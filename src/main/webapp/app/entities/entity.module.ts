@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
       },
       {
         path: 'deposit',
-        loadChildren: () => import('./deposit/deposit.module').then(m => m.CashManagerDepositModule),
+        loadChildren: () => import('../entities-extended/deposit/deposit-extended.module').then(m => m.CashManagerDepositModule),
       },
       {
         path: 'expanse',

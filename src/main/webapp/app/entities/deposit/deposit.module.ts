@@ -9,8 +9,11 @@ import { DepositDeleteDialogComponent } from './deposit-delete-dialog.component'
 import { depositRoute } from './deposit.route';
 
 @NgModule({
-  imports: [CashManagerSharedModule, RouterModule.forChild(depositRoute)],
+  imports: [
+    CashManagerSharedModule,
+    RouterModule.forChild(depositRoute),
+  ] /*,
   declarations: [DepositComponent, DepositDetailComponent, DepositUpdateComponent, DepositDeleteDialogComponent],
-  entryComponents: [DepositDeleteDialogComponent],
+  entryComponents: [DepositDeleteDialogComponent],*/,
 })
 export class CashManagerDepositModule {}

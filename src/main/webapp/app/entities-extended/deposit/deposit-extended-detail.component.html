@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="deposit">
+            <h2><span>Deposit</span> {{ deposit.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Login Id</span></dt>
+                <dd>
+                    <span>{{ deposit.loginId }}</span>
+                </dd>
+                <dt><span>Deposit No</span></dt>
+                <dd>
+                    <span>{{ deposit.depositNo }}</span>
+                </dd>
+                <dt><span>Deposit By</span></dt>
+                <dd>
+                    <span>{{ deposit.depositBy }}</span>
+                </dd>
+                <dt><span>Deposit Date</span></dt>
+                <dd>
+                    <span>{{ deposit.depositDate }}</span>
+                </dd>
+                <dt><span>Medium</span></dt>
+                <dd>
+                    <span>{{ deposit.medium }}</span>
+                </dd>
+                <dt><span>Amount</span></dt>
+                <dd>
+                    <span>{{ deposit.amount }}</span>
+                </dd>
+                <dt><span>Created By</span></dt>
+                <dd>
+                    <span>{{ deposit.createdBy }}</span>
+                </dd>
+                <dt><span>Created On</span></dt>
+                <dd>
+                    <span>{{ deposit.createdOn }}</span>
+                </dd>
+                <dt><span>Modified By</span></dt>
+                <dd>
+                    <span>{{ deposit.modifiedBy }}</span>
+                </dd>
+                <dt><span>Modified On</span></dt>
+                <dd>
+                    <span>{{ deposit.modifiedOn }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/deposit', deposit.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

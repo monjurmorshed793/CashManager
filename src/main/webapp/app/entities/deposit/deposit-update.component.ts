@@ -32,7 +32,7 @@ export class DepositUpdateComponent implements OnInit {
     modifiedOn: [],
   });
 
-  constructor(protected depositService: DepositService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(protected depositService: DepositService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ deposit }) => {

@@ -8,71 +8,56 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
-import { IExpanse, Expanse } from 'app/shared/model/expanse.model';
-import { ExpanseService } from './expanse.service';
+import { IItem, Item } from 'app/shared/model/item.model';
+import { ItemService } from './item.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
-import { IPayTo } from 'app/shared/model/pay-to.model';
-import { PayToService } from 'app/entities/pay-to/pay-to.service';
 
 @Component({
-  selector: 'jhi-expanse-update',
-  templateUrl: './expanse-update.component.html',
+  selector: 'jhi-item-update',
+  templateUrl: './item-update.component.html',
 })
-export class ExpanseUpdateComponent implements OnInit {
+export class ItemUpdateComponent implements OnInit {
   isSaving = false;
-  paytos: IPayTo[] = [];
-  voucherDateDp: any;
 
   editForm = this.fb.group({
     id: [],
-    loginId: [],
-    voucherNo: [],
-    voucherDate: [],
-    month: [],
-    notes: [],
+    name: [],
+    description: [],
     createdBy: [],
     createdOn: [],
     modifiedBy: [],
     modifiedOn: [],
-    payToId: [],
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
-    protected expanseService: ExpanseService,
-    protected payToService: PayToService,
+    protected itemService: ItemService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ expanse }) => {
-      if (!expanse.id) {
+    this.activatedRoute.data.subscribe(({ item }) => {
+      if (!item.id) {
         const today = moment().startOf('day');
-        expanse.createdOn = today;
-        expanse.modifiedOn = today;
+        item.createdOn = today;
+        item.modifiedOn = today;
       }
 
-      this.updateForm(expanse);
-
-      this.payToService.query().subscribe((res: HttpResponse<IPayTo[]>) => (this.paytos = res.body || []));
+      this.updateForm(item);
     });
   }
 
-  updateForm(expanse: IExpanse): void {
+  updateForm(item: IItem): void {
     this.editForm.patchValue({
-      id: expanse.id,
-      loginId: expanse.loginId,
-      voucherNo: expanse.voucherNo,
-      voucherDate: expanse.voucherDate,
-      month: expanse.month,
-      notes: expanse.notes,
-      createdBy: expanse.createdBy,
-      createdOn: expanse.createdOn ? expanse.createdOn.format(DATE_TIME_FORMAT) : null,
-      modifiedBy: expanse.modifiedBy,
-      modifiedOn: expanse.modifiedOn ? expanse.modifiedOn.format(DATE_TIME_FORMAT) : null,
-      payToId: expanse.payToId,
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      createdBy: item.createdBy,
+      createdOn: item.createdOn ? item.createdOn.format(DATE_TIME_FORMAT) : null,
+      modifiedBy: item.modifiedBy,
+      modifiedOn: item.modifiedOn ? item.modifiedOn.format(DATE_TIME_FORMAT) : null,
     });
   }
 
@@ -98,32 +83,28 @@ export class ExpanseUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const expanse = this.createFromForm();
-    if (expanse.id !== undefined) {
-      this.subscribeToSaveResponse(this.expanseService.update(expanse));
+    const item = this.createFromForm();
+    if (item.id !== undefined) {
+      this.subscribeToSaveResponse(this.itemService.update(item));
     } else {
-      this.subscribeToSaveResponse(this.expanseService.create(expanse));
+      this.subscribeToSaveResponse(this.itemService.create(item));
     }
   }
 
-  private createFromForm(): IExpanse {
+  private createFromForm(): IItem {
     return {
-      ...new Expanse(),
+      ...new Item(),
       id: this.editForm.get(['id'])!.value,
-      loginId: this.editForm.get(['loginId'])!.value,
-      voucherNo: this.editForm.get(['voucherNo'])!.value,
-      voucherDate: this.editForm.get(['voucherDate'])!.value,
-      month: this.editForm.get(['month'])!.value,
-      notes: this.editForm.get(['notes'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      description: this.editForm.get(['description'])!.value,
       createdBy: this.editForm.get(['createdBy'])!.value,
       createdOn: this.editForm.get(['createdOn'])!.value ? moment(this.editForm.get(['createdOn'])!.value, DATE_TIME_FORMAT) : undefined,
       modifiedBy: this.editForm.get(['modifiedBy'])!.value,
       modifiedOn: this.editForm.get(['modifiedOn'])!.value ? moment(this.editForm.get(['modifiedOn'])!.value, DATE_TIME_FORMAT) : undefined,
-      payToId: this.editForm.get(['payToId'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IExpanse>>): void {
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IItem>>): void {
     result.subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()
@@ -137,9 +118,5 @@ export class ExpanseUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
-  }
-
-  trackById(index: number, item: IPayTo): any {
-    return item.id;
   }
 }
