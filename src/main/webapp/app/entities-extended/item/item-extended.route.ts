@@ -4,17 +4,17 @@ import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IItem, Item } from 'app/shared/model/item.model';
-import { ItemService } from './item.service';
-import { ItemComponent } from './item.component';
-import { ItemDetailComponent } from './item-detail.component';
-import { ItemUpdateComponent } from './item-update.component';
+import { ItemExtendedService } from './item-extended.service';
+import { ItemExtendedComponent } from './item-extended.component';
+import { ItemExtendedDetailComponent } from './item-extended-detail.component';
+import { ItemExtendedUpdateComponent } from './item-extended-update.component';
+import { IItem, Item } from '../../shared/model/item.model';
+import { UserRouteAccessService } from '../../core/auth/user-route-access-service';
+import { Authority } from '../../shared/constants/authority.constants';
 
 @Injectable({ providedIn: 'root' })
-export class ItemResolve implements Resolve<IItem> {
-  constructor(private service: ItemService, private router: Router) {}
+export class ItemExtendedResolve implements Resolve<IItem> {
+  constructor(private service: ItemExtendedService, private router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IItem> | Observable<never> {
     const id = route.params['id'];
@@ -34,10 +34,10 @@ export class ItemResolve implements Resolve<IItem> {
   }
 }
 
-export const itemRoute: Routes = [
+export const itemExtendedRoute: Routes = [
   {
     path: '',
-    component: ItemComponent,
+    component: ItemExtendedComponent,
     data: {
       authorities: [Authority.USER],
       defaultSort: 'id,asc',
@@ -47,9 +47,9 @@ export const itemRoute: Routes = [
   },
   {
     path: ':id/view',
-    component: ItemDetailComponent,
+    component: ItemExtendedDetailComponent,
     resolve: {
-      item: ItemResolve,
+      item: ItemExtendedResolve,
     },
     data: {
       authorities: [Authority.USER],
@@ -59,9 +59,9 @@ export const itemRoute: Routes = [
   },
   {
     path: 'new',
-    component: ItemUpdateComponent,
+    component: ItemExtendedUpdateComponent,
     resolve: {
-      item: ItemResolve,
+      item: ItemExtendedResolve,
     },
     data: {
       authorities: [Authority.USER],
@@ -71,9 +71,9 @@ export const itemRoute: Routes = [
   },
   {
     path: ':id/edit',
-    component: ItemUpdateComponent,
+    component: ItemExtendedUpdateComponent,
     resolve: {
-      item: ItemResolve,
+      item: ItemExtendedResolve,
     },
     data: {
       authorities: [Authority.USER],

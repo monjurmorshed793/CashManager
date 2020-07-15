@@ -9,8 +9,11 @@ import { ItemDeleteDialogComponent } from './item-delete-dialog.component';
 import { itemRoute } from './item.route';
 
 @NgModule({
-  imports: [CashManagerSharedModule, RouterModule.forChild(itemRoute)],
+  imports: [
+    CashManagerSharedModule,
+    RouterModule.forChild(itemRoute),
+  ] /*
   declarations: [ItemComponent, ItemDetailComponent, ItemUpdateComponent, ItemDeleteDialogComponent],
-  entryComponents: [ItemDeleteDialogComponent],
+  entryComponents: [ItemDeleteDialogComponent],*/,
 })
 export class CashManagerItemModule {}

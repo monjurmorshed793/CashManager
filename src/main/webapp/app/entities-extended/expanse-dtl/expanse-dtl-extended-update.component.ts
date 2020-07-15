@@ -11,7 +11,7 @@ import { ExpanseDtlExtendedService } from './expanse-dtl-extended.service';
 import { ExpanseService } from '../../entities/expanse/expanse.service';
 import { IItem } from '../../shared/model/item.model';
 import { IExpanse } from '../../shared/model/expanse.model';
-import { ItemService } from '../item/item.service';
+import { ItemExtendedService } from '../item/item-extended.service';
 
 type SelectableEntity = IExpanse | IItem;
 
@@ -23,7 +23,7 @@ export class ExpanseDtlExtendedUpdateComponent extends ExpanseDtlUpdateComponent
   constructor(
     protected expanseDtlService: ExpanseDtlExtendedService,
     protected expanseService: ExpanseService,
-    protected itemService: ItemService,
+    protected itemService: ItemExtendedService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {

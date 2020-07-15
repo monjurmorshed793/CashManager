@@ -34,7 +34,7 @@ export class ItemUpdateComponent implements OnInit {
     protected eventManager: JhiEventManager,
     protected itemService: ItemService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
