@@ -9,8 +9,11 @@ import { PayToDeleteDialogComponent } from './pay-to-delete-dialog.component';
 import { payToRoute } from './pay-to.route';
 
 @NgModule({
-  imports: [CashManagerSharedModule, RouterModule.forChild(payToRoute)],
+  imports: [
+    CashManagerSharedModule,
+    RouterModule.forChild(payToRoute),
+  ] /*,
   declarations: [PayToComponent, PayToDetailComponent, PayToUpdateComponent, PayToDeleteDialogComponent],
-  entryComponents: [PayToDeleteDialogComponent],
+  entryComponents: [PayToDeleteDialogComponent],*/,
 })
 export class CashManagerPayToModule {}

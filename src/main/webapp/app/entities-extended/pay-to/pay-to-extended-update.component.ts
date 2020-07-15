@@ -7,23 +7,21 @@ import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
-import { ExpanseExtendedService } from './expanse-extended.service';
-import { ExpanseUpdateComponent } from '../../entities/expanse/expanse-update.component';
-import { PayToExtendedService } from '../pay-to/pay-to-extended.service';
+import { PayToExtendedService } from './pay-to-extended.service';
+import { PayToUpdateComponent } from '../../entities/pay-to/pay-to-update.component';
 
 @Component({
-  selector: 'jhi-expanse-update',
-  templateUrl: './expanse-extended-update.component.html',
+  selector: 'jhi-pay-to-update',
+  templateUrl: './pay-to-extended-update.component.html',
 })
-export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent implements OnInit {
+export class PayToExtendedUpdateComponent extends PayToUpdateComponent implements OnInit {
   constructor(
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
-    protected expanseService: ExpanseExtendedService,
     protected payToService: PayToExtendedService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {
-    super(dataUtils, eventManager, expanseService, payToService, activatedRoute, fb);
+    super(dataUtils, eventManager, payToService, activatedRoute, fb);
   }
 }

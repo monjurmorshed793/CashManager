@@ -4,17 +4,17 @@ import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IPayTo, PayTo } from 'app/shared/model/pay-to.model';
-import { PayToService } from './pay-to.service';
-import { PayToComponent } from './pay-to.component';
-import { PayToDetailComponent } from './pay-to-detail.component';
-import { PayToUpdateComponent } from './pay-to-update.component';
+import { PayToExtendedService } from './pay-to-extended.service';
+import { PayToExtendedComponent } from './pay-to-extended.component';
+import { PayToExtendedDetailComponent } from './pay-to-extended-detail.component';
+import { PayToExtendedUpdateComponent } from './pay-to-extended-update.component';
+import { IPayTo, PayTo } from '../../shared/model/pay-to.model';
+import { UserRouteAccessService } from '../../core/auth/user-route-access-service';
+import { Authority } from '../../shared/constants/authority.constants';
 
 @Injectable({ providedIn: 'root' })
-export class PayToResolve implements Resolve<IPayTo> {
-  constructor(private service: PayToService, private router: Router) {}
+export class PayToExtendedResolve implements Resolve<IPayTo> {
+  constructor(private service: PayToExtendedService, private router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IPayTo> | Observable<never> {
     const id = route.params['id'];
@@ -34,10 +34,10 @@ export class PayToResolve implements Resolve<IPayTo> {
   }
 }
 
-export const payToRoute: Routes = [
+export const payToExtendedRoute: Routes = [
   {
     path: '',
-    component: PayToComponent,
+    component: PayToExtendedComponent,
     data: {
       authorities: [Authority.USER],
       defaultSort: 'id,asc',
@@ -47,9 +47,9 @@ export const payToRoute: Routes = [
   },
   {
     path: ':id/view',
-    component: PayToDetailComponent,
+    component: PayToExtendedDetailComponent,
     resolve: {
-      payTo: PayToResolve,
+      payTo: PayToExtendedResolve,
     },
     data: {
       authorities: [Authority.USER],
@@ -59,9 +59,9 @@ export const payToRoute: Routes = [
   },
   {
     path: 'new',
-    component: PayToUpdateComponent,
+    component: PayToExtendedUpdateComponent,
     resolve: {
-      payTo: PayToResolve,
+      payTo: PayToExtendedResolve,
     },
     data: {
       authorities: [Authority.USER],
@@ -71,9 +71,9 @@ export const payToRoute: Routes = [
   },
   {
     path: ':id/edit',
-    component: PayToUpdateComponent,
+    component: PayToExtendedUpdateComponent,
     resolve: {
-      payTo: PayToResolve,
+      payTo: PayToExtendedResolve,
     },
     data: {
       authorities: [Authority.USER],

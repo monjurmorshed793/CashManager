@@ -34,7 +34,7 @@ export class PayToUpdateComponent implements OnInit {
     protected eventManager: JhiEventManager,
     protected payToService: PayToService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
