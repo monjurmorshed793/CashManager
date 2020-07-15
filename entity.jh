@@ -1,0 +1,86 @@
+entity Item{
+	name String,
+    description TextBlob,
+    createdBy String,
+    createdOn Instant,
+    modifiedBy String,
+    modifiedOn Instant
+}
+
+entity Payto{
+	name String,
+    description TextBlob,
+    createdBy String,
+    createdOn Instant,
+    modifiedBy String,
+    modifiedOn Instant
+}
+
+entity Deposit{
+	loginId String,
+    depositNo Integer,
+    depositBy String,
+    depositDate LocalDate,
+    medium DepositMedium,
+    amount BigDecimal,
+    createdBy String,
+    createdOn Instant,
+    modifiedBy String,
+    modifiedOn Instant
+}
+
+entity Expanse{
+	loginId String,
+    voucherNo Integer,
+    voucherDate LocalDate,
+    month MonthType,
+    notes TextBlob,
+    createdBy String,
+    createdOn Instant,
+    modifiedBy String,
+    modifiedOn Instant
+}
+
+entity ExpanseDtl{
+	//item
+    quantity BigDecimal,
+    unitPrice BigDecimal,
+    amount BigDecimal,
+    createdBy String,
+    createdOn Instant,
+    modifiedBy String,
+    modifiedOn Instant
+}
+
+
+enum DepositMedium{
+	ATM,
+    BANK,
+    CASH
+}
+
+enum MonthType{
+  JANUARY,
+  FEBRUARY,
+  MARCH,
+  APRIL,
+  MAY,
+  JUNE,
+  JULY,
+  AUGUST,
+  SEPTEMBER,
+  OCTOBER,
+  NOVEMBER,
+  DECEMBER
+}
+
+relationship ManyToOne {
+	ExpanseDtl{expanse(voucherNo)} to Expanse,
+    ExpanseDtl{item(name)} to Item,
+    Expanse{payTo(name)} to PayTo
+}
+
+dto all with mapstruct
+filter *
+paginate Item, PayTo, Deposit, Expanse, ExpanseDtl with pagination
+service Item, PayTo, Deposit, Expanse, ExpanseDtl with serviceClass
