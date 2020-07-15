@@ -6,7 +6,7 @@ import { IExpanseDtl } from 'app/shared/model/expanse-dtl.model';
 import { ExpanseDtlExtendedService } from './expanse-dtl-extended.service';
 
 @Component({
-  templateUrl: './expanse-dtl-delete-dialog.component.html',
+  templateUrl: './expanse-dtl-extended-delete-dialog.component.html',
 })
 export class ExpanseDtlExtendedDeleteDialogComponent {
   expanseDtl?: IExpanseDtl;

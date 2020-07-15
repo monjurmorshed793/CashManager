@@ -10,8 +10,6 @@ import { IExpanse } from '../../shared/model/expanse.model';
   templateUrl: './expanse-extended-detail.component.html',
 })
 export class ExpanseExtendedDetailComponent extends ExpanseDetailComponent implements OnInit {
-  expanse: IExpanse | null = null;
-
   constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {
     super(dataUtils, activatedRoute);
   }

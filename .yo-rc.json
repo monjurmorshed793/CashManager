@@ -19,7 +19,7 @@
     "searchEngine": false,
     "messageBroker": false,
     "serviceDiscoveryType": false,
-    "buildTool": "gradle",
+    "buildTool": "maven",
     "enableSwaggerCodegen": false,
     "jwtSecretKey": "Y2Q4MzE5Y2EzZmNiMTM5NmU3NTcyZTQ5ZWQxMGFhODdhZGE2NTI4MWI4Mzg1OGQzYzFmYjI3MzY4YTAwZjM4Mzc3YjM2MjI0ZDU0YWRmMjExYWQ5YTU3YTY0MjI1M2I1MTkxZDFiN2M5ZjdmZjM5MWRjMjA5MmRjNDU2YjcwMzg=",
     "embeddableLaunchScript": false,

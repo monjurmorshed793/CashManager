@@ -6,11 +6,11 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'item',
-        loadChildren: () => import('./item/item.module').then(m => m.CashManagerItemModule),
+        loadChildren: () => import('../entities-extended/item/item-extended.module').then(m => m.CashManagerItemModule),
       },
       {
         path: 'pay-to',
-        loadChildren: () => import('./pay-to/pay-to.module').then(m => m.CashManagerPayToModule),
+        loadChildren: () => import('../entities-extended/pay-to/pay-to-extended.module').then(m => m.CashManagerPayToModule),
       },
       {
         path: 'deposit',
@@ -18,11 +18,11 @@ import { RouterModule } from '@angular/router';
       },
       {
         path: 'expanse',
-        loadChildren: () => import('./expanse/expanse.module').then(m => m.CashManagerExpanseModule),
+        loadChildren: () => import('../entities-extended/expanse/expanse-extended.module').then(m => m.CashManagerExpanseModule),
       },
       {
         path: 'expanse-dtl',
-        loadChildren: () => import('./expanse-dtl/expanse-dtl.module').then(m => m.CashManagerExpanseDtlModule),
+        loadChildren: () => import('../entities-extended/expanse-dtl/expanse-dtl-extended.module').then(m => m.CashManagerExpanseDtlModule),
       },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),

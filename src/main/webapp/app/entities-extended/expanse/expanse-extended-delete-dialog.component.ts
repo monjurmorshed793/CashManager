@@ -4,6 +4,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { ExpanseExtendedService } from './expanse-extended.service';
 import { ExpanseDeleteDialogComponent } from '../../entities/expanse/expanse-delete-dialog.component';
+import { ExpanseService } from '../../entities/expanse/expanse.service';
 
 @Component({
   templateUrl: './expanse-extended-delete-dialog.component.html',

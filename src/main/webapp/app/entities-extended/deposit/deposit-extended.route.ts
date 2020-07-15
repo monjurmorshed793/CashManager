@@ -9,6 +9,8 @@ import { DepositExtendedComponent } from './deposit-extended.component';
 import { DepositExtendedDetailComponent } from './deposit-extended-detail.component';
 import { DepositExtendedUpdateComponent } from './deposit-extended-update.component';
 import { Deposit, IDeposit } from '../../shared/model/deposit.model';
+import { Authority } from '../../shared/constants/authority.constants';
+import { UserRouteAccessService } from '../../core/auth/user-route-access-service';
 
 @Injectable({ providedIn: 'root' })
 export class DepositExtendedResolve implements Resolve<IDeposit> {

@@ -9,8 +9,11 @@ import { ExpanseDeleteDialogComponent } from './expanse-delete-dialog.component'
 import { expanseRoute } from './expanse.route';
 
 @NgModule({
-  imports: [CashManagerSharedModule, RouterModule.forChild(expanseRoute)],
+  imports: [
+    CashManagerSharedModule,
+    RouterModule.forChild(expanseRoute),
+  ] /*,
   declarations: [ExpanseComponent, ExpanseDetailComponent, ExpanseUpdateComponent, ExpanseDeleteDialogComponent],
-  entryComponents: [ExpanseDeleteDialogComponent],
+  entryComponents: [ExpanseDeleteDialogComponent],*/,
 })
 export class CashManagerExpanseModule {}
