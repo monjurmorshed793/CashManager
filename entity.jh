@@ -18,11 +18,13 @@ entity PayTo{
 
 entity Deposit{
 	loginId String,
-    depositNo Integer,
+    depositNo Integer unique,
     depositBy String,
     depositDate LocalDate,
     medium DepositMedium,
     amount BigDecimal,
+    isPosted Boolean,
+    postDate Instant,
     createdBy String,
     createdOn Instant,
     modifiedBy String,
@@ -35,6 +37,8 @@ entity Expanse{
     voucherDate LocalDate,
     month MonthType,
     notes TextBlob,
+    isPosted Boolean,
+    postDate Instant,
     createdBy String,
     createdOn Instant,
     modifiedBy String,
