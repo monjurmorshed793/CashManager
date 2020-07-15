@@ -1,22 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { IExpanseDtl } from 'app/shared/model/expanse-dtl.model';
+import { ExpanseDtlDetailComponent } from '../../entities/expanse-dtl/expanse-dtl-detail.component';
 
 @Component({
   selector: 'jhi-expanse-dtl-detail',
-  templateUrl: './expanse-dtl-detail.component.html',
+  templateUrl: './expanse-dtl-extended-detail.component.html',
 })
-export class ExpanseDtlExtendedDetailComponent implements OnInit {
-  expanseDtl: IExpanseDtl | null = null;
-
-  constructor(protected activatedRoute: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ expanseDtl }) => (this.expanseDtl = expanseDtl));
-  }
-
-  previousState(): void {
-    window.history.back();
+export class ExpanseDtlExtendedDetailComponent extends ExpanseDtlDetailComponent implements OnInit {
+  constructor(protected activatedRoute: ActivatedRoute) {
+    super(activatedRoute);
   }
 }

@@ -43,7 +43,7 @@ export class ExpanseDtlUpdateComponent implements OnInit {
     protected expanseService: ExpanseService,
     protected itemService: ItemService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
