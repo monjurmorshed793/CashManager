@@ -20,12 +20,14 @@ export class DepositUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    loginId: [],
-    depositNo: [],
-    depositBy: [],
-    depositDate: [],
-    medium: [],
-    amount: [],
+    loginId: [null, [Validators.required]],
+    depositNo: [null, []],
+    depositBy: [null, [Validators.required]],
+    depositDate: [null, [Validators.required]],
+    medium: [null, [Validators.required]],
+    amount: [null, [Validators.required]],
+    isPosted: [],
+    postDate: [],
     createdBy: [],
     createdOn: [],
     modifiedBy: [],
@@ -38,6 +40,7 @@ export class DepositUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ deposit }) => {
       if (!deposit.id) {
         const today = moment().startOf('day');
+        deposit.postDate = today;
         deposit.createdOn = today;
         deposit.modifiedOn = today;
       }
@@ -55,6 +58,8 @@ export class DepositUpdateComponent implements OnInit {
       depositDate: deposit.depositDate,
       medium: deposit.medium,
       amount: deposit.amount,
+      isPosted: deposit.isPosted,
+      postDate: deposit.postDate ? deposit.postDate.format(DATE_TIME_FORMAT) : null,
       createdBy: deposit.createdBy,
       createdOn: deposit.createdOn ? deposit.createdOn.format(DATE_TIME_FORMAT) : null,
       modifiedBy: deposit.modifiedBy,
@@ -86,6 +91,8 @@ export class DepositUpdateComponent implements OnInit {
       depositDate: this.editForm.get(['depositDate'])!.value,
       medium: this.editForm.get(['medium'])!.value,
       amount: this.editForm.get(['amount'])!.value,
+      isPosted: this.editForm.get(['isPosted'])!.value,
+      postDate: this.editForm.get(['postDate'])!.value ? moment(this.editForm.get(['postDate'])!.value, DATE_TIME_FORMAT) : undefined,
       createdBy: this.editForm.get(['createdBy'])!.value,
       createdOn: this.editForm.get(['createdOn'])!.value ? moment(this.editForm.get(['createdOn'])!.value, DATE_TIME_FORMAT) : undefined,
       modifiedBy: this.editForm.get(['modifiedBy'])!.value,

@@ -17,18 +17,24 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="login_id" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="voucher_no" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_expanse_voucher_no" />
             </column>
             <column name="voucher_date" type="date">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="month" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="notes" type="${clobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_posted" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="post_date" type="datetime">
                 <constraints nullable="true" />
             </column>
             <column name="created_by" type="varchar(255)">
@@ -44,10 +50,11 @@
                 <constraints nullable="true" />
             </column>
             <column name="pay_to_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="expanse" columnName="post_date" columnDataType="datetime"/>
         <dropDefaultValue tableName="expanse" columnName="created_on" columnDataType="datetime"/>
         <dropDefaultValue tableName="expanse" columnName="modified_on" columnDataType="datetime"/>
     </changeSet>
@@ -76,10 +83,13 @@
             <column name="voucher_date" type="date"/>
             <column name="month" type="string"/>
             <column name="notes" type="clob"/>
+            <column name="is_posted" type="boolean"/>
+            <column name="post_date" type="datetime"/>
             <column name="created_by" type="string"/>
             <column name="created_on" type="datetime"/>
             <column name="modified_by" type="string"/>
             <column name="modified_on" type="datetime"/>
+            <column name="pay_to_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

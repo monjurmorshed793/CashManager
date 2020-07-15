@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -26,22 +27,33 @@ public class Expanse implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "login_id")
+    @NotNull
+    @Column(name = "login_id", nullable = false)
     private String loginId;
 
-    @Column(name = "voucher_no")
+    
+    @Column(name = "voucher_no", unique = true)
     private Integer voucherNo;
 
-    @Column(name = "voucher_date")
+    @NotNull
+    @Column(name = "voucher_date", nullable = false)
     private LocalDate voucherDate;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "month")
+    @Column(name = "month", nullable = false)
     private MonthType month;
 
+    
     @Lob
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = false)
     private String notes;
+
+    @Column(name = "is_posted")
+    private Boolean isPosted;
+
+    @Column(name = "post_date")
+    private Instant postDate;
 
     @Column(name = "created_by")
     private String createdBy;
@@ -55,7 +67,8 @@ public class Expanse implements Serializable {
     @Column(name = "modified_on")
     private Instant modifiedOn;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "expanses", allowSetters = true)
     private PayTo payTo;
 
@@ -131,6 +144,32 @@ public class Expanse implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Boolean isIsPosted() {
+        return isPosted;
+    }
+
+    public Expanse isPosted(Boolean isPosted) {
+        this.isPosted = isPosted;
+        return this;
+    }
+
+    public void setIsPosted(Boolean isPosted) {
+        this.isPosted = isPosted;
+    }
+
+    public Instant getPostDate() {
+        return postDate;
+    }
+
+    public Expanse postDate(Instant postDate) {
+        this.postDate = postDate;
+        return this;
+    }
+
+    public void setPostDate(Instant postDate) {
+        this.postDate = postDate;
     }
 
     public String getCreatedBy() {
@@ -225,6 +264,8 @@ public class Expanse implements Serializable {
             ", voucherDate='" + getVoucherDate() + "'" +
             ", month='" + getMonth() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", isPosted='" + isIsPosted() + "'" +
+            ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdOn='" + getCreatedOn() + "'" +
             ", modifiedBy='" + getModifiedBy() + "'" +

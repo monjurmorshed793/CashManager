@@ -27,15 +27,15 @@ export class ExpanseDtlUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    quantity: [],
-    unitPrice: [],
-    amount: [],
+    quantity: [null, [Validators.required]],
+    unitPrice: [null, [Validators.required]],
+    amount: [null, [Validators.required]],
     createdBy: [],
     createdOn: [],
     modifiedBy: [],
     modifiedOn: [],
     expanseId: [],
-    itemId: [],
+    itemId: [null, Validators.required],
   });
 
   constructor(

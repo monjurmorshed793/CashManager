@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,13 +25,16 @@ public class ExpanseDtl implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "quantity", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "quantity", precision = 21, scale = 2, nullable = false)
     private BigDecimal quantity;
 
-    @Column(name = "unit_price", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "unit_price", precision = 21, scale = 2, nullable = false)
     private BigDecimal unitPrice;
 
-    @Column(name = "amount", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "amount", precision = 21, scale = 2, nullable = false)
     private BigDecimal amount;
 
     @Column(name = "created_by")
@@ -49,7 +53,8 @@ public class ExpanseDtl implements Serializable {
     @JsonIgnoreProperties(value = "expanseDtls", allowSetters = true)
     private Expanse expanse;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "expanseDtls", allowSetters = true)
     private Item item;
 

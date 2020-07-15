@@ -55,6 +55,10 @@ public class ExpanseCriteria implements Serializable, Criteria {
 
     private MonthTypeFilter month;
 
+    private BooleanFilter isPosted;
+
+    private InstantFilter postDate;
+
     private StringFilter createdBy;
 
     private InstantFilter createdOn;
@@ -74,6 +78,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
         this.voucherNo = other.voucherNo == null ? null : other.voucherNo.copy();
         this.voucherDate = other.voucherDate == null ? null : other.voucherDate.copy();
         this.month = other.month == null ? null : other.month.copy();
+        this.isPosted = other.isPosted == null ? null : other.isPosted.copy();
+        this.postDate = other.postDate == null ? null : other.postDate.copy();
         this.createdBy = other.createdBy == null ? null : other.createdBy.copy();
         this.createdOn = other.createdOn == null ? null : other.createdOn.copy();
         this.modifiedBy = other.modifiedBy == null ? null : other.modifiedBy.copy();
@@ -124,6 +130,22 @@ public class ExpanseCriteria implements Serializable, Criteria {
 
     public void setMonth(MonthTypeFilter month) {
         this.month = month;
+    }
+
+    public BooleanFilter getIsPosted() {
+        return isPosted;
+    }
+
+    public void setIsPosted(BooleanFilter isPosted) {
+        this.isPosted = isPosted;
+    }
+
+    public InstantFilter getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(InstantFilter postDate) {
+        this.postDate = postDate;
     }
 
     public StringFilter getCreatedBy() {
@@ -182,6 +204,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
             Objects.equals(voucherNo, that.voucherNo) &&
             Objects.equals(voucherDate, that.voucherDate) &&
             Objects.equals(month, that.month) &&
+            Objects.equals(isPosted, that.isPosted) &&
+            Objects.equals(postDate, that.postDate) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdOn, that.createdOn) &&
             Objects.equals(modifiedBy, that.modifiedBy) &&
@@ -197,6 +221,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
         voucherNo,
         voucherDate,
         month,
+        isPosted,
+        postDate,
         createdBy,
         createdOn,
         modifiedBy,
@@ -214,6 +240,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
                 (voucherNo != null ? "voucherNo=" + voucherNo + ", " : "") +
                 (voucherDate != null ? "voucherDate=" + voucherDate + ", " : "") +
                 (month != null ? "month=" + month + ", " : "") +
+                (isPosted != null ? "isPosted=" + isPosted + ", " : "") +
+                (postDate != null ? "postDate=" + postDate + ", " : "") +
                 (createdBy != null ? "createdBy=" + createdBy + ", " : "") +
                 (createdOn != null ? "createdOn=" + createdOn + ", " : "") +
                 (modifiedBy != null ? "modifiedBy=" + modifiedBy + ", " : "") +

@@ -15,12 +15,24 @@
                     <label class="form-control-label" for="field_loginId">Login Id</label>
                     <input type="text" class="form-control" name="loginId" id="field_loginId"
                            formControlName="loginId"/>
+                    <div *ngIf="editForm.get('loginId')!.invalid && (editForm.get('loginId')!.dirty || editForm.get('loginId')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('loginId')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_voucherNo">Voucher No</label>
                     <input type="number" class="form-control" name="voucherNo" id="field_voucherNo"
                            formControlName="voucherNo"/>
+                    <div *ngIf="editForm.get('voucherNo')!.invalid && (editForm.get('voucherNo')!.dirty || editForm.get('voucherNo')!.touched)">
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('voucherNo')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -30,6 +42,12 @@
                         <span class="input-group-append">
                             <button type="button" class="btn btn-secondary" (click)="voucherDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
+                    </div>
+                    <div *ngIf="editForm.get('voucherDate')!.invalid && (editForm.get('voucherDate')!.dirty || editForm.get('voucherDate')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('voucherDate')?.errors?.required">
+                        This field is required.
+                        </small>
                     </div>
                 </div>
 
@@ -49,12 +67,37 @@
                         <option value="NOVEMBER">NOVEMBER</option>
                         <option value="DECEMBER">DECEMBER</option>
                     </select>
+                    <div *ngIf="editForm.get('month')!.invalid && (editForm.get('month')!.dirty || editForm.get('month')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('month')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_notes">Notes</label>
                     <textarea class="form-control" name="notes" id="field_notes"
                               formControlName="notes"></textarea>
+                    <div *ngIf="editForm.get('notes')!.invalid && (editForm.get('notes')!.dirty || editForm.get('notes')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('notes')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_isPosted">Is Posted</label>
+                    <input type="checkbox" class="form-control" name="isPosted" id="field_isPosted"
+                           formControlName="isPosted"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_postDate">Post Date</label>
+                    <div class="d-flex">
+                        <input id="field_postDate" type="datetime-local" class="form-control" name="postDate" formControlName="postDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -86,9 +129,15 @@
                 <div class="form-group">
                     <label class="form-control-label" for="field_payTo">Pay To</label>
                     <select class="form-control" id="field_payTo" name="payTo" formControlName="payToId">
-                        <option [ngValue]="null"></option>
+                        <option *ngIf="!editForm.get('payToId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="payToOption.id" *ngFor="let payToOption of paytos; trackBy: trackById">{{ payToOption.name }}</option>
                     </select>
+                </div>
+                <div *ngIf="editForm.get('payToId')!.invalid && (editForm.get('payToId')!.dirty || editForm.get('payToId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('payToId')?.errors?.required">
+                        This field is required.
+                    </small>
                 </div>
             </div>
 

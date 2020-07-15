@@ -33,6 +33,8 @@ describe('Service Tests', () => {
         currentDate,
         DepositMedium.ATM,
         0,
+        false,
+        currentDate,
         'AAAAAAA',
         currentDate,
         'AAAAAAA',
@@ -45,6 +47,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             depositDate: currentDate.format(DATE_FORMAT),
+            postDate: currentDate.format(DATE_TIME_FORMAT),
             createdOn: currentDate.format(DATE_TIME_FORMAT),
             modifiedOn: currentDate.format(DATE_TIME_FORMAT),
           },
@@ -63,6 +66,7 @@ describe('Service Tests', () => {
           {
             id: 0,
             depositDate: currentDate.format(DATE_FORMAT),
+            postDate: currentDate.format(DATE_TIME_FORMAT),
             createdOn: currentDate.format(DATE_TIME_FORMAT),
             modifiedOn: currentDate.format(DATE_TIME_FORMAT),
           },
@@ -72,6 +76,7 @@ describe('Service Tests', () => {
         const expected = Object.assign(
           {
             depositDate: currentDate,
+            postDate: currentDate,
             createdOn: currentDate,
             modifiedOn: currentDate,
           },
@@ -94,6 +99,8 @@ describe('Service Tests', () => {
             depositDate: currentDate.format(DATE_FORMAT),
             medium: 'BBBBBB',
             amount: 1,
+            isPosted: true,
+            postDate: currentDate.format(DATE_TIME_FORMAT),
             createdBy: 'BBBBBB',
             createdOn: currentDate.format(DATE_TIME_FORMAT),
             modifiedBy: 'BBBBBB',
@@ -105,6 +112,7 @@ describe('Service Tests', () => {
         const expected = Object.assign(
           {
             depositDate: currentDate,
+            postDate: currentDate,
             createdOn: currentDate,
             modifiedOn: currentDate,
           },
@@ -127,6 +135,8 @@ describe('Service Tests', () => {
             depositDate: currentDate.format(DATE_FORMAT),
             medium: 'BBBBBB',
             amount: 1,
+            isPosted: true,
+            postDate: currentDate.format(DATE_TIME_FORMAT),
             createdBy: 'BBBBBB',
             createdOn: currentDate.format(DATE_TIME_FORMAT),
             modifiedBy: 'BBBBBB',
@@ -138,6 +148,7 @@ describe('Service Tests', () => {
         const expected = Object.assign(
           {
             depositDate: currentDate,
+            postDate: currentDate,
             createdOn: currentDate,
             modifiedOn: currentDate,
           },

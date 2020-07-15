@@ -103,6 +103,12 @@ public class ExpanseQueryService extends QueryService<Expanse> {
             if (criteria.getMonth() != null) {
                 specification = specification.and(buildSpecification(criteria.getMonth(), Expanse_.month));
             }
+            if (criteria.getIsPosted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsPosted(), Expanse_.isPosted));
+            }
+            if (criteria.getPostDate() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPostDate(), Expanse_.postDate));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), Expanse_.createdBy));
             }

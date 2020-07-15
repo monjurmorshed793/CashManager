@@ -28,6 +28,8 @@
                     <th scope="col"  jhiSortBy="voucherDate"><span>Voucher Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="month"><span>Month</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="notes"><span>Notes</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="isPosted"><span>Is Posted</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="postDate"><span>Post Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="createdBy"><span>Created By</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="createdOn"><span>Created On</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="modifiedBy"><span>Modified By</span> <fa-icon icon="sort"></fa-icon></th>
@@ -44,6 +46,8 @@
                     <td>{{ expanse.voucherDate | date:'mediumDate' }}</td>
                     <td>{{ expanse.month }}</td>
                     <td>{{ expanse.notes }}</td>
+                    <td>{{ expanse.isPosted }}</td>
+                    <td>{{ expanse.postDate | date:'medium' }}</td>
                     <td>{{ expanse.createdBy }}</td>
                     <td>{{ expanse.createdOn | date:'medium' }}</td>
                     <td>{{ expanse.modifiedBy }}</td>

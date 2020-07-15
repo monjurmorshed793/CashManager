@@ -3,15 +3,18 @@
   "fields": [
     {
       "fieldName": "quantity",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "unitPrice",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "amount",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "createdBy",
@@ -42,6 +45,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "item",
       "otherEntityRelationshipName": "expanseDtl",
+      "relationshipValidateRules": "required",
       "relationshipName": "item",
       "otherEntityField": "name"
     }

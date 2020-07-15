@@ -58,6 +58,12 @@ public class ExpanseResourceIT {
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_POSTED = false;
+    private static final Boolean UPDATED_IS_POSTED = true;
+
+    private static final Instant DEFAULT_POST_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_POST_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
 
@@ -103,10 +109,22 @@ public class ExpanseResourceIT {
             .voucherDate(DEFAULT_VOUCHER_DATE)
             .month(DEFAULT_MONTH)
             .notes(DEFAULT_NOTES)
+            .isPosted(DEFAULT_IS_POSTED)
+            .postDate(DEFAULT_POST_DATE)
             .createdBy(DEFAULT_CREATED_BY)
             .createdOn(DEFAULT_CREATED_ON)
             .modifiedBy(DEFAULT_MODIFIED_BY)
             .modifiedOn(DEFAULT_MODIFIED_ON);
+        // Add required entity
+        PayTo payTo;
+        if (TestUtil.findAll(em, PayTo.class).isEmpty()) {
+            payTo = PayToResourceIT.createEntity(em);
+            em.persist(payTo);
+            em.flush();
+        } else {
+            payTo = TestUtil.findAll(em, PayTo.class).get(0);
+        }
+        expanse.setPayTo(payTo);
         return expanse;
     }
     /**
@@ -122,10 +140,22 @@ public class ExpanseResourceIT {
             .voucherDate(UPDATED_VOUCHER_DATE)
             .month(UPDATED_MONTH)
             .notes(UPDATED_NOTES)
+            .isPosted(UPDATED_IS_POSTED)
+            .postDate(UPDATED_POST_DATE)
             .createdBy(UPDATED_CREATED_BY)
             .createdOn(UPDATED_CREATED_ON)
             .modifiedBy(UPDATED_MODIFIED_BY)
             .modifiedOn(UPDATED_MODIFIED_ON);
+        // Add required entity
+        PayTo payTo;
+        if (TestUtil.findAll(em, PayTo.class).isEmpty()) {
+            payTo = PayToResourceIT.createUpdatedEntity(em);
+            em.persist(payTo);
+            em.flush();
+        } else {
+            payTo = TestUtil.findAll(em, PayTo.class).get(0);
+        }
+        expanse.setPayTo(payTo);
         return expanse;
     }
 
@@ -154,6 +184,8 @@ public class ExpanseResourceIT {
         assertThat(testExpanse.getVoucherDate()).isEqualTo(DEFAULT_VOUCHER_DATE);
         assertThat(testExpanse.getMonth()).isEqualTo(DEFAULT_MONTH);
         assertThat(testExpanse.getNotes()).isEqualTo(DEFAULT_NOTES);
+        assertThat(testExpanse.isIsPosted()).isEqualTo(DEFAULT_IS_POSTED);
+        assertThat(testExpanse.getPostDate()).isEqualTo(DEFAULT_POST_DATE);
         assertThat(testExpanse.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
         assertThat(testExpanse.getCreatedOn()).isEqualTo(DEFAULT_CREATED_ON);
         assertThat(testExpanse.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
@@ -183,6 +215,66 @@ public class ExpanseResourceIT {
 
     @Test
     @Transactional
+    public void checkLoginIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = expanseRepository.findAll().size();
+        // set the field null
+        expanse.setLoginId(null);
+
+        // Create the Expanse, which fails.
+        ExpanseDTO expanseDTO = expanseMapper.toDto(expanse);
+
+
+        restExpanseMockMvc.perform(post("/api/expanses")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(expanseDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Expanse> expanseList = expanseRepository.findAll();
+        assertThat(expanseList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkVoucherDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = expanseRepository.findAll().size();
+        // set the field null
+        expanse.setVoucherDate(null);
+
+        // Create the Expanse, which fails.
+        ExpanseDTO expanseDTO = expanseMapper.toDto(expanse);
+
+
+        restExpanseMockMvc.perform(post("/api/expanses")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(expanseDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Expanse> expanseList = expanseRepository.findAll();
+        assertThat(expanseList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMonthIsRequired() throws Exception {
+        int databaseSizeBeforeTest = expanseRepository.findAll().size();
+        // set the field null
+        expanse.setMonth(null);
+
+        // Create the Expanse, which fails.
+        ExpanseDTO expanseDTO = expanseMapper.toDto(expanse);
+
+
+        restExpanseMockMvc.perform(post("/api/expanses")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(expanseDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Expanse> expanseList = expanseRepository.findAll();
+        assertThat(expanseList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllExpanses() throws Exception {
         // Initialize the database
         expanseRepository.saveAndFlush(expanse);
@@ -197,6 +289,8 @@ public class ExpanseResourceIT {
             .andExpect(jsonPath("$.[*].voucherDate").value(hasItem(DEFAULT_VOUCHER_DATE.toString())))
             .andExpect(jsonPath("$.[*].month").value(hasItem(DEFAULT_MONTH.toString())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
+            .andExpect(jsonPath("$.[*].isPosted").value(hasItem(DEFAULT_IS_POSTED.booleanValue())))
+            .andExpect(jsonPath("$.[*].postDate").value(hasItem(DEFAULT_POST_DATE.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
             .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
@@ -219,6 +313,8 @@ public class ExpanseResourceIT {
             .andExpect(jsonPath("$.voucherDate").value(DEFAULT_VOUCHER_DATE.toString()))
             .andExpect(jsonPath("$.month").value(DEFAULT_MONTH.toString()))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES.toString()))
+            .andExpect(jsonPath("$.isPosted").value(DEFAULT_IS_POSTED.booleanValue()))
+            .andExpect(jsonPath("$.postDate").value(DEFAULT_POST_DATE.toString()))
             .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
             .andExpect(jsonPath("$.createdOn").value(DEFAULT_CREATED_ON.toString()))
             .andExpect(jsonPath("$.modifiedBy").value(DEFAULT_MODIFIED_BY))
@@ -587,6 +683,110 @@ public class ExpanseResourceIT {
 
     @Test
     @Transactional
+    public void getAllExpansesByIsPostedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        expanseRepository.saveAndFlush(expanse);
+
+        // Get all the expanseList where isPosted equals to DEFAULT_IS_POSTED
+        defaultExpanseShouldBeFound("isPosted.equals=" + DEFAULT_IS_POSTED);
+
+        // Get all the expanseList where isPosted equals to UPDATED_IS_POSTED
+        defaultExpanseShouldNotBeFound("isPosted.equals=" + UPDATED_IS_POSTED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllExpansesByIsPostedIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        expanseRepository.saveAndFlush(expanse);
+
+        // Get all the expanseList where isPosted not equals to DEFAULT_IS_POSTED
+        defaultExpanseShouldNotBeFound("isPosted.notEquals=" + DEFAULT_IS_POSTED);
+
+        // Get all the expanseList where isPosted not equals to UPDATED_IS_POSTED
+        defaultExpanseShouldBeFound("isPosted.notEquals=" + UPDATED_IS_POSTED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllExpansesByIsPostedIsInShouldWork() throws Exception {
+        // Initialize the database
+        expanseRepository.saveAndFlush(expanse);
+
+        // Get all the expanseList where isPosted in DEFAULT_IS_POSTED or UPDATED_IS_POSTED
+        defaultExpanseShouldBeFound("isPosted.in=" + DEFAULT_IS_POSTED + "," + UPDATED_IS_POSTED);
+
+        // Get all the expanseList where isPosted equals to UPDATED_IS_POSTED
+        defaultExpanseShouldNotBeFound("isPosted.in=" + UPDATED_IS_POSTED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllExpansesByIsPostedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        expanseRepository.saveAndFlush(expanse);
+
+        // Get all the expanseList where isPosted is not null
+        defaultExpanseShouldBeFound("isPosted.specified=true");
+
+        // Get all the expanseList where isPosted is null
+        defaultExpanseShouldNotBeFound("isPosted.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllExpansesByPostDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        expanseRepository.saveAndFlush(expanse);
+
+        // Get all the expanseList where postDate equals to DEFAULT_POST_DATE
+        defaultExpanseShouldBeFound("postDate.equals=" + DEFAULT_POST_DATE);
+
+        // Get all the expanseList where postDate equals to UPDATED_POST_DATE
+        defaultExpanseShouldNotBeFound("postDate.equals=" + UPDATED_POST_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllExpansesByPostDateIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        expanseRepository.saveAndFlush(expanse);
+
+        // Get all the expanseList where postDate not equals to DEFAULT_POST_DATE
+        defaultExpanseShouldNotBeFound("postDate.notEquals=" + DEFAULT_POST_DATE);
+
+        // Get all the expanseList where postDate not equals to UPDATED_POST_DATE
+        defaultExpanseShouldBeFound("postDate.notEquals=" + UPDATED_POST_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllExpansesByPostDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        expanseRepository.saveAndFlush(expanse);
+
+        // Get all the expanseList where postDate in DEFAULT_POST_DATE or UPDATED_POST_DATE
+        defaultExpanseShouldBeFound("postDate.in=" + DEFAULT_POST_DATE + "," + UPDATED_POST_DATE);
+
+        // Get all the expanseList where postDate equals to UPDATED_POST_DATE
+        defaultExpanseShouldNotBeFound("postDate.in=" + UPDATED_POST_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllExpansesByPostDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        expanseRepository.saveAndFlush(expanse);
+
+        // Get all the expanseList where postDate is not null
+        defaultExpanseShouldBeFound("postDate.specified=true");
+
+        // Get all the expanseList where postDate is null
+        defaultExpanseShouldNotBeFound("postDate.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllExpansesByCreatedByIsEqualToSomething() throws Exception {
         // Initialize the database
         expanseRepository.saveAndFlush(expanse);
@@ -848,12 +1048,8 @@ public class ExpanseResourceIT {
     @Test
     @Transactional
     public void getAllExpansesByPayToIsEqualToSomething() throws Exception {
-        // Initialize the database
-        expanseRepository.saveAndFlush(expanse);
-        PayTo payTo = PayToResourceIT.createEntity(em);
-        em.persist(payTo);
-        em.flush();
-        expanse.setPayTo(payTo);
+        // Get already existing entity
+        PayTo payTo = expanse.getPayTo();
         expanseRepository.saveAndFlush(expanse);
         Long payToId = payTo.getId();
 
@@ -877,6 +1073,8 @@ public class ExpanseResourceIT {
             .andExpect(jsonPath("$.[*].voucherDate").value(hasItem(DEFAULT_VOUCHER_DATE.toString())))
             .andExpect(jsonPath("$.[*].month").value(hasItem(DEFAULT_MONTH.toString())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
+            .andExpect(jsonPath("$.[*].isPosted").value(hasItem(DEFAULT_IS_POSTED.booleanValue())))
+            .andExpect(jsonPath("$.[*].postDate").value(hasItem(DEFAULT_POST_DATE.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
             .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
@@ -932,6 +1130,8 @@ public class ExpanseResourceIT {
             .voucherDate(UPDATED_VOUCHER_DATE)
             .month(UPDATED_MONTH)
             .notes(UPDATED_NOTES)
+            .isPosted(UPDATED_IS_POSTED)
+            .postDate(UPDATED_POST_DATE)
             .createdBy(UPDATED_CREATED_BY)
             .createdOn(UPDATED_CREATED_ON)
             .modifiedBy(UPDATED_MODIFIED_BY)
@@ -952,6 +1152,8 @@ public class ExpanseResourceIT {
         assertThat(testExpanse.getVoucherDate()).isEqualTo(UPDATED_VOUCHER_DATE);
         assertThat(testExpanse.getMonth()).isEqualTo(UPDATED_MONTH);
         assertThat(testExpanse.getNotes()).isEqualTo(UPDATED_NOTES);
+        assertThat(testExpanse.isIsPosted()).isEqualTo(UPDATED_IS_POSTED);
+        assertThat(testExpanse.getPostDate()).isEqualTo(UPDATED_POST_DATE);
         assertThat(testExpanse.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
         assertThat(testExpanse.getCreatedOn()).isEqualTo(UPDATED_CREATED_ON);
         assertThat(testExpanse.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);

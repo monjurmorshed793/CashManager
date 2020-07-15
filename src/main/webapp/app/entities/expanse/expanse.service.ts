@@ -52,6 +52,7 @@ export class ExpanseService {
   protected convertDateFromClient(expanse: IExpanse): IExpanse {
     const copy: IExpanse = Object.assign({}, expanse, {
       voucherDate: expanse.voucherDate && expanse.voucherDate.isValid() ? expanse.voucherDate.format(DATE_FORMAT) : undefined,
+      postDate: expanse.postDate && expanse.postDate.isValid() ? expanse.postDate.toJSON() : undefined,
       createdOn: expanse.createdOn && expanse.createdOn.isValid() ? expanse.createdOn.toJSON() : undefined,
       modifiedOn: expanse.modifiedOn && expanse.modifiedOn.isValid() ? expanse.modifiedOn.toJSON() : undefined,
     });
@@ -61,6 +62,7 @@ export class ExpanseService {
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
       res.body.voucherDate = res.body.voucherDate ? moment(res.body.voucherDate) : undefined;
+      res.body.postDate = res.body.postDate ? moment(res.body.postDate) : undefined;
       res.body.createdOn = res.body.createdOn ? moment(res.body.createdOn) : undefined;
       res.body.modifiedOn = res.body.modifiedOn ? moment(res.body.modifiedOn) : undefined;
     }
@@ -71,6 +73,7 @@ export class ExpanseService {
     if (res.body) {
       res.body.forEach((expanse: IExpanse) => {
         expanse.voucherDate = expanse.voucherDate ? moment(expanse.voucherDate) : undefined;
+        expanse.postDate = expanse.postDate ? moment(expanse.postDate) : undefined;
         expanse.createdOn = expanse.createdOn ? moment(expanse.createdOn) : undefined;
         expanse.modifiedOn = expanse.modifiedOn ? moment(expanse.modifiedOn) : undefined;
       });

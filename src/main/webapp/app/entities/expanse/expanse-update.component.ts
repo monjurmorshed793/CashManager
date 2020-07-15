@@ -25,16 +25,18 @@ export class ExpanseUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    loginId: [],
-    voucherNo: [],
-    voucherDate: [],
-    month: [],
-    notes: [],
+    loginId: [null, [Validators.required]],
+    voucherNo: [null, []],
+    voucherDate: [null, [Validators.required]],
+    month: [null, [Validators.required]],
+    notes: [null, [Validators.required]],
+    isPosted: [],
+    postDate: [],
     createdBy: [],
     createdOn: [],
     modifiedBy: [],
     modifiedOn: [],
-    payToId: [],
+    payToId: [null, Validators.required],
   });
 
   constructor(
@@ -50,6 +52,7 @@ export class ExpanseUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ expanse }) => {
       if (!expanse.id) {
         const today = moment().startOf('day');
+        expanse.postDate = today;
         expanse.createdOn = today;
         expanse.modifiedOn = today;
       }
@@ -68,6 +71,8 @@ export class ExpanseUpdateComponent implements OnInit {
       voucherDate: expanse.voucherDate,
       month: expanse.month,
       notes: expanse.notes,
+      isPosted: expanse.isPosted,
+      postDate: expanse.postDate ? expanse.postDate.format(DATE_TIME_FORMAT) : null,
       createdBy: expanse.createdBy,
       createdOn: expanse.createdOn ? expanse.createdOn.format(DATE_TIME_FORMAT) : null,
       modifiedBy: expanse.modifiedBy,
@@ -115,6 +120,8 @@ export class ExpanseUpdateComponent implements OnInit {
       voucherDate: this.editForm.get(['voucherDate'])!.value,
       month: this.editForm.get(['month'])!.value,
       notes: this.editForm.get(['notes'])!.value,
+      isPosted: this.editForm.get(['isPosted'])!.value,
+      postDate: this.editForm.get(['postDate'])!.value ? moment(this.editForm.get(['postDate'])!.value, DATE_TIME_FORMAT) : undefined,
       createdBy: this.editForm.get(['createdBy'])!.value,
       createdOn: this.editForm.get(['createdOn'])!.value ? moment(this.editForm.get(['createdOn'])!.value, DATE_TIME_FORMAT) : undefined,
       modifiedBy: this.editForm.get(['modifiedBy'])!.value,

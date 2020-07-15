@@ -2,6 +2,7 @@ package org.cash.manager.service.dto;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import org.cash.manager.domain.enumeration.DepositMedium;
@@ -13,17 +14,27 @@ public class DepositDTO implements Serializable {
     
     private Long id;
 
+    @NotNull
     private String loginId;
 
+    
     private Integer depositNo;
 
+    @NotNull
     private String depositBy;
 
+    @NotNull
     private LocalDate depositDate;
 
+    @NotNull
     private DepositMedium medium;
 
+    @NotNull
     private BigDecimal amount;
+
+    private Boolean isPosted;
+
+    private Instant postDate;
 
     private String createdBy;
 
@@ -90,6 +101,22 @@ public class DepositDTO implements Serializable {
         this.amount = amount;
     }
 
+    public Boolean isIsPosted() {
+        return isPosted;
+    }
+
+    public void setIsPosted(Boolean isPosted) {
+        this.isPosted = isPosted;
+    }
+
+    public Instant getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Instant postDate) {
+        this.postDate = postDate;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -150,6 +177,8 @@ public class DepositDTO implements Serializable {
             ", depositDate='" + getDepositDate() + "'" +
             ", medium='" + getMedium() + "'" +
             ", amount=" + getAmount() +
+            ", isPosted='" + isIsPosted() + "'" +
+            ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdOn='" + getCreatedOn() + "'" +
             ", modifiedBy='" + getModifiedBy() + "'" +

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -56,7 +57,7 @@ public class ExpanseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/expanses")
-    public ResponseEntity<ExpanseDTO> createExpanse(@RequestBody ExpanseDTO expanseDTO) throws URISyntaxException {
+    public ResponseEntity<ExpanseDTO> createExpanse(@Valid @RequestBody ExpanseDTO expanseDTO) throws URISyntaxException {
         log.debug("REST request to save Expanse : {}", expanseDTO);
         if (expanseDTO.getId() != null) {
             throw new BadRequestAlertException("A new expanse cannot already have an ID", ENTITY_NAME, "idexists");
@@ -77,7 +78,7 @@ public class ExpanseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/expanses")
-    public ResponseEntity<ExpanseDTO> updateExpanse(@RequestBody ExpanseDTO expanseDTO) throws URISyntaxException {
+    public ResponseEntity<ExpanseDTO> updateExpanse(@Valid @RequestBody ExpanseDTO expanseDTO) throws URISyntaxException {
         log.debug("REST request to update Expanse : {}", expanseDTO);
         if (expanseDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

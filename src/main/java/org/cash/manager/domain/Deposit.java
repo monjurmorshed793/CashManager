@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -26,24 +27,36 @@ public class Deposit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "login_id")
+    @NotNull
+    @Column(name = "login_id", nullable = false)
     private String loginId;
 
-    @Column(name = "deposit_no")
+    
+    @Column(name = "deposit_no", unique = true)
     private Integer depositNo;
 
-    @Column(name = "deposit_by")
+    @NotNull
+    @Column(name = "deposit_by", nullable = false)
     private String depositBy;
 
-    @Column(name = "deposit_date")
+    @NotNull
+    @Column(name = "deposit_date", nullable = false)
     private LocalDate depositDate;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "medium")
+    @Column(name = "medium", nullable = false)
     private DepositMedium medium;
 
-    @Column(name = "amount", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "amount", precision = 21, scale = 2, nullable = false)
     private BigDecimal amount;
+
+    @Column(name = "is_posted")
+    private Boolean isPosted;
+
+    @Column(name = "post_date")
+    private Instant postDate;
 
     @Column(name = "created_by")
     private String createdBy;
@@ -144,6 +157,32 @@ public class Deposit implements Serializable {
         this.amount = amount;
     }
 
+    public Boolean isIsPosted() {
+        return isPosted;
+    }
+
+    public Deposit isPosted(Boolean isPosted) {
+        this.isPosted = isPosted;
+        return this;
+    }
+
+    public void setIsPosted(Boolean isPosted) {
+        this.isPosted = isPosted;
+    }
+
+    public Instant getPostDate() {
+        return postDate;
+    }
+
+    public Deposit postDate(Instant postDate) {
+        this.postDate = postDate;
+        return this;
+    }
+
+    public void setPostDate(Instant postDate) {
+        this.postDate = postDate;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -224,6 +263,8 @@ public class Deposit implements Serializable {
             ", depositDate='" + getDepositDate() + "'" +
             ", medium='" + getMedium() + "'" +
             ", amount=" + getAmount() +
+            ", isPosted='" + isIsPosted() + "'" +
+            ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdOn='" + getCreatedOn() + "'" +
             ", modifiedBy='" + getModifiedBy() + "'" +

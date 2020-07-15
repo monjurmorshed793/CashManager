@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -56,7 +57,7 @@ public class DepositResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/deposits")
-    public ResponseEntity<DepositDTO> createDeposit(@RequestBody DepositDTO depositDTO) throws URISyntaxException {
+    public ResponseEntity<DepositDTO> createDeposit(@Valid @RequestBody DepositDTO depositDTO) throws URISyntaxException {
         log.debug("REST request to save Deposit : {}", depositDTO);
         if (depositDTO.getId() != null) {
             throw new BadRequestAlertException("A new deposit cannot already have an ID", ENTITY_NAME, "idexists");
@@ -77,7 +78,7 @@ public class DepositResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/deposits")
-    public ResponseEntity<DepositDTO> updateDeposit(@RequestBody DepositDTO depositDTO) throws URISyntaxException {
+    public ResponseEntity<DepositDTO> updateDeposit(@Valid @RequestBody DepositDTO depositDTO) throws URISyntaxException {
         log.debug("REST request to update Deposit : {}", depositDTO);
         if (depositDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

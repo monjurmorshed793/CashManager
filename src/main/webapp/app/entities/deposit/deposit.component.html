@@ -29,6 +29,8 @@
                     <th scope="col"  jhiSortBy="depositDate"><span>Deposit Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="medium"><span>Medium</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="amount"><span>Amount</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="isPosted"><span>Is Posted</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="postDate"><span>Post Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="createdBy"><span>Created By</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="createdOn"><span>Created On</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="modifiedBy"><span>Modified By</span> <fa-icon icon="sort"></fa-icon></th>
@@ -45,6 +47,8 @@
                     <td>{{ deposit.depositDate | date:'mediumDate' }}</td>
                     <td>{{ deposit.medium }}</td>
                     <td>{{ deposit.amount }}</td>
+                    <td>{{ deposit.isPosted }}</td>
+                    <td>{{ deposit.postDate | date:'medium' }}</td>
                     <td>{{ deposit.createdBy }}</td>
                     <td>{{ deposit.createdOn | date:'medium' }}</td>
                     <td>{{ deposit.modifiedBy }}</td>

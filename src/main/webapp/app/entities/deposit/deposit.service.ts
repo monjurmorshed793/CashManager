@@ -52,6 +52,7 @@ export class DepositService {
   protected convertDateFromClient(deposit: IDeposit): IDeposit {
     const copy: IDeposit = Object.assign({}, deposit, {
       depositDate: deposit.depositDate && deposit.depositDate.isValid() ? deposit.depositDate.format(DATE_FORMAT) : undefined,
+      postDate: deposit.postDate && deposit.postDate.isValid() ? deposit.postDate.toJSON() : undefined,
       createdOn: deposit.createdOn && deposit.createdOn.isValid() ? deposit.createdOn.toJSON() : undefined,
       modifiedOn: deposit.modifiedOn && deposit.modifiedOn.isValid() ? deposit.modifiedOn.toJSON() : undefined,
     });
@@ -61,6 +62,7 @@ export class DepositService {
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
       res.body.depositDate = res.body.depositDate ? moment(res.body.depositDate) : undefined;
+      res.body.postDate = res.body.postDate ? moment(res.body.postDate) : undefined;
       res.body.createdOn = res.body.createdOn ? moment(res.body.createdOn) : undefined;
       res.body.modifiedOn = res.body.modifiedOn ? moment(res.body.modifiedOn) : undefined;
     }
@@ -71,6 +73,7 @@ export class DepositService {
     if (res.body) {
       res.body.forEach((deposit: IDeposit) => {
         deposit.depositDate = deposit.depositDate ? moment(deposit.depositDate) : undefined;
+        deposit.postDate = deposit.postDate ? moment(deposit.postDate) : undefined;
         deposit.createdOn = deposit.createdOn ? moment(deposit.createdOn) : undefined;
         deposit.modifiedOn = deposit.modifiedOn ? moment(deposit.modifiedOn) : undefined;
       });

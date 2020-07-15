@@ -60,6 +60,10 @@ public class DepositCriteria implements Serializable, Criteria {
 
     private BigDecimalFilter amount;
 
+    private BooleanFilter isPosted;
+
+    private InstantFilter postDate;
+
     private StringFilter createdBy;
 
     private InstantFilter createdOn;
@@ -79,6 +83,8 @@ public class DepositCriteria implements Serializable, Criteria {
         this.depositDate = other.depositDate == null ? null : other.depositDate.copy();
         this.medium = other.medium == null ? null : other.medium.copy();
         this.amount = other.amount == null ? null : other.amount.copy();
+        this.isPosted = other.isPosted == null ? null : other.isPosted.copy();
+        this.postDate = other.postDate == null ? null : other.postDate.copy();
         this.createdBy = other.createdBy == null ? null : other.createdBy.copy();
         this.createdOn = other.createdOn == null ? null : other.createdOn.copy();
         this.modifiedBy = other.modifiedBy == null ? null : other.modifiedBy.copy();
@@ -146,6 +152,22 @@ public class DepositCriteria implements Serializable, Criteria {
         this.amount = amount;
     }
 
+    public BooleanFilter getIsPosted() {
+        return isPosted;
+    }
+
+    public void setIsPosted(BooleanFilter isPosted) {
+        this.isPosted = isPosted;
+    }
+
+    public InstantFilter getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(InstantFilter postDate) {
+        this.postDate = postDate;
+    }
+
     public StringFilter getCreatedBy() {
         return createdBy;
     }
@@ -196,6 +218,8 @@ public class DepositCriteria implements Serializable, Criteria {
             Objects.equals(depositDate, that.depositDate) &&
             Objects.equals(medium, that.medium) &&
             Objects.equals(amount, that.amount) &&
+            Objects.equals(isPosted, that.isPosted) &&
+            Objects.equals(postDate, that.postDate) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdOn, that.createdOn) &&
             Objects.equals(modifiedBy, that.modifiedBy) &&
@@ -212,6 +236,8 @@ public class DepositCriteria implements Serializable, Criteria {
         depositDate,
         medium,
         amount,
+        isPosted,
+        postDate,
         createdBy,
         createdOn,
         modifiedBy,
@@ -230,6 +256,8 @@ public class DepositCriteria implements Serializable, Criteria {
                 (depositDate != null ? "depositDate=" + depositDate + ", " : "") +
                 (medium != null ? "medium=" + medium + ", " : "") +
                 (amount != null ? "amount=" + amount + ", " : "") +
+                (isPosted != null ? "isPosted=" + isPosted + ", " : "") +
+                (postDate != null ? "postDate=" + postDate + ", " : "") +
                 (createdBy != null ? "createdBy=" + createdBy + ", " : "") +
                 (createdOn != null ? "createdOn=" + createdOn + ", " : "") +
                 (modifiedBy != null ? "modifiedBy=" + modifiedBy + ", " : "") +

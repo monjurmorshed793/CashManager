@@ -1,11 +1,11 @@
-id;login_id;deposit_no;deposit_by;deposit_date;medium;amount;created_by;created_on;modified_by;modified_on
-1;violet Technician Sports;90666;Officer Borders;2020-07-14;ATM;75619;convergence Object-based protocol;2020-07-15T04:48:01;Personal Loan Account;2020-07-14T20:57:13
-2;programming;23337;bandwidth Bacon;2020-07-14;ATM;52494;paradigms Practical Wooden Car Vermont;2020-07-14T23:32:55;Generic;2020-07-14T10:25:51
-3;parse sensor Vision-oriented;61627;real-time Liaison Sleek;2020-07-15;CASH;69535;Lead backing up Specialist;2020-07-15T03:00:21;invoice;2020-07-14T13:10:21
-4;Maine Small Designer;10034;bypassing auxiliary;2020-07-15;ATM;2836;Sharable Executive;2020-07-15T09:14:52;Ergonomic;2020-07-14T19:24:02
-5;Sports Compatible;37616;HTTP Beauty;2020-07-15;ATM;61731;Inlet;2020-07-15T04:28:03;Granite needs-based Metal;2020-07-14T10:06:15
-6;Developer neural-net;28424;Applications maroon Facilitator;2020-07-14;CASH;85592;bleeding-edge;2020-07-14T10:40:24;yellow;2020-07-15T00:37:52
-7;Supervisor pink;48740;infrastructure Fantastic;2020-07-15;CASH;69967;Generic Wooden Keyboard Analyst;2020-07-14T15:12:16;Producer magnetic Fantastic;2020-07-14T17:00:53
-8;Practical Frozen Bike;41268;Borders Branding;2020-07-14;ATM;68558;zero defect deposit Refined;2020-07-14T19:11:00;feed Representative;2020-07-15T08:38:22
-9;Branch Fiji Dollar;13716;panel;2020-07-15;CASH;10795;Uzbekistan Sum;2020-07-14T14:48:37;parse;2020-07-14T23:28:02
-10;Cross-group;4454;Sports multi-tasking dedicated;2020-07-14;CASH;93700;Keyboard concept;2020-07-14T14:21:36;Industrial Steel Home;2020-07-14T23:51:55
+id;login_id;deposit_no;deposit_by;deposit_date;medium;amount;is_posted;post_date;created_by;created_on;modified_by;modified_on
+1;violet Technician Sports;90666;Officer Borders;2020-07-14;ATM;75619;true;2020-07-14T23:29:16;Object-based protocol;2020-07-15T04:48:01;Personal Loan Account;2020-07-14T20:57:13
+2;programming;23337;bandwidth Bacon;2020-07-14;ATM;52494;true;2020-07-14T23:47:13;Practical Wooden Car;2020-07-14T20:04:32;initiatives Generic Facilitator;2020-07-14T16:07:29
+3;sensor Vision-oriented Personal Loan Account;28788;Liaison Sleek Books;2020-07-15;ATM;98665;false;2020-07-15T03:00:21;invoice;2020-07-14T13:10:21;Maine Small Designer;2020-07-15T07:32:03
+4;bypassing auxiliary;38230;pink Kyat;2020-07-15;CASH;97388;false;2020-07-15T09:14:52;Ergonomic;2020-07-14T19:24:02;Sports Compatible;2020-07-15T00:54:53
+5;HTTP Beauty;19054;Kazakhstan Shoes;2020-07-15;CASH;13069;true;2020-07-15T03:30:28;Metal Planner Developer;2020-07-15T02:27:00;user-facing Applications maroon;2020-07-14T10:00:29
+6;Future Streamlined program;13857;Walk collaboration;2020-07-15;BANK;48740;true;2020-07-15T02:14:57;Fantastic leverage;2020-07-14T10:04:10;International Causeway;2020-07-14T18:55:53
+7;Frozen;49921;parsing navigate partnerships;2020-07-15;BANK;48259;true;2020-07-14T11:10:49;Massachusetts Stream mission-critical;2020-07-15T08:27:42;Functionality Orchestrator yellow;2020-07-14T13:36:19
+8;Poland matrix;94296;brand;2020-07-15;BANK;39617;false;2020-07-14T14:09:13;bypassing Handcrafted Fresh Bacon Cheese;2020-07-14T10:26:01;Computers Steel;2020-07-14T15:27:42
+9;compressing;66844;Pre-emptive;2020-07-15;ATM;15457;false;2020-07-15T05:01:17;TCP Liaison Small;2020-07-15T03:15:21;Albania zero administration;2020-07-14T22:45:57
+10;Small Concrete Shoes mobile;47347;Vista deposit;2020-07-14;BANK;47297;false;2020-07-14T13:00:11;back up invoice RAM;2020-07-15T00:48:10;Practical calculate CFA Franc BEAC;2020-07-15T08:25:52

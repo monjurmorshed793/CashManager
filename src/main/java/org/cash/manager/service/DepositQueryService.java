@@ -109,6 +109,12 @@ public class DepositQueryService extends QueryService<Deposit> {
             if (criteria.getAmount() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getAmount(), Deposit_.amount));
             }
+            if (criteria.getIsPosted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsPosted(), Deposit_.isPosted));
+            }
+            if (criteria.getPostDate() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPostDate(), Deposit_.postDate));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), Deposit_.createdBy));
             }

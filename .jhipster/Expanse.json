@@ -3,25 +3,38 @@
   "fields": [
     {
       "fieldName": "loginId",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "voucherNo",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["unique"]
     },
     {
       "fieldName": "voucherDate",
-      "fieldType": "LocalDate"
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "month",
       "fieldType": "MonthType",
-      "fieldValues": "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER"
+      "fieldValues": "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "notes",
       "fieldType": "byte[]",
-      "fieldTypeBlobContent": "text"
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isPosted",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "postDate",
+      "fieldType": "Instant"
     },
     {
       "fieldName": "createdBy",
@@ -45,6 +58,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "payTo",
       "otherEntityRelationshipName": "expanse",
+      "relationshipValidateRules": "required",
       "relationshipName": "payTo",
       "otherEntityField": "name"
     }

@@ -3,28 +3,42 @@
   "fields": [
     {
       "fieldName": "loginId",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "depositNo",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["unique"]
     },
     {
       "fieldName": "depositBy",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "depositDate",
-      "fieldType": "LocalDate"
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "medium",
       "fieldType": "DepositMedium",
-      "fieldValues": "ATM,BANK,CASH"
+      "fieldValues": "ATM,BANK,CASH",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "amount",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isPosted",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "postDate",
+      "fieldType": "Instant"
     },
     {
       "fieldName": "createdBy",

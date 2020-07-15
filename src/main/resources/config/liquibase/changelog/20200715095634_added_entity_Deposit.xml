@@ -17,21 +17,27 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="login_id" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="deposit_no" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_deposit_deposit_no" />
             </column>
             <column name="deposit_by" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="deposit_date" type="date">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="medium" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="amount" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_posted" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="post_date" type="datetime">
                 <constraints nullable="true" />
             </column>
             <column name="created_by" type="varchar(255)">
@@ -48,6 +54,7 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="deposit" columnName="post_date" columnDataType="datetime"/>
         <dropDefaultValue tableName="deposit" columnName="created_on" columnDataType="datetime"/>
         <dropDefaultValue tableName="deposit" columnName="modified_on" columnDataType="datetime"/>
     </changeSet>
@@ -77,6 +84,8 @@
             <column name="deposit_date" type="date"/>
             <column name="medium" type="string"/>
             <column name="amount" type="numeric"/>
+            <column name="is_posted" type="boolean"/>
+            <column name="post_date" type="datetime"/>
             <column name="created_by" type="string"/>
             <column name="created_on" type="datetime"/>
             <column name="modified_by" type="string"/>

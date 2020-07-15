@@ -25,7 +25,20 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Expanse(0, 'AAAAAAA', 0, currentDate, MonthType.JANUARY, 'AAAAAAA', 'AAAAAAA', currentDate, 'AAAAAAA', currentDate);
+      elemDefault = new Expanse(
+        0,
+        'AAAAAAA',
+        0,
+        currentDate,
+        MonthType.JANUARY,
+        'AAAAAAA',
+        false,
+        currentDate,
+        'AAAAAAA',
+        currentDate,
+        'AAAAAAA',
+        currentDate
+      );
     });
 
     describe('Service methods', () => {
@@ -33,6 +46,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             voucherDate: currentDate.format(DATE_FORMAT),
+            postDate: currentDate.format(DATE_TIME_FORMAT),
             createdOn: currentDate.format(DATE_TIME_FORMAT),
             modifiedOn: currentDate.format(DATE_TIME_FORMAT),
           },
@@ -51,6 +65,7 @@ describe('Service Tests', () => {
           {
             id: 0,
             voucherDate: currentDate.format(DATE_FORMAT),
+            postDate: currentDate.format(DATE_TIME_FORMAT),
             createdOn: currentDate.format(DATE_TIME_FORMAT),
             modifiedOn: currentDate.format(DATE_TIME_FORMAT),
           },
@@ -60,6 +75,7 @@ describe('Service Tests', () => {
         const expected = Object.assign(
           {
             voucherDate: currentDate,
+            postDate: currentDate,
             createdOn: currentDate,
             modifiedOn: currentDate,
           },
@@ -81,6 +97,8 @@ describe('Service Tests', () => {
             voucherDate: currentDate.format(DATE_FORMAT),
             month: 'BBBBBB',
             notes: 'BBBBBB',
+            isPosted: true,
+            postDate: currentDate.format(DATE_TIME_FORMAT),
             createdBy: 'BBBBBB',
             createdOn: currentDate.format(DATE_TIME_FORMAT),
             modifiedBy: 'BBBBBB',
@@ -92,6 +110,7 @@ describe('Service Tests', () => {
         const expected = Object.assign(
           {
             voucherDate: currentDate,
+            postDate: currentDate,
             createdOn: currentDate,
             modifiedOn: currentDate,
           },
@@ -113,6 +132,8 @@ describe('Service Tests', () => {
             voucherDate: currentDate.format(DATE_FORMAT),
             month: 'BBBBBB',
             notes: 'BBBBBB',
+            isPosted: true,
+            postDate: currentDate.format(DATE_TIME_FORMAT),
             createdBy: 'BBBBBB',
             createdOn: currentDate.format(DATE_TIME_FORMAT),
             modifiedBy: 'BBBBBB',
@@ -124,6 +145,7 @@ describe('Service Tests', () => {
         const expected = Object.assign(
           {
             voucherDate: currentDate,
+            postDate: currentDate,
             createdOn: currentDate,
             modifiedOn: currentDate,
           },

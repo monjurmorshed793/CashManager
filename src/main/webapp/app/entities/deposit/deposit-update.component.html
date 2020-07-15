@@ -15,18 +15,36 @@
                     <label class="form-control-label" for="field_loginId">Login Id</label>
                     <input type="text" class="form-control" name="loginId" id="field_loginId"
                            formControlName="loginId"/>
+                    <div *ngIf="editForm.get('loginId')!.invalid && (editForm.get('loginId')!.dirty || editForm.get('loginId')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('loginId')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_depositNo">Deposit No</label>
                     <input type="number" class="form-control" name="depositNo" id="field_depositNo"
                            formControlName="depositNo"/>
+                    <div *ngIf="editForm.get('depositNo')!.invalid && (editForm.get('depositNo')!.dirty || editForm.get('depositNo')!.touched)">
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('depositNo')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_depositBy">Deposit By</label>
                     <input type="text" class="form-control" name="depositBy" id="field_depositBy"
                            formControlName="depositBy"/>
+                    <div *ngIf="editForm.get('depositBy')!.invalid && (editForm.get('depositBy')!.dirty || editForm.get('depositBy')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('depositBy')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -37,6 +55,12 @@
                             <button type="button" class="btn btn-secondary" (click)="depositDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
                     </div>
+                    <div *ngIf="editForm.get('depositDate')!.invalid && (editForm.get('depositDate')!.dirty || editForm.get('depositDate')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('depositDate')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -46,12 +70,41 @@
                         <option value="BANK">BANK</option>
                         <option value="CASH">CASH</option>
                     </select>
+                    <div *ngIf="editForm.get('medium')!.invalid && (editForm.get('medium')!.dirty || editForm.get('medium')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('medium')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_amount">Amount</label>
                     <input type="number" class="form-control" name="amount" id="field_amount"
                            formControlName="amount"/>
+                    <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('amount')?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('amount')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_isPosted">Is Posted</label>
+                    <input type="checkbox" class="form-control" name="isPosted" id="field_isPosted"
+                           formControlName="isPosted"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_postDate">Post Date</label>
+                    <div class="d-flex">
+                        <input id="field_postDate" type="datetime-local" class="form-control" name="postDate" formControlName="postDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
                 </div>
 
                 <div class="form-group">

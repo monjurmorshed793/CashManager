@@ -2,6 +2,7 @@ package org.cash.manager.service.dto;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import javax.persistence.Lob;
 import org.cash.manager.domain.enumeration.MonthType;
@@ -13,16 +14,25 @@ public class ExpanseDTO implements Serializable {
     
     private Long id;
 
+    @NotNull
     private String loginId;
 
+    
     private Integer voucherNo;
 
+    @NotNull
     private LocalDate voucherDate;
 
+    @NotNull
     private MonthType month;
 
+    
     @Lob
     private String notes;
+
+    private Boolean isPosted;
+
+    private Instant postDate;
 
     private String createdBy;
 
@@ -83,6 +93,22 @@ public class ExpanseDTO implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Boolean isIsPosted() {
+        return isPosted;
+    }
+
+    public void setIsPosted(Boolean isPosted) {
+        this.isPosted = isPosted;
+    }
+
+    public Instant getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Instant postDate) {
+        this.postDate = postDate;
     }
 
     public String getCreatedBy() {
@@ -160,6 +186,8 @@ public class ExpanseDTO implements Serializable {
             ", voucherDate='" + getVoucherDate() + "'" +
             ", month='" + getMonth() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", isPosted='" + isIsPosted() + "'" +
+            ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdOn='" + getCreatedOn() + "'" +
             ", modifiedBy='" + getModifiedBy() + "'" +

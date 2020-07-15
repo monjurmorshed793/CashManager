@@ -61,6 +61,12 @@ public class DepositResourceIT {
     private static final BigDecimal UPDATED_AMOUNT = new BigDecimal(2);
     private static final BigDecimal SMALLER_AMOUNT = new BigDecimal(1 - 1);
 
+    private static final Boolean DEFAULT_IS_POSTED = false;
+    private static final Boolean UPDATED_IS_POSTED = true;
+
+    private static final Instant DEFAULT_POST_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_POST_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
 
@@ -107,6 +113,8 @@ public class DepositResourceIT {
             .depositDate(DEFAULT_DEPOSIT_DATE)
             .medium(DEFAULT_MEDIUM)
             .amount(DEFAULT_AMOUNT)
+            .isPosted(DEFAULT_IS_POSTED)
+            .postDate(DEFAULT_POST_DATE)
             .createdBy(DEFAULT_CREATED_BY)
             .createdOn(DEFAULT_CREATED_ON)
             .modifiedBy(DEFAULT_MODIFIED_BY)
@@ -127,6 +135,8 @@ public class DepositResourceIT {
             .depositDate(UPDATED_DEPOSIT_DATE)
             .medium(UPDATED_MEDIUM)
             .amount(UPDATED_AMOUNT)
+            .isPosted(UPDATED_IS_POSTED)
+            .postDate(UPDATED_POST_DATE)
             .createdBy(UPDATED_CREATED_BY)
             .createdOn(UPDATED_CREATED_ON)
             .modifiedBy(UPDATED_MODIFIED_BY)
@@ -160,6 +170,8 @@ public class DepositResourceIT {
         assertThat(testDeposit.getDepositDate()).isEqualTo(DEFAULT_DEPOSIT_DATE);
         assertThat(testDeposit.getMedium()).isEqualTo(DEFAULT_MEDIUM);
         assertThat(testDeposit.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testDeposit.isIsPosted()).isEqualTo(DEFAULT_IS_POSTED);
+        assertThat(testDeposit.getPostDate()).isEqualTo(DEFAULT_POST_DATE);
         assertThat(testDeposit.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
         assertThat(testDeposit.getCreatedOn()).isEqualTo(DEFAULT_CREATED_ON);
         assertThat(testDeposit.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
@@ -189,6 +201,106 @@ public class DepositResourceIT {
 
     @Test
     @Transactional
+    public void checkLoginIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = depositRepository.findAll().size();
+        // set the field null
+        deposit.setLoginId(null);
+
+        // Create the Deposit, which fails.
+        DepositDTO depositDTO = depositMapper.toDto(deposit);
+
+
+        restDepositMockMvc.perform(post("/api/deposits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(depositDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Deposit> depositList = depositRepository.findAll();
+        assertThat(depositList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDepositByIsRequired() throws Exception {
+        int databaseSizeBeforeTest = depositRepository.findAll().size();
+        // set the field null
+        deposit.setDepositBy(null);
+
+        // Create the Deposit, which fails.
+        DepositDTO depositDTO = depositMapper.toDto(deposit);
+
+
+        restDepositMockMvc.perform(post("/api/deposits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(depositDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Deposit> depositList = depositRepository.findAll();
+        assertThat(depositList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDepositDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = depositRepository.findAll().size();
+        // set the field null
+        deposit.setDepositDate(null);
+
+        // Create the Deposit, which fails.
+        DepositDTO depositDTO = depositMapper.toDto(deposit);
+
+
+        restDepositMockMvc.perform(post("/api/deposits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(depositDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Deposit> depositList = depositRepository.findAll();
+        assertThat(depositList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMediumIsRequired() throws Exception {
+        int databaseSizeBeforeTest = depositRepository.findAll().size();
+        // set the field null
+        deposit.setMedium(null);
+
+        // Create the Deposit, which fails.
+        DepositDTO depositDTO = depositMapper.toDto(deposit);
+
+
+        restDepositMockMvc.perform(post("/api/deposits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(depositDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Deposit> depositList = depositRepository.findAll();
+        assertThat(depositList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAmountIsRequired() throws Exception {
+        int databaseSizeBeforeTest = depositRepository.findAll().size();
+        // set the field null
+        deposit.setAmount(null);
+
+        // Create the Deposit, which fails.
+        DepositDTO depositDTO = depositMapper.toDto(deposit);
+
+
+        restDepositMockMvc.perform(post("/api/deposits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(depositDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Deposit> depositList = depositRepository.findAll();
+        assertThat(depositList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllDeposits() throws Exception {
         // Initialize the database
         depositRepository.saveAndFlush(deposit);
@@ -204,6 +316,8 @@ public class DepositResourceIT {
             .andExpect(jsonPath("$.[*].depositDate").value(hasItem(DEFAULT_DEPOSIT_DATE.toString())))
             .andExpect(jsonPath("$.[*].medium").value(hasItem(DEFAULT_MEDIUM.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].isPosted").value(hasItem(DEFAULT_IS_POSTED.booleanValue())))
+            .andExpect(jsonPath("$.[*].postDate").value(hasItem(DEFAULT_POST_DATE.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
             .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
@@ -227,6 +341,8 @@ public class DepositResourceIT {
             .andExpect(jsonPath("$.depositDate").value(DEFAULT_DEPOSIT_DATE.toString()))
             .andExpect(jsonPath("$.medium").value(DEFAULT_MEDIUM.toString()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()))
+            .andExpect(jsonPath("$.isPosted").value(DEFAULT_IS_POSTED.booleanValue()))
+            .andExpect(jsonPath("$.postDate").value(DEFAULT_POST_DATE.toString()))
             .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
             .andExpect(jsonPath("$.createdOn").value(DEFAULT_CREATED_ON.toString()))
             .andExpect(jsonPath("$.modifiedBy").value(DEFAULT_MODIFIED_BY))
@@ -778,6 +894,110 @@ public class DepositResourceIT {
 
     @Test
     @Transactional
+    public void getAllDepositsByIsPostedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        depositRepository.saveAndFlush(deposit);
+
+        // Get all the depositList where isPosted equals to DEFAULT_IS_POSTED
+        defaultDepositShouldBeFound("isPosted.equals=" + DEFAULT_IS_POSTED);
+
+        // Get all the depositList where isPosted equals to UPDATED_IS_POSTED
+        defaultDepositShouldNotBeFound("isPosted.equals=" + UPDATED_IS_POSTED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDepositsByIsPostedIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        depositRepository.saveAndFlush(deposit);
+
+        // Get all the depositList where isPosted not equals to DEFAULT_IS_POSTED
+        defaultDepositShouldNotBeFound("isPosted.notEquals=" + DEFAULT_IS_POSTED);
+
+        // Get all the depositList where isPosted not equals to UPDATED_IS_POSTED
+        defaultDepositShouldBeFound("isPosted.notEquals=" + UPDATED_IS_POSTED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDepositsByIsPostedIsInShouldWork() throws Exception {
+        // Initialize the database
+        depositRepository.saveAndFlush(deposit);
+
+        // Get all the depositList where isPosted in DEFAULT_IS_POSTED or UPDATED_IS_POSTED
+        defaultDepositShouldBeFound("isPosted.in=" + DEFAULT_IS_POSTED + "," + UPDATED_IS_POSTED);
+
+        // Get all the depositList where isPosted equals to UPDATED_IS_POSTED
+        defaultDepositShouldNotBeFound("isPosted.in=" + UPDATED_IS_POSTED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDepositsByIsPostedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        depositRepository.saveAndFlush(deposit);
+
+        // Get all the depositList where isPosted is not null
+        defaultDepositShouldBeFound("isPosted.specified=true");
+
+        // Get all the depositList where isPosted is null
+        defaultDepositShouldNotBeFound("isPosted.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllDepositsByPostDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        depositRepository.saveAndFlush(deposit);
+
+        // Get all the depositList where postDate equals to DEFAULT_POST_DATE
+        defaultDepositShouldBeFound("postDate.equals=" + DEFAULT_POST_DATE);
+
+        // Get all the depositList where postDate equals to UPDATED_POST_DATE
+        defaultDepositShouldNotBeFound("postDate.equals=" + UPDATED_POST_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDepositsByPostDateIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        depositRepository.saveAndFlush(deposit);
+
+        // Get all the depositList where postDate not equals to DEFAULT_POST_DATE
+        defaultDepositShouldNotBeFound("postDate.notEquals=" + DEFAULT_POST_DATE);
+
+        // Get all the depositList where postDate not equals to UPDATED_POST_DATE
+        defaultDepositShouldBeFound("postDate.notEquals=" + UPDATED_POST_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDepositsByPostDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        depositRepository.saveAndFlush(deposit);
+
+        // Get all the depositList where postDate in DEFAULT_POST_DATE or UPDATED_POST_DATE
+        defaultDepositShouldBeFound("postDate.in=" + DEFAULT_POST_DATE + "," + UPDATED_POST_DATE);
+
+        // Get all the depositList where postDate equals to UPDATED_POST_DATE
+        defaultDepositShouldNotBeFound("postDate.in=" + UPDATED_POST_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDepositsByPostDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        depositRepository.saveAndFlush(deposit);
+
+        // Get all the depositList where postDate is not null
+        defaultDepositShouldBeFound("postDate.specified=true");
+
+        // Get all the depositList where postDate is null
+        defaultDepositShouldNotBeFound("postDate.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllDepositsByCreatedByIsEqualToSomething() throws Exception {
         // Initialize the database
         depositRepository.saveAndFlush(deposit);
@@ -1049,6 +1269,8 @@ public class DepositResourceIT {
             .andExpect(jsonPath("$.[*].depositDate").value(hasItem(DEFAULT_DEPOSIT_DATE.toString())))
             .andExpect(jsonPath("$.[*].medium").value(hasItem(DEFAULT_MEDIUM.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].isPosted").value(hasItem(DEFAULT_IS_POSTED.booleanValue())))
+            .andExpect(jsonPath("$.[*].postDate").value(hasItem(DEFAULT_POST_DATE.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
             .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
@@ -1105,6 +1327,8 @@ public class DepositResourceIT {
             .depositDate(UPDATED_DEPOSIT_DATE)
             .medium(UPDATED_MEDIUM)
             .amount(UPDATED_AMOUNT)
+            .isPosted(UPDATED_IS_POSTED)
+            .postDate(UPDATED_POST_DATE)
             .createdBy(UPDATED_CREATED_BY)
             .createdOn(UPDATED_CREATED_ON)
             .modifiedBy(UPDATED_MODIFIED_BY)
@@ -1126,6 +1350,8 @@ public class DepositResourceIT {
         assertThat(testDeposit.getDepositDate()).isEqualTo(UPDATED_DEPOSIT_DATE);
         assertThat(testDeposit.getMedium()).isEqualTo(UPDATED_MEDIUM);
         assertThat(testDeposit.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testDeposit.isIsPosted()).isEqualTo(UPDATED_IS_POSTED);
+        assertThat(testDeposit.getPostDate()).isEqualTo(UPDATED_POST_DATE);
         assertThat(testDeposit.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
         assertThat(testDeposit.getCreatedOn()).isEqualTo(UPDATED_CREATED_ON);
         assertThat(testDeposit.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);

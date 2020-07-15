@@ -98,6 +98,16 @@ public class ExpanseDtlResourceIT {
             .createdOn(DEFAULT_CREATED_ON)
             .modifiedBy(DEFAULT_MODIFIED_BY)
             .modifiedOn(DEFAULT_MODIFIED_ON);
+        // Add required entity
+        Item item;
+        if (TestUtil.findAll(em, Item.class).isEmpty()) {
+            item = ItemResourceIT.createEntity(em);
+            em.persist(item);
+            em.flush();
+        } else {
+            item = TestUtil.findAll(em, Item.class).get(0);
+        }
+        expanseDtl.setItem(item);
         return expanseDtl;
     }
     /**
@@ -115,6 +125,16 @@ public class ExpanseDtlResourceIT {
             .createdOn(UPDATED_CREATED_ON)
             .modifiedBy(UPDATED_MODIFIED_BY)
             .modifiedOn(UPDATED_MODIFIED_ON);
+        // Add required entity
+        Item item;
+        if (TestUtil.findAll(em, Item.class).isEmpty()) {
+            item = ItemResourceIT.createUpdatedEntity(em);
+            em.persist(item);
+            em.flush();
+        } else {
+            item = TestUtil.findAll(em, Item.class).get(0);
+        }
+        expanseDtl.setItem(item);
         return expanseDtl;
     }
 
@@ -167,6 +187,66 @@ public class ExpanseDtlResourceIT {
         assertThat(expanseDtlList).hasSize(databaseSizeBeforeCreate);
     }
 
+
+    @Test
+    @Transactional
+    public void checkQuantityIsRequired() throws Exception {
+        int databaseSizeBeforeTest = expanseDtlRepository.findAll().size();
+        // set the field null
+        expanseDtl.setQuantity(null);
+
+        // Create the ExpanseDtl, which fails.
+        ExpanseDtlDTO expanseDtlDTO = expanseDtlMapper.toDto(expanseDtl);
+
+
+        restExpanseDtlMockMvc.perform(post("/api/expanse-dtls")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(expanseDtlDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<ExpanseDtl> expanseDtlList = expanseDtlRepository.findAll();
+        assertThat(expanseDtlList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkUnitPriceIsRequired() throws Exception {
+        int databaseSizeBeforeTest = expanseDtlRepository.findAll().size();
+        // set the field null
+        expanseDtl.setUnitPrice(null);
+
+        // Create the ExpanseDtl, which fails.
+        ExpanseDtlDTO expanseDtlDTO = expanseDtlMapper.toDto(expanseDtl);
+
+
+        restExpanseDtlMockMvc.perform(post("/api/expanse-dtls")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(expanseDtlDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<ExpanseDtl> expanseDtlList = expanseDtlRepository.findAll();
+        assertThat(expanseDtlList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAmountIsRequired() throws Exception {
+        int databaseSizeBeforeTest = expanseDtlRepository.findAll().size();
+        // set the field null
+        expanseDtl.setAmount(null);
+
+        // Create the ExpanseDtl, which fails.
+        ExpanseDtlDTO expanseDtlDTO = expanseDtlMapper.toDto(expanseDtl);
+
+
+        restExpanseDtlMockMvc.perform(post("/api/expanse-dtls")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(expanseDtlDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<ExpanseDtl> expanseDtlList = expanseDtlRepository.findAll();
+        assertThat(expanseDtlList).hasSize(databaseSizeBeforeTest);
+    }
 
     @Test
     @Transactional
@@ -826,12 +906,8 @@ public class ExpanseDtlResourceIT {
     @Test
     @Transactional
     public void getAllExpanseDtlsByItemIsEqualToSomething() throws Exception {
-        // Initialize the database
-        expanseDtlRepository.saveAndFlush(expanseDtl);
-        Item item = ItemResourceIT.createEntity(em);
-        em.persist(item);
-        em.flush();
-        expanseDtl.setItem(item);
+        // Get already existing entity
+        Item item = expanseDtl.getItem();
         expanseDtlRepository.saveAndFlush(expanseDtl);
         Long itemId = item.getId();
 

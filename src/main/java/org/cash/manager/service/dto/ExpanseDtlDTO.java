@@ -1,6 +1,7 @@
 package org.cash.manager.service.dto;
 
 import java.time.Instant;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -11,10 +12,13 @@ public class ExpanseDtlDTO implements Serializable {
     
     private Long id;
 
+    @NotNull
     private BigDecimal quantity;
 
+    @NotNull
     private BigDecimal unitPrice;
 
+    @NotNull
     private BigDecimal amount;
 
     private String createdBy;
