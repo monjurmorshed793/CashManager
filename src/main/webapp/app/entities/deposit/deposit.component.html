@@ -1,0 +1,89 @@
+<div>
+    <h2 id="page-heading">
+        <span>Deposits</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-deposit" [routerLink]="['/deposit/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Deposit
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="deposits?.length === 0">
+        <span>No deposits found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="deposits && deposits.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="loginId"><span>Login Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="depositNo"><span>Deposit No</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="depositBy"><span>Deposit By</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="depositDate"><span>Deposit Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="medium"><span>Medium</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="amount"><span>Amount</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="createdBy"><span>Created By</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="createdOn"><span>Created On</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="modifiedBy"><span>Modified By</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="modifiedOn"><span>Modified On</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let deposit of deposits ;trackBy: trackId">
+                    <td><a [routerLink]="['/deposit', deposit.id, 'view']">{{ deposit.id }}</a></td>
+                    <td>{{ deposit.loginId }}</td>
+                    <td>{{ deposit.depositNo }}</td>
+                    <td>{{ deposit.depositBy }}</td>
+                    <td>{{ deposit.depositDate | date:'mediumDate' }}</td>
+                    <td>{{ deposit.medium }}</td>
+                    <td>{{ deposit.amount }}</td>
+                    <td>{{ deposit.createdBy }}</td>
+                    <td>{{ deposit.createdOn | date:'medium' }}</td>
+                    <td>{{ deposit.modifiedBy }}</td>
+                    <td>{{ deposit.modifiedOn | date:'medium' }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/deposit', deposit.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/deposit', deposit.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(deposit)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="deposits && deposits.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

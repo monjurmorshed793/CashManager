@@ -48,6 +48,11 @@ public class CacheConfiguration {
             createCache(cm, org.cash.manager.domain.User.class.getName());
             createCache(cm, org.cash.manager.domain.Authority.class.getName());
             createCache(cm, org.cash.manager.domain.User.class.getName() + ".authorities");
+            createCache(cm, org.cash.manager.domain.Item.class.getName());
+            createCache(cm, org.cash.manager.domain.PayTo.class.getName());
+            createCache(cm, org.cash.manager.domain.Deposit.class.getName());
+            createCache(cm, org.cash.manager.domain.Expanse.class.getName());
+            createCache(cm, org.cash.manager.domain.ExpanseDtl.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

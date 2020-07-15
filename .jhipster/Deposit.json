@@ -1,0 +1,58 @@
+{
+  "name": "Deposit",
+  "fields": [
+    {
+      "fieldName": "loginId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "depositNo",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "depositBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "depositDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "medium",
+      "fieldType": "DepositMedium",
+      "fieldValues": "ATM,BANK,CASH"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdOn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modifiedOn",
+      "fieldType": "Instant"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20200715095634",
+  "entityTableName": "deposit",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

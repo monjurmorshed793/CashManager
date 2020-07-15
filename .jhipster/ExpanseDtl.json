@@ -1,0 +1,60 @@
+{
+  "name": "ExpanseDtl",
+  "fields": [
+    {
+      "fieldName": "quantity",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "unitPrice",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdOn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modifiedOn",
+      "fieldType": "Instant"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "expanse",
+      "otherEntityRelationshipName": "expanseDtl",
+      "relationshipName": "expanse",
+      "otherEntityField": "voucherNo"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "item",
+      "otherEntityRelationshipName": "expanseDtl",
+      "relationshipName": "item",
+      "otherEntityField": "name"
+    }
+  ],
+  "changelogDate": "20200715095834",
+  "entityTableName": "expanse_dtl",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

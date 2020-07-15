@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity ExpanseDtl.
+    -->
+    <changeSet id="20200715095834-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="expanse_id"
+                                 baseTableName="expanse_dtl"
+                                 constraintName="fk_expanse_dtl_expanse_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="expanse"/>
+
+        <addForeignKeyConstraint baseColumnNames="item_id"
+                                 baseTableName="expanse_dtl"
+                                 constraintName="fk_expanse_dtl_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="item"/>
+
+    </changeSet>
+</databaseChangeLog>

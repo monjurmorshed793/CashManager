@@ -7,7 +7,7 @@ entity Item{
     modifiedOn Instant
 }
 
-entity Payto{
+entity PayTo{
 	name String,
     description TextBlob,
     createdBy String,

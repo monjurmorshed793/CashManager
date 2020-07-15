@@ -1,0 +1,63 @@
+{
+  "name": "Expanse",
+  "fields": [
+    {
+      "fieldName": "loginId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "voucherNo",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "voucherDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "month",
+      "fieldType": "MonthType",
+      "fieldValues": "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER"
+    },
+    {
+      "fieldName": "notes",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdOn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modifiedOn",
+      "fieldType": "Instant"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "payTo",
+      "otherEntityRelationshipName": "expanse",
+      "relationshipName": "payTo",
+      "otherEntityField": "name"
+    }
+  ],
+  "changelogDate": "20200715095734",
+  "entityTableName": "expanse",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}
