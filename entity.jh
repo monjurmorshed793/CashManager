@@ -17,12 +17,12 @@ entity PayTo{
 }
 
 entity Deposit{
-	loginId String,
+	loginId String required,
     depositNo Integer unique,
-    depositBy String,
-    depositDate LocalDate,
-    medium DepositMedium,
-    amount BigDecimal,
+    depositBy String required,
+    depositDate LocalDate required,
+    medium DepositMedium required,
+    amount BigDecimal required,
     isPosted Boolean,
     postDate Instant,
     createdBy String,
@@ -32,11 +32,11 @@ entity Deposit{
 }
 
 entity Expanse{
-	loginId String,
-    voucherNo Integer,
-    voucherDate LocalDate,
-    month MonthType,
-    notes TextBlob,
+	loginId String required,
+    voucherNo Integer unique,
+    voucherDate LocalDate required,
+    month MonthType required,
+    notes TextBlob required,
     isPosted Boolean,
     postDate Instant,
     createdBy String,
@@ -47,9 +47,9 @@ entity Expanse{
 
 entity ExpanseDtl{
 	//item
-    quantity BigDecimal,
-    unitPrice BigDecimal,
-    amount BigDecimal,
+    quantity BigDecimal required,
+    unitPrice BigDecimal required,
+    amount BigDecimal required,
     createdBy String,
     createdOn Instant,
     modifiedBy String,
@@ -80,8 +80,8 @@ enum MonthType{
 
 relationship ManyToOne {
 	ExpanseDtl{expanse(voucherNo)} to Expanse,
-    ExpanseDtl{item(name)} to Item,
-    Expanse{payTo(name)} to PayTo
+    ExpanseDtl{item(name) required} to Item,
+    Expanse{payTo(name) required} to PayTo
 }
 
 dto all with mapstruct
