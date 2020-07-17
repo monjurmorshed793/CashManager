@@ -46,6 +46,15 @@ entity Expanse{
     modifiedOn Instant
 }
 
+@skipClient
+entity ExpanseSeq{
+
+}
+@skipClient
+entity DepositSeq{
+
+}
+
 entity ExpanseDtl{
 	//item
     quantity BigDecimal required,
