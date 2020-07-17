@@ -6,82 +6,64 @@
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                <div class="form-group row" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" class=" col-md-4">ID</label>
+                    <input type="text" class="form-control col-md-8" id="id" name="id" formControlName="id" readonly />
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_loginId">Login Id</label>
-                    <input type="text" class="form-control" name="loginId" id="field_loginId"
-                           formControlName="loginId"/>
+                <div class="form-group row">
+                    <label class="form-control-label col-md-4" for="field_loginId">Login Id</label>
+                    <input type="text" class="form-control col-md-8" name="loginId" id="field_loginId"
+                           formControlName="loginId" readonly/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_depositNo">Deposit No</label>
-                    <input type="number" class="form-control" name="depositNo" id="field_depositNo"
-                           formControlName="depositNo"/>
+                <div class="form-group row">
+                    <label  class="form-control-label col-md-4" for="field_depositNo">Deposit No (auto generalizable after first save)</label>
+                    <input type="number" class="form-control col-md-8" name="depositNo" id="field_depositNo"
+                           formControlName="depositNo" readonly/>
+
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_depositBy">Deposit By</label>
-                    <input type="text" class="form-control" name="depositBy" id="field_depositBy"
+                <div class="form-group row">
+                    <label class="form-control-label col-md-4" for="field_depositBy">Deposit By</label>
+                    <input type="text" class="form-control col-md-8" name="depositBy" id="field_depositBy"
                            formControlName="depositBy"/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_depositDate">Deposit Date</label>
-                    <div class="input-group">
-                        <input id="field_depositDate" type="text" class="form-control" name="depositDate" ngbDatepicker #depositDateDp="ngbDatepicker" formControlName="depositDate"/>
-                        <span class="input-group-append">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="form-group col-md-4">
+                                <label class="form-control-label" for="field_depositDate">Deposit Date</label>
+                                <div class="input-group">
+                                    <input id="field_depositDate" type="text" class="form-control" name="depositDate" ngbDatepicker #depositDateDp="ngbDatepicker" formControlName="depositDate"/>
+                                    <span class="input-group-append">
                             <button type="button" class="btn btn-secondary" (click)="depositDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label class="form-control-label" for="field_medium">Medium</label>
+                                <select class="form-control" name="medium" formControlName="medium" id="field_medium">
+                                    <option value="ATM">ATM</option>
+                                    <option value="BANK">BANK</option>
+                                    <option value="CASH">CASH</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label class="form-control-label" for="field_amount">Amount</label>
+                                <input type="number" class="form-control" name="amount" id="field_amount"
+                                       formControlName="amount"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_medium">Medium</label>
-                    <select class="form-control" name="medium" formControlName="medium" id="field_medium">
-                        <option value="ATM">ATM</option>
-                        <option value="BANK">BANK</option>
-                        <option value="CASH">CASH</option>
-                    </select>
-                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_amount">Amount</label>
-                    <input type="number" class="form-control" name="amount" id="field_amount"
-                           formControlName="amount"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_createdBy">Created By</label>
-                    <input type="text" class="form-control" name="createdBy" id="field_createdBy"
-                           formControlName="createdBy"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_createdOn">Created On</label>
-                    <div class="d-flex">
-                        <input id="field_createdOn" type="datetime-local" class="form-control" name="createdOn" formControlName="createdOn" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_modifiedBy">Modified By</label>
-                    <input type="text" class="form-control" name="modifiedBy" id="field_modifiedBy"
-                           formControlName="modifiedBy"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_modifiedOn">Modified On</label>
-                    <div class="d-flex">
-                        <input id="field_modifiedOn" type="datetime-local" class="form-control" name="modifiedOn" formControlName="modifiedOn" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                </div>
-            </div>
-
-            <div>
+            <div style="padding-top: 10px;">
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
                 </button>
@@ -89,6 +71,11 @@
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
                 </button>
+
+                <button  id="post-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-success" (click)="post()">
+                    <fa-icon icon="share"></fa-icon>&nbsp;<span>Post</span>
+                </button>
+
             </div>
         </form>
     </div>

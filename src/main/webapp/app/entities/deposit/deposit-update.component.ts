@@ -81,7 +81,7 @@ export class DepositUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): IDeposit {
+  protected createFromForm(): IDeposit {
     return {
       ...new Deposit(),
       id: this.editForm.get(['id'])!.value,

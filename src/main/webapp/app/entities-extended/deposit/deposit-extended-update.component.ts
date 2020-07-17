@@ -8,13 +8,48 @@ import * as moment from 'moment';
 
 import { DepositExtendedService } from './deposit-extended.service';
 import { DepositUpdateComponent } from '../../entities/deposit/deposit-update.component';
+import { AccountService } from '../../core/auth/account.service';
+import { Account } from '../../core/user/account.model';
 
 @Component({
   selector: 'jhi-deposit-update',
   templateUrl: './deposit-extended-update.component.html',
 })
 export class DepositExtendedUpdateComponent extends DepositUpdateComponent implements OnInit {
-  constructor(protected depositService: DepositExtendedService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {
+  account: Account | null = null;
+
+  constructor(
+    protected depositService: DepositExtendedService,
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder,
+    private accountService: AccountService
+  ) {
     super(depositService, activatedRoute, fb);
+  }
+
+  ngOnInit(): void {
+    this.accountService.getAuthenticationState().subscribe(a => (this.account = a));
+
+    this.activatedRoute.data.subscribe(({ deposit }) => {
+      if (!deposit.id) {
+        const today = moment().startOf('day');
+        deposit.postDate = today;
+        deposit.createdOn = today;
+        deposit.modifiedOn = today;
+      }
+      deposit.loginId = deposit.loginId ? deposit.loginId : this.account?.login;
+      this.updateForm(deposit);
+    });
+  }
+
+  post(): void {
+    this.isSaving = true;
+    const deposit = this.createFromForm();
+    deposit.isPosted = true;
+    if (deposit.id !== undefined) {
+      this.subscribeToSaveResponse(this.depositService.update(deposit));
+    } else {
+      this.subscribeToSaveResponse(this.depositService.create(deposit));
+    }
   }
 }
