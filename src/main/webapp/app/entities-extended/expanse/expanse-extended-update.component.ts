@@ -140,17 +140,26 @@ export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent imple
     this.modalService.dismissAll();
   }
 
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IExpanse>>): void {
+    result.subscribe(
+      res => {
+        if (this.isAddingNew) {
+          this.expanseService.setNewId(res?.body?.id!);
+        }
+        this.onSaveSuccess();
+      },
+      () => this.onSaveError()
+    );
+  }
+
   save(): void {
     this.isSaving = true;
     const expanse = this.createFromForm();
     if (expanse.id !== undefined) {
       this.subscribeToSaveResponse(this.expanseService.update(expanse));
     } else {
-      const newlyCreatedExpanse = this.expanseService.create(expanse);
-      newlyCreatedExpanse.subscribe(res => {
-        this.expanseService.setNewId(res?.body?.id!);
-      });
-      this.subscribeToSaveResponse(newlyCreatedExpanse);
+      this.isAddingNew = true;
+      this.subscribeToSaveResponse(this.expanseService.create(expanse));
     }
   }
 }

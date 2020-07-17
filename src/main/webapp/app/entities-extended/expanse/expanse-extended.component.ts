@@ -18,6 +18,7 @@ import { AccountService } from '../../core/auth/account.service';
 })
 export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit, OnDestroy {
   account: Account | null = null;
+  newId: number | null = null;
   constructor(
     protected expanseService: ExpanseExtendedService,
     protected activatedRoute: ActivatedRoute,
@@ -61,14 +62,21 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
 
   ngOnInit(): void {
     this.expanseService.getNewId().subscribe(res => {
+      this.newId = res;
       if (res) {
         const id = res;
-        this.expanseService.setNewId(null);
+        // this.expanseService.setNewId(null);
         this.router.navigate(['/expanse', id, 'edit']);
       }
     });
     this.accountService.getAuthenticationState().subscribe(res => (this.account = res));
     this.handleNavigation();
     this.registerChangeInExpanses();
+  }
+
+  registerChangeInExpanses(): void {
+    this.eventSubscriber = this.eventManager.subscribe('expanseListModification', () => {
+      this.loadPage();
+    });
   }
 }
