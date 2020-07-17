@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.Lob;
 import org.cash.manager.domain.enumeration.DepositMedium;
 
 /**
@@ -31,6 +32,10 @@ public class DepositDTO implements Serializable {
 
     @NotNull
     private BigDecimal amount;
+
+    
+    @Lob
+    private String note;
 
     private Boolean isPosted;
 
@@ -99,6 +104,14 @@ public class DepositDTO implements Serializable {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Boolean isIsPosted() {
@@ -177,6 +190,7 @@ public class DepositDTO implements Serializable {
             ", depositDate='" + getDepositDate() + "'" +
             ", medium='" + getMedium() + "'" +
             ", amount=" + getAmount() +
+            ", note='" + getNote() + "'" +
             ", isPosted='" + isIsPosted() + "'" +
             ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

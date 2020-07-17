@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -60,6 +61,9 @@ public class DepositResourceIT {
     private static final BigDecimal DEFAULT_AMOUNT = new BigDecimal(1);
     private static final BigDecimal UPDATED_AMOUNT = new BigDecimal(2);
     private static final BigDecimal SMALLER_AMOUNT = new BigDecimal(1 - 1);
+
+    private static final String DEFAULT_NOTE = "AAAAAAAAAA";
+    private static final String UPDATED_NOTE = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_IS_POSTED = false;
     private static final Boolean UPDATED_IS_POSTED = true;
@@ -113,6 +117,7 @@ public class DepositResourceIT {
             .depositDate(DEFAULT_DEPOSIT_DATE)
             .medium(DEFAULT_MEDIUM)
             .amount(DEFAULT_AMOUNT)
+            .note(DEFAULT_NOTE)
             .isPosted(DEFAULT_IS_POSTED)
             .postDate(DEFAULT_POST_DATE)
             .createdBy(DEFAULT_CREATED_BY)
@@ -135,6 +140,7 @@ public class DepositResourceIT {
             .depositDate(UPDATED_DEPOSIT_DATE)
             .medium(UPDATED_MEDIUM)
             .amount(UPDATED_AMOUNT)
+            .note(UPDATED_NOTE)
             .isPosted(UPDATED_IS_POSTED)
             .postDate(UPDATED_POST_DATE)
             .createdBy(UPDATED_CREATED_BY)
@@ -170,6 +176,7 @@ public class DepositResourceIT {
         assertThat(testDeposit.getDepositDate()).isEqualTo(DEFAULT_DEPOSIT_DATE);
         assertThat(testDeposit.getMedium()).isEqualTo(DEFAULT_MEDIUM);
         assertThat(testDeposit.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testDeposit.getNote()).isEqualTo(DEFAULT_NOTE);
         assertThat(testDeposit.isIsPosted()).isEqualTo(DEFAULT_IS_POSTED);
         assertThat(testDeposit.getPostDate()).isEqualTo(DEFAULT_POST_DATE);
         assertThat(testDeposit.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
@@ -316,6 +323,7 @@ public class DepositResourceIT {
             .andExpect(jsonPath("$.[*].depositDate").value(hasItem(DEFAULT_DEPOSIT_DATE.toString())))
             .andExpect(jsonPath("$.[*].medium").value(hasItem(DEFAULT_MEDIUM.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE.toString())))
             .andExpect(jsonPath("$.[*].isPosted").value(hasItem(DEFAULT_IS_POSTED.booleanValue())))
             .andExpect(jsonPath("$.[*].postDate").value(hasItem(DEFAULT_POST_DATE.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
@@ -341,6 +349,7 @@ public class DepositResourceIT {
             .andExpect(jsonPath("$.depositDate").value(DEFAULT_DEPOSIT_DATE.toString()))
             .andExpect(jsonPath("$.medium").value(DEFAULT_MEDIUM.toString()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()))
+            .andExpect(jsonPath("$.note").value(DEFAULT_NOTE.toString()))
             .andExpect(jsonPath("$.isPosted").value(DEFAULT_IS_POSTED.booleanValue()))
             .andExpect(jsonPath("$.postDate").value(DEFAULT_POST_DATE.toString()))
             .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
@@ -1269,6 +1278,7 @@ public class DepositResourceIT {
             .andExpect(jsonPath("$.[*].depositDate").value(hasItem(DEFAULT_DEPOSIT_DATE.toString())))
             .andExpect(jsonPath("$.[*].medium").value(hasItem(DEFAULT_MEDIUM.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE.toString())))
             .andExpect(jsonPath("$.[*].isPosted").value(hasItem(DEFAULT_IS_POSTED.booleanValue())))
             .andExpect(jsonPath("$.[*].postDate").value(hasItem(DEFAULT_POST_DATE.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
@@ -1327,6 +1337,7 @@ public class DepositResourceIT {
             .depositDate(UPDATED_DEPOSIT_DATE)
             .medium(UPDATED_MEDIUM)
             .amount(UPDATED_AMOUNT)
+            .note(UPDATED_NOTE)
             .isPosted(UPDATED_IS_POSTED)
             .postDate(UPDATED_POST_DATE)
             .createdBy(UPDATED_CREATED_BY)
@@ -1350,6 +1361,7 @@ public class DepositResourceIT {
         assertThat(testDeposit.getDepositDate()).isEqualTo(UPDATED_DEPOSIT_DATE);
         assertThat(testDeposit.getMedium()).isEqualTo(UPDATED_MEDIUM);
         assertThat(testDeposit.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testDeposit.getNote()).isEqualTo(UPDATED_NOTE);
         assertThat(testDeposit.isIsPosted()).isEqualTo(UPDATED_IS_POSTED);
         assertThat(testDeposit.getPostDate()).isEqualTo(UPDATED_POST_DATE);
         assertThat(testDeposit.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);

@@ -111,7 +111,7 @@ export class ExpanseUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): IExpanse {
+  protected createFromForm(): IExpanse {
     return {
       ...new Expanse(),
       id: this.editForm.get(['id'])!.value,

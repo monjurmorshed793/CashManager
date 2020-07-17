@@ -23,6 +23,7 @@ entity Deposit{
     depositDate LocalDate required,
     medium DepositMedium required,
     amount BigDecimal required,
+    note TextBlob required,
     isPosted Boolean,
     postDate Instant,
     createdBy String,

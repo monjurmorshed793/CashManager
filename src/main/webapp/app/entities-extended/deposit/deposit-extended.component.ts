@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IDeposit } from 'app/shared/model/deposit.model';
@@ -24,12 +24,13 @@ export class DepositExtendedComponent extends DepositComponent implements OnInit
   constructor(
     protected depositService: DepositExtendedService,
     protected activatedRoute: ActivatedRoute,
+    protected dataUtils: JhiDataUtils,
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     private accountService: AccountService
   ) {
-    super(depositService, activatedRoute, router, eventManager, modalService);
+    super(depositService, activatedRoute, dataUtils, router, eventManager, modalService);
   }
 
   loadPage(page?: number, dontNavigate?: boolean): void {

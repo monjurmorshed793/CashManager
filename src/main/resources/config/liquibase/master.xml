@@ -20,6 +20,8 @@
     <include file="config/liquibase/changelog/20200715095734_added_entity_Expanse.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200715095834_added_entity_ExpanseDtl.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200717082721_changelog_authorities_added.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200717132522_changelog.xml" relativeToChangelogFile="false"/>
+
 
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->

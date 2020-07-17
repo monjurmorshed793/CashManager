@@ -10,6 +10,8 @@ import { DepositExtendedService } from './deposit-extended.service';
 import { DepositUpdateComponent } from '../../entities/deposit/deposit-update.component';
 import { AccountService } from '../../core/auth/account.service';
 import { Account } from '../../core/user/account.model';
+import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { DepositService } from '../../entities/deposit/deposit.service';
 
 @Component({
   selector: 'jhi-deposit-update',
@@ -19,12 +21,14 @@ export class DepositExtendedUpdateComponent extends DepositUpdateComponent imple
   account: Account | null = null;
 
   constructor(
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
     protected depositService: DepositExtendedService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
     private accountService: AccountService
   ) {
-    super(depositService, activatedRoute, fb);
+    super(dataUtils, eventManager, depositService, activatedRoute, fb);
   }
 
   ngOnInit(): void {

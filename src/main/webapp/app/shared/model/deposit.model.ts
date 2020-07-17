@@ -9,6 +9,7 @@ export interface IDeposit {
   depositDate?: Moment;
   medium?: DepositMedium;
   amount?: number;
+  note?: any;
   isPosted?: boolean;
   postDate?: Moment;
   createdBy?: string;
@@ -26,6 +27,7 @@ export class Deposit implements IDeposit {
     public depositDate?: Moment,
     public medium?: DepositMedium,
     public amount?: number,
+    public note?: any,
     public isPosted?: boolean,
     public postDate?: Moment,
     public createdBy?: string,
