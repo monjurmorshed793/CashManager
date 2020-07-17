@@ -12,6 +12,11 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 import org.cash.manager.domain.enumeration.MonthType;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * A Expanse.
@@ -19,6 +24,7 @@ import org.cash.manager.domain.enumeration.MonthType;
 @Entity
 @Table(name = "expanse")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@EntityListeners(AuditingEntityListener.class)
 public class Expanse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +37,7 @@ public class Expanse implements Serializable {
     @Column(name = "login_id", nullable = false)
     private String loginId;
 
-    
+
     @Column(name = "voucher_no", unique = true)
     private Integer voucherNo;
 
@@ -44,7 +50,7 @@ public class Expanse implements Serializable {
     @Column(name = "month", nullable = false)
     private MonthType month;
 
-    
+
     @Lob
     @Column(name = "notes", nullable = false)
     private String notes;
@@ -56,15 +62,19 @@ public class Expanse implements Serializable {
     private Instant postDate;
 
     @Column(name = "created_by")
+    @CreatedBy
     private String createdBy;
 
     @Column(name = "created_on")
+    @CreatedDate
     private Instant createdOn;
 
     @Column(name = "modified_by")
+    @LastModifiedBy
     private String modifiedBy;
 
     @Column(name = "modified_on")
+    @LastModifiedDate
     private Instant modifiedOn;
 
     @ManyToOne(optional = false)

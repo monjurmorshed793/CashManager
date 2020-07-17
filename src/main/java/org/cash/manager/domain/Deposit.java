@@ -12,6 +12,11 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 import org.cash.manager.domain.enumeration.DepositMedium;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * A Deposit.
@@ -19,6 +24,7 @@ import org.cash.manager.domain.enumeration.DepositMedium;
 @Entity
 @Table(name = "deposit")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@EntityListeners(AuditingEntityListener.class)
 public class Deposit implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +37,7 @@ public class Deposit implements Serializable {
     @Column(name = "login_id", nullable = false)
     private String loginId;
 
-    
+
     @Column(name = "deposit_no", unique = true)
     private Integer depositNo;
 
@@ -59,15 +65,19 @@ public class Deposit implements Serializable {
     private Instant postDate;
 
     @Column(name = "created_by")
+    @CreatedBy
     private String createdBy;
 
     @Column(name = "created_on")
+    @CreatedDate
     private Instant createdOn;
 
     @Column(name = "modified_by")
+    @LastModifiedBy
     private String modifiedBy;
 
     @Column(name = "modified_on")
+    @LastModifiedDate
     private Instant modifiedOn;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

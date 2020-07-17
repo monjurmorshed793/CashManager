@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-5">
+        <span class="cash-home img-fluid rounded"></span>
+    </div>
+
+    <div class="col-md-7">
+        <div class="row justify-content-between">
+            <h1 class="display-4 col-md-8">Welcome, Cash Manager!</h1>
+            <div class="col-md-8" [ngSwitch]="isAuthenticated()">
+                <div >
+                    <div class="alert alert-success" *ngSwitchCase="true">
+                        <span id="home-logged-message" *ngIf="account">You are logged in as user "{{ account.login }}".</span>
+                    </div>
+
+                    <div class="alert alert-warning" *ngSwitchCase="false">
+                        <span>If you want to </span>
+                        <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+                    </div>
+
+                    <div class="alert alert-warning" *ngSwitchCase="false">
+                        <span>You don't have an account yet?</span>&nbsp;
+                        <a class="alert-link" routerLink="account/register">Register a new account</a>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div [ngSwitch]="isAuthenticated()" class="col-md-8">
+                <button *ngSwitchCase="false" class="btn btn-success btn-lg btn-block" (click)="login()">Login</button>
+                <button *ngSwitchCase="false" class="btn btn-primary btn-lg btn-block" routerLink="account/register">Register</button>
+            </div>
+        </div>
+
+    </div>
+</div>

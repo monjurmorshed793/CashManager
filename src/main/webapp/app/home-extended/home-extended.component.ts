@@ -1,20 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-
-import { LoginModalService } from 'app/core/login/login-modal.service';
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
+import { AccountService } from '../core/auth/account.service';
+import { LoginModalService } from '../core/login/login-modal.service';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'jhi-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['home.scss'],
+  templateUrl: './home-extended.component.html',
+  styleUrls: ['home-extended.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  account: Account | null = null;
-  authSubscription?: Subscription;
-
-  constructor(protected accountService: AccountService, protected loginModalService: LoginModalService) {}
+export class HomeExtendedComponent extends HomeComponent implements OnInit, OnDestroy {
+  constructor(protected accountService: AccountService, protected loginModalService: LoginModalService) {
+    super(accountService, loginModalService);
+  }
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));

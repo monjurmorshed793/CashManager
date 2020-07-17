@@ -3,6 +3,11 @@ package org.cash.manager.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -17,6 +22,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "expanse_dtl")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@EntityListeners(AuditingEntityListener.class)
 public class ExpanseDtl implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,15 +44,19 @@ public class ExpanseDtl implements Serializable {
     private BigDecimal amount;
 
     @Column(name = "created_by")
+    @CreatedBy
     private String createdBy;
 
     @Column(name = "created_on")
+    @CreatedDate
     private Instant createdOn;
 
     @Column(name = "modified_by")
+    @LastModifiedBy
     private String modifiedBy;
 
     @Column(name = "modified_on")
+    @LastModifiedDate
     private Instant modifiedOn;
 
     @ManyToOne
