@@ -11,6 +11,14 @@ import { ExpanseComponent } from '../../entities/expanse/expanse.component';
 import { ExpanseDetailComponent } from '../../entities/expanse/expanse-detail.component';
 import { ExpanseUpdateComponent } from '../../entities/expanse/expanse-update.component';
 import { ExpanseDeleteDialogComponent } from '../../entities/expanse/expanse-delete-dialog.component';
+import { ExpanseDtlComponent } from '../../entities/expanse-dtl/expanse-dtl.component';
+import { ExpanseDtlDetailComponent } from '../../entities/expanse-dtl/expanse-dtl-detail.component';
+import { ExpanseDtlUpdateComponent } from '../../entities/expanse-dtl/expanse-dtl-update.component';
+import { ExpanseDtlDeleteDialogComponent } from '../../entities/expanse-dtl/expanse-dtl-delete-dialog.component';
+import { ExpanseDtlExtendedComponent } from '../expanse-dtl/expanse-dtl-extended.component';
+import { ExpanseDtlExtendedDetailComponent } from '../expanse-dtl/expanse-dtl-extended-detail.component';
+import { ExpanseDtlExtendedUpdateComponent } from '../expanse-dtl/expanse-dtl-extended-update.component';
+import { ExpanseDtlExtendedDeleteDialogComponent } from '../expanse-dtl/expanse-dtl-extended-delete-dialog.component';
 
 @NgModule({
   imports: [CashManagerSharedModule, RouterModule.forChild(expanseExtendedRoute)],

@@ -18,6 +18,8 @@ export class ExpanseDtlExtendedResolve implements Resolve<IExpanseDtl> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<IExpanseDtl> | Observable<never> {
     const id = route.params['id'];
+    const expanseId = route.params['expanseId'];
+
     if (id) {
       return this.service.find(id).pipe(
         flatMap((expanseDtl: HttpResponse<ExpanseDtl>) => {
@@ -29,6 +31,10 @@ export class ExpanseDtlExtendedResolve implements Resolve<IExpanseDtl> {
           }
         })
       );
+    } else if (expanseId) {
+      const expanseDtl = new ExpanseDtl();
+      expanseDtl.expanseId = expanseId;
+      return of(expanseDtl);
     }
     return of(new ExpanseDtl());
   }
@@ -59,6 +65,18 @@ export const expanseDtlExtendedRoute: Routes = [
   },
   {
     path: 'new',
+    component: ExpanseDtlExtendedUpdateComponent,
+    resolve: {
+      expanseDtl: ExpanseDtlExtendedResolve,
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'ExpanseDtls',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':expanseId/new',
     component: ExpanseDtlExtendedUpdateComponent,
     resolve: {
       expanseDtl: ExpanseDtlExtendedResolve,
