@@ -23,8 +23,8 @@ auto-refreshes when files change on your hard drive.
 
 ```
 
+./mvnw
 
-./gradlew -x webpack
 
 npm start
 ```
@@ -110,8 +110,8 @@ To build the final jar and optimize the CashManager application for production, 
 
 ```
 
+./mvnw -Pprod clean verify
 
-./gradlew -Pprod clean bootJar
 
 ```
 
@@ -120,8 +120,8 @@ To ensure everything worked, run:
 
 ```
 
+java -jar target/*.jar
 
-java -jar build/libs/*.jar
 
 ```
 
@@ -135,8 +135,8 @@ To package your application as a war in order to deploy it to an application ser
 
 ```
 
+./mvnw -Pprod,war clean verify
 
-./gradlew -Pprod -Pwar clean bootWar
 
 ```
 
@@ -145,7 +145,7 @@ To package your application as a war in order to deploy it to an application ser
 To launch your application's tests, run:
 
 ```
-./gradlew test integrationTest jacocoTestReport
+./mvnw verify
 ```
 
 ### Client tests
@@ -166,12 +166,18 @@ Sonar is used to analyse code quality. You can start a local Sonar server (acces
 docker-compose -f src/main/docker/sonar.yml up -d
 ```
 
-You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the gradle plugin.
+You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
 
 Then, run a Sonar analysis:
 
 ```
-./gradlew -Pprod clean check jacocoTestReport sonarqube
+./mvnw -Pprod clean verify sonar:sonar
+```
+
+If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
+
+```
+./mvnw initialize sonar:sonar
 ```
 
 For more information, refer to the [Code quality page][].
@@ -196,7 +202,7 @@ You can also fully dockerize your application and all the services that it depen
 To achieve this, first build a docker image of your app by running:
 
 ```
-./gradlew bootJar -Pprod jibDockerBuild
+./mvnw -Pprod verify jib:dockerBuild
 ```
 
 Then run:

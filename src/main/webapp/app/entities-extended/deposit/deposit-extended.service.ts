@@ -13,6 +13,8 @@ type EntityArrayResponseType = HttpResponse<IDeposit[]>;
 
 @Injectable({ providedIn: 'root' })
 export class DepositExtendedService extends DepositService {
+  public resourceUrl = SERVER_API_URL + 'api/extended/deposits';
+
   constructor(protected http: HttpClient) {
     super(http);
   }
