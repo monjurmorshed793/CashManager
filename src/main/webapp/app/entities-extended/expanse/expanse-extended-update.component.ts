@@ -66,6 +66,7 @@ export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent imple
     this.expanseService.setNewId(null);
     this.activatedRoute.data.subscribe(({ expanse }) => {
       if (!expanse.id) {
+        this.expanseService.setExpanseId(expanse.id);
         const today = moment().startOf('day');
         expanse.postDate = today;
         expanse.createdOn = today;

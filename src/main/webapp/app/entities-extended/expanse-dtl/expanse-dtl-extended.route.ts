@@ -42,16 +42,6 @@ export class ExpanseDtlExtendedResolve implements Resolve<IExpanseDtl> {
 
 export const expanseDtlExtendedRoute: Routes = [
   {
-    path: '',
-    component: ExpanseDtlExtendedComponent,
-    data: {
-      authorities: [Authority.USER],
-      defaultSort: 'id,asc',
-      pageTitle: 'ExpanseDtls',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: ':id/view',
     component: ExpanseDtlExtendedDetailComponent,
     resolve: {

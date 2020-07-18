@@ -1,4 +1,13 @@
-<div>
+<div class="row justify-content-center" *ngIf="showLoader">
+    <div class="col-md-8 fa-5x" align="center" *ngIf="showLoader">
+         <span>
+                <fa-icon icon="spinner" [pulse]="true"></fa-icon>
+            </span>
+    </div>
+</div>
+
+
+<div *ngIf="!showLoader">
     <h2 id="page-heading">
         <span>Expanses</span>
 
@@ -22,32 +31,21 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="loginId"><span>Login Id</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="voucherNo"><span>Voucher No</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="voucherDate"><span>Voucher Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="month"><span>Month</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="notes"><span>Notes</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="createdBy"><span>Created By</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="createdOn"><span>Created On</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="modifiedBy"><span>Modified By</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="modifiedOn"><span>Modified On</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="payToName"><span>Pay To</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let expanse of expanses ;trackBy: trackId">
-                    <td><a [routerLink]="['/expanse', expanse.id, 'view']">{{ expanse.id }}</a></td>
                     <td>{{ expanse.loginId }}</td>
                     <td>{{ expanse.voucherNo }}</td>
                     <td>{{ expanse.voucherDate | date:'mediumDate' }}</td>
                     <td>{{ expanse.month }}</td>
-                    <td>{{ expanse.notes }}</td>
                     <td>{{ expanse.createdBy }}</td>
-                    <td>{{ expanse.createdOn | date:'medium' }}</td>
-                    <td>{{ expanse.modifiedBy }}</td>
-                    <td>{{ expanse.modifiedOn | date:'medium' }}</td>
                     <td>
                         <div *ngIf="expanse.payToId">
                             <a [routerLink]="['/pay-to', expanse.payToId , 'view']" >{{ expanse.payToName }}</a>

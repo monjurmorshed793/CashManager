@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<IExpanse[]>;
 export class ExpanseExtendedService extends ExpanseService {
   public resourceUrl = SERVER_API_URL + 'api/extended/expanses';
   private newId = new ReplaySubject<number | null>(1);
+  public expanseId = new ReplaySubject<number | null>(1);
 
   constructor(protected http: HttpClient) {
     super(http);
@@ -25,5 +26,13 @@ export class ExpanseExtendedService extends ExpanseService {
 
   getNewId(): Observable<number | null> {
     return this.newId.asObservable();
+  }
+
+  setExpanseId(value: number | null): void {
+    this.expanseId.next(value);
+  }
+
+  getExpanseId(): Observable<number | null> {
+    return this.expanseId.asObservable();
   }
 }

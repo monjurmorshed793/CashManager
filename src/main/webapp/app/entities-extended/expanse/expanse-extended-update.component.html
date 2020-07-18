@@ -4,7 +4,7 @@
     </div>
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-expanse-heading">Create or edit a Expanse</h2>
+            <h2 id="jhi-expanse-heading">Create or edit a Expense</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
@@ -57,11 +57,13 @@
                     </select>
                 </div>
 
-                <div class="card">
+
+
+                <div class="card" *ngIf="editForm.controls['id'].value">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
-                                <jhi-expanse-dtl-extended [expanseId]="expanse?.id!"></jhi-expanse-dtl-extended>
+                            <div class="col-md-12" style="background-color: whitesmoke;">
+                                <jhi-expanse-dtl-directive  [expanseId]="editForm.controls['id'].value"></jhi-expanse-dtl-directive>
                             </div>
                         </div>
                     </div>

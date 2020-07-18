@@ -19,6 +19,7 @@ import { AccountService } from '../../core/auth/account.service';
 export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   newId: number | null = null;
+  showLoader = false;
   constructor(
     protected expanseService: ExpanseExtendedService,
     protected activatedRoute: ActivatedRoute,
@@ -61,6 +62,8 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
   }
 
   ngOnInit(): void {
+    this.showLoader = true;
+    this.expanseService.setExpanseId(null);
     this.expanseService.getNewId().subscribe(res => {
       this.newId = res;
       if (res) {
@@ -78,5 +81,22 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
     this.eventSubscriber = this.eventManager.subscribe('expanseListModification', () => {
       this.loadPage();
     });
+  }
+
+  protected onSuccess(data: IExpanse[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.showLoader = false;
+    this.page = page;
+    if (navigate) {
+      this.router.navigate(['/expanse'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+        },
+      });
+    }
+    this.expanses = data || [];
+    this.ngbPaginationPage = this.page;
   }
 }
