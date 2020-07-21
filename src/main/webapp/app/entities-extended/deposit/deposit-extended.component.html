@@ -1,4 +1,4 @@
-<div>
+<div >
     <h2 id="page-heading">
         <span>Deposits</span>
 
@@ -22,9 +22,9 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="loginId"><span>Login Id</span> <fa-icon icon="sort"></fa-icon></th>
+                 <!--   <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>-->
                     <th scope="col"  jhiSortBy="depositNo"><span>Deposit No</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="loginId"><span>Login Id</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="depositBy"><span>Deposit By</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="depositDate"><span>Deposit Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="medium"><span>Medium</span> <fa-icon icon="sort"></fa-icon></th>
@@ -38,9 +38,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="let deposit of deposits ;trackBy: trackId">
-                    <td><a [routerLink]="['/deposit', deposit.id, 'view']">{{ deposit.id }}</a></td>
-                    <td>{{ deposit.loginId }}</td>
+                    <!--<td><a [routerLink]="['/deposit', deposit.id, 'view']">{{ deposit.id }}</a></td>-->
                     <td>{{ deposit.depositNo }}</td>
+                    <td>{{ deposit.loginId }}</td>
                     <td>{{ deposit.depositBy }}</td>
                     <td>{{ deposit.depositDate | date:'mediumDate' }}</td>
                     <td>{{ deposit.medium }}</td>
@@ -58,14 +58,14 @@
                                 <span class="d-none d-md-inline">View</span>
                             </button>
 
-                            <button type="submit"
+                            <button type="submit" *ngIf="!deposit.isPosted"
                                     [routerLink]="['/deposit', deposit.id, 'edit']"
                                     class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
                                 <span class="d-none d-md-inline">Edit</span>
                             </button>
 
-                            <button type="submit" (click)="delete(deposit)"
+                            <button *ngIf="!deposit.isPosted" type="submit" (click)="delete(deposit)"
                                     class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
                                 <span class="d-none d-md-inline">Delete</span>

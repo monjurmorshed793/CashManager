@@ -6,9 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { IDeposit, Deposit } from 'app/shared/model/deposit.model';
 import { DepositService } from './deposit.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
 
 @Component({
   selector: 'jhi-deposit-update',
@@ -26,6 +28,7 @@ export class DepositUpdateComponent implements OnInit {
     depositDate: [null, [Validators.required]],
     medium: [null, [Validators.required]],
     amount: [null, [Validators.required]],
+    note: [null, [Validators.required]],
     isPosted: [],
     postDate: [],
     createdBy: [],
@@ -34,7 +37,13 @@ export class DepositUpdateComponent implements OnInit {
     modifiedOn: [],
   });
 
-  constructor(protected depositService: DepositService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
+  constructor(
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected depositService: DepositService,
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ deposit }) => {
@@ -58,12 +67,29 @@ export class DepositUpdateComponent implements OnInit {
       depositDate: deposit.depositDate,
       medium: deposit.medium,
       amount: deposit.amount,
+      note: deposit.note,
       isPosted: deposit.isPosted,
       postDate: deposit.postDate ? deposit.postDate.format(DATE_TIME_FORMAT) : null,
       createdBy: deposit.createdBy,
       createdOn: deposit.createdOn ? deposit.createdOn.format(DATE_TIME_FORMAT) : null,
       modifiedBy: deposit.modifiedBy,
       modifiedOn: deposit.modifiedOn ? deposit.modifiedOn.format(DATE_TIME_FORMAT) : null,
+    });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType: string, base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
+
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
+      this.eventManager.broadcast(
+        new JhiEventWithContent<AlertError>('cashManagerApp.error', { message: err.message })
+      );
     });
   }
 
@@ -91,6 +117,7 @@ export class DepositUpdateComponent implements OnInit {
       depositDate: this.editForm.get(['depositDate'])!.value,
       medium: this.editForm.get(['medium'])!.value,
       amount: this.editForm.get(['amount'])!.value,
+      note: this.editForm.get(['note'])!.value,
       isPosted: this.editForm.get(['isPosted'])!.value,
       postDate: this.editForm.get(['postDate'])!.value ? moment(this.editForm.get(['postDate'])!.value, DATE_TIME_FORMAT) : undefined,
       createdBy: this.editForm.get(['createdBy'])!.value,

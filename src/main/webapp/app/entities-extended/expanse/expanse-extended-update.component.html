@@ -1,31 +1,29 @@
 <div class="row justify-content-center">
     <div class="col-8">
+        <jhi-alert></jhi-alert>
+    </div>
+    <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-expanse-heading">Create or edit a Expanse</h2>
+            <h2 id="jhi-expanse-heading">Create or edit a Expense</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                <div class="form-group row">
+                    <label class="form-control-label col-md-4" for="field_loginId">Login Id</label>
+                    <input type="text" class="form-control col-md-8" name="loginId" id="field_loginId"
+                           formControlName="loginId" readonly/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_loginId">Login Id</label>
-                    <input type="text" class="form-control" name="loginId" id="field_loginId"
-                           formControlName="loginId"/>
+                <div class="form-group row">
+                    <label class="form-control-label col-md-4" for="field_voucherNo">Voucher No (auto generated)</label>
+                    <input type="number" class="form-control col-md-8" name="voucherNo" id="field_voucherNo"
+                           formControlName="voucherNo" readonly/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_voucherNo">Voucher No</label>
-                    <input type="number" class="form-control" name="voucherNo" id="field_voucherNo"
-                           formControlName="voucherNo"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_voucherDate">Voucher Date</label>
-                    <div class="input-group">
+                <div class="form-group row">
+                    <label class="form-control-label col-md-4" for="field_voucherDate">Voucher Date</label>
+                    <div class="input-group col-md-8">
                         <input id="field_voucherDate" type="text" class="form-control" name="voucherDate" ngbDatepicker #voucherDateDp="ngbDatepicker" formControlName="voucherDate"/>
                         <span class="input-group-append">
                             <button type="button" class="btn btn-secondary" (click)="voucherDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
@@ -33,9 +31,9 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_month">Month</label>
-                    <select class="form-control" name="month" formControlName="month" id="field_month">
+                <div class="form-group row">
+                    <label class="form-control-label col-md-4" for="field_month">Month</label>
+                    <select class="form-control col-md-8" name="month" formControlName="month" id="field_month">
                         <option value="JANUARY">JANUARY</option>
                         <option value="FEBRUARY">FEBRUARY</option>
                         <option value="MARCH">MARCH</option>
@@ -51,45 +49,33 @@
                     </select>
                 </div>
 
+                <div class="form-group row">
+                    <label class="form-control-label col-md-4" for="field_payTo">Pay To</label>
+                    <select class="form-control col-md-8" id="field_payTo" name="payTo" formControlName="payToId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="payToOption.id" *ngFor="let payToOption of paytos; trackBy: trackById">{{ payToOption.name }}</option>
+                    </select>
+                </div>
+
+
+
+                <div class="card" *ngIf="editForm.controls['id'].value">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12" style="background-color: whitesmoke;">
+                                <jhi-expanse-dtl-directive  [expanseId]="editForm.controls['id'].value"></jhi-expanse-dtl-directive>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="form-control-label" for="field_notes">Notes</label>
                     <textarea class="form-control" name="notes" id="field_notes"
                               formControlName="notes"></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_createdBy">Created By</label>
-                    <input type="text" class="form-control" name="createdBy" id="field_createdBy"
-                           formControlName="createdBy"/>
-                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_createdOn">Created On</label>
-                    <div class="d-flex">
-                        <input id="field_createdOn" type="datetime-local" class="form-control" name="createdOn" formControlName="createdOn" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_modifiedBy">Modified By</label>
-                    <input type="text" class="form-control" name="modifiedBy" id="field_modifiedBy"
-                           formControlName="modifiedBy"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_modifiedOn">Modified On</label>
-                    <div class="d-flex">
-                        <input id="field_modifiedOn" type="datetime-local" class="form-control" name="modifiedOn" formControlName="modifiedOn" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_payTo">Pay To</label>
-                    <select class="form-control" id="field_payTo" name="payTo" formControlName="payToId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="payToOption.id" *ngFor="let payToOption of paytos; trackBy: trackById">{{ payToOption.name }}</option>
-                    </select>
-                </div>
             </div>
 
             <div>
@@ -104,3 +90,154 @@
         </form>
     </div>
 </div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>One fine body&hellip;</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<!--<ng-template #longContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Item</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <form name="expanseDtlForm" role="form" novalidate (ngSubmit)="addItemToList()" [formGroup]="editForm">
+                    <h2 id="jhi-expanse-dtl-heading">Create or edit a Expanse Dtl</h2>
+
+                    <div>
+                        <jhi-alert-error></jhi-alert-error>
+
+                        <div class="form-group" [hidden]="!expanseDtlForm.get('id')!.value">
+                            <label for="id">ID</label>
+                            <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_quantity">Quantity</label>
+                            <input type="number" class="form-control" name="quantity" id="field_quantity"
+                                   formControlName="quantity"/>
+                            <div *ngIf="expanseDtlForm.get('quantity')!.invalid && (expanseDtlForm.get('quantity')!.dirty || expanseDtlForm.get('quantity')!.touched)">
+                                <small class="form-text text-danger"
+                                       *ngIf="expanseDtlForm.get('quantity')?.errors?.required">
+                                    This field is required.
+                                </small>
+                                <small class="form-text text-danger"
+                                       [hidden]="!expanseDtlForm.get('quantity')?.errors?.number">
+                                    This field should be a number.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_unitPrice">Unit Price</label>
+                            <input type="number" class="form-control" name="unitPrice" id="field_unitPrice"
+                                   formControlName="unitPrice"/>
+                            <div *ngIf="expanseDtlForm.get('unitPrice')!.invalid && (expanseDtlForm.get('unitPrice')!.dirty || expanseDtlForm.get('unitPrice')!.touched)">
+                                <small class="form-text text-danger"
+                                       *ngIf="expanseDtlForm.get('unitPrice')?.errors?.required">
+                                    This field is required.
+                                </small>
+                                <small class="form-text text-danger"
+                                       [hidden]="!expanseDtlForm.get('unitPrice')?.errors?.number">
+                                    This field should be a number.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_amount">Amount</label>
+                            <input type="number" class="form-control" name="amount" id="field_amount"
+                                   formControlName="amount"/>
+                            <div *ngIf="expanseDtlForm.get('amount')!.invalid && (expanseDtlForm.get('amount')!.dirty || expanseDtlForm.get('amount')!.touched)">
+                                <small class="form-text text-danger"
+                                       *ngIf="expanseDtlForm.get('amount')?.errors?.required">
+                                    This field is required.
+                                </small>
+                                <small class="form-text text-danger"
+                                       [hidden]="!expanseDtlForm.get('amount')?.errors?.number">
+                                    This field should be a number.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_createdBy">Created By</label>
+                            <input type="text" class="form-control" name="createdBy" id="field_createdBy"
+                                   formControlName="createdBy"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_createdOn">Created On</label>
+                            <div class="d-flex">
+                                <input id="field_createdOn" type="datetime-local" class="form-control" name="createdOn" formControlName="createdOn" placeholder="YYYY-MM-DD HH:mm"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_modifiedBy">Modified By</label>
+                            <input type="text" class="form-control" name="modifiedBy" id="field_modifiedBy"
+                                   formControlName="modifiedBy"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_modifiedOn">Modified On</label>
+                            <div class="d-flex">
+                                <input id="field_modifiedOn" type="datetime-local" class="form-control" name="modifiedOn" formControlName="modifiedOn" placeholder="YYYY-MM-DD HH:mm"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_expanse">Expanse</label>
+                            <select class="form-control" id="field_expanse" name="expanse" formControlName="expanseId">
+                                <option [ngValue]="null"></option>
+                                <option [ngValue]="expanseOption.id" *ngFor="let expanseOption of expanses; trackBy: trackById">{{ expanseOption.voucherNo }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_item">Item</label>
+                            <select class="form-control" id="field_item" name="item" formControlName="itemId">
+                                <option *ngIf="!expanseDtlForm.get('itemId')!.value" [ngValue]="null" selected></option>
+                                <option [ngValue]="itemOption.id" *ngFor="let itemOption of items; trackBy: trackById">{{ itemOption.name }}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="expanseDtlForm.get('itemId')!.invalid && (expanseDtlForm.get('itemId')!.dirty || expanseDtlForm.get('itemId')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="expanseDtlForm.get('itemId')?.errors?.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div>
+
+
+                        <button type="submit" id="save-dtl-entity" [disabled]="expanseDtlForm.invalid || isSaving" class="btn btn-primary">
+                            <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>-->

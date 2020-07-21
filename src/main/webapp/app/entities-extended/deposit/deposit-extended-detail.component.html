@@ -1,54 +1,100 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="deposit">
-            <h2><span>Deposit</span> {{ deposit.id }}</h2>
+            <h2><span>Deposit</span> {{ deposit.depositNo }}</h2>
 
             <hr>
 
             <jhi-alert-error></jhi-alert-error>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span>Login Id</span></dt>
-                <dd>
+            <dl class="row">
+                <dt class="col-md-3"><span>Login Id</span></dt>
+                <dd class="col-md-9" align="left">
                     <span>{{ deposit.loginId }}</span>
                 </dd>
-                <dt><span>Deposit No</span></dt>
-                <dd>
+                <dt class="col-md-3"><span>Deposit No</span></dt>
+                <dd class="col-md-9" align="left">
                     <span>{{ deposit.depositNo }}</span>
                 </dd>
-                <dt><span>Deposit By</span></dt>
-                <dd>
+                <dt class="col-md-3"><span>Deposit By</span></dt>
+                <dd class="col-md-9" align="left">
                     <span>{{ deposit.depositBy }}</span>
                 </dd>
-                <dt><span>Deposit Date</span></dt>
-                <dd>
-                    <span>{{ deposit.depositDate }}</span>
-                </dd>
-                <dt><span>Medium</span></dt>
-                <dd>
-                    <span>{{ deposit.medium }}</span>
-                </dd>
-                <dt><span>Amount</span></dt>
-                <dd>
-                    <span>{{ deposit.amount }}</span>
-                </dd>
-                <dt><span>Created By</span></dt>
-                <dd>
-                    <span>{{ deposit.createdBy }}</span>
-                </dd>
-                <dt><span>Created On</span></dt>
-                <dd>
-                    <span>{{ deposit.createdOn }}</span>
-                </dd>
-                <dt><span>Modified By</span></dt>
-                <dd>
-                    <span>{{ deposit.modifiedBy }}</span>
-                </dd>
-                <dt><span>Modified On</span></dt>
-                <dd>
-                    <span>{{ deposit.modifiedOn }}</span>
-                </dd>
+
             </dl>
+
+
+            <div class="card">
+                <div class="card-body">
+                    <dl class="row">
+                        <div class="col-md-4">
+                            <dl class="row-md jh-entity-details">
+                                <dt><span>Deposit Date</span></dt>
+                                <dd>
+                                    <span>{{ deposit.depositDate | date: 'mediumDate'}}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-4">
+                            <dl class="row-md jh-entity-details">
+                                <dt><span>Medium</span></dt>
+                                <dd>
+                                    <span>{{ deposit.medium }}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-4">
+                            <dl class="row-md jh-entity-details">
+                                <dt><span>Amount</span></dt>
+                                <dd>
+                                    <span>{{ deposit.amount }}</span>
+                                </dd>
+                            </dl>
+                        </div>
+
+                    </dl>
+                </div>
+            </div>
+
+
+            <div class="card" *jhiHasAnyAuthority="'ROLE_ADMIN'" style="padding-top: 10px;">
+                <div class="card-body">
+                    <dl class="row">
+                        <div class="col-md-3">
+                            <dl class="row-md jh-entity-details">
+                                <dt><span>Created By</span></dt>
+                                <dd>
+                                    <span>{{ deposit.createdBy }}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-3">
+                            <dl class="row-md jh-entity-details">
+                                <dt><span>Created On</span></dt>
+                                <dd>
+                                    <span>{{ deposit.createdOn | date: 'medium'}}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-3">
+                            <dl class="row-md jh-entity-details">
+                                <dt><span>Modified By</span></dt>
+                                <dd>
+                                    <span>{{ deposit.modifiedBy }}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-3">
+                            <dl class="row-md jh-entity-details">
+                                <dt><span>Modified On</span></dt>
+                                <dd>
+                                    <span>{{ deposit.modifiedOn | date: 'medium' }}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </dl>
+                </div>
+            </div>
 
             <button type="submit"
                     (click)="previousState()"
@@ -56,7 +102,7 @@
                 <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
             </button>
 
-            <button type="button"
+            <button *ngIf="!deposit.isPosted" type="button"
                     [routerLink]="['/deposit', deposit.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>

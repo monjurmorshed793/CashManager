@@ -20,6 +20,19 @@ type SelectableEntity = IExpanse | IItem;
   templateUrl: './expanse-dtl-extended-update.component.html',
 })
 export class ExpanseDtlExtendedUpdateComponent extends ExpanseDtlUpdateComponent implements OnInit {
+  editForm = this.fb.group({
+    id: [],
+    quantity: [null, [Validators.required]],
+    unitPrice: [null, [Validators.required]],
+    amount: [null],
+    createdBy: [],
+    createdOn: [],
+    modifiedBy: [],
+    modifiedOn: [],
+    expanseId: [],
+    itemId: [null, Validators.required],
+  });
+
   constructor(
     protected expanseDtlService: ExpanseDtlExtendedService,
     protected expanseService: ExpanseService,

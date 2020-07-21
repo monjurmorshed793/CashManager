@@ -14,16 +14,7 @@ import { CashManagerSharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [CashManagerSharedModule, RouterModule.forChild(expanseDtlExtendedRoute)],
-  declarations: [
-    ExpanseDtlComponent,
-    ExpanseDtlDetailComponent,
-    ExpanseDtlUpdateComponent,
-    ExpanseDtlDeleteDialogComponent,
-    ExpanseDtlExtendedComponent,
-    ExpanseDtlExtendedDetailComponent,
-    ExpanseDtlExtendedUpdateComponent,
-    ExpanseDtlExtendedDeleteDialogComponent,
-  ],
+  declarations: [],
   entryComponents: [ExpanseDtlExtendedDeleteDialogComponent],
 })
 export class CashManagerExpanseDtlModule {}
