@@ -9,17 +9,17 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link ExpanseDtl} and its DTO {@link ExpanseDtlDTO}.
  */
-@Mapper(componentModel = "spring", uses = {ExpanseMapper.class, ItemMapper.class})
+@Mapper(componentModel = "spring", uses = {ItemMapper.class, ExpanseMapper.class})
 public interface ExpanseDtlMapper extends EntityMapper<ExpanseDtlDTO, ExpanseDtl> {
 
-    @Mapping(source = "expanse.id", target = "expanseId")
-    @Mapping(source = "expanse.voucherNo", target = "expanseVoucherNo")
     @Mapping(source = "item.id", target = "itemId")
     @Mapping(source = "item.name", target = "itemName")
+    @Mapping(source = "expanse.id", target = "expanseId")
+    @Mapping(source = "expanse.voucherNo", target = "expanseVoucherNo")
     ExpanseDtlDTO toDto(ExpanseDtl expanseDtl);
 
-    @Mapping(source = "expanseId", target = "expanse")
     @Mapping(source = "itemId", target = "item")
+    @Mapping(source = "expanseId", target = "expanse")
     ExpanseDtl toEntity(ExpanseDtlDTO expanseDtlDTO);
 
     default ExpanseDtl fromId(Long id) {

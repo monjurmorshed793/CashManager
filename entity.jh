@@ -90,9 +90,12 @@ enum MonthType{
 }
 
 relationship ManyToOne {
-	ExpanseDtl{expanse(voucherNo)} to Expanse,
     ExpanseDtl{item(name) required} to Item,
     Expanse{payTo(name) required} to PayTo
+}
+
+relationship OneToMany{
+    Expanse{expanseDtl} to ExpanseDtl{expanse(voucherNo)}
 }
 
 dto all with mapstruct

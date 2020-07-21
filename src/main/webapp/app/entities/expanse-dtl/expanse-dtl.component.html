@@ -30,8 +30,8 @@
                     <th scope="col"  jhiSortBy="createdOn"><span>Created On</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="modifiedBy"><span>Modified By</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="modifiedOn"><span>Modified On</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="expanseVoucherNo"><span>Expanse</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="itemName"><span>Item</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="expanseVoucherNo"><span>Expanse</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -46,13 +46,13 @@
                     <td>{{ expanseDtl.modifiedBy }}</td>
                     <td>{{ expanseDtl.modifiedOn | date:'medium' }}</td>
                     <td>
-                        <div *ngIf="expanseDtl.expanseId">
-                            <a [routerLink]="['/expanse', expanseDtl.expanseId , 'view']" >{{ expanseDtl.expanseVoucherNo }}</a>
+                        <div *ngIf="expanseDtl.itemId">
+                            <a [routerLink]="['/item', expanseDtl.itemId , 'view']" >{{ expanseDtl.itemName }}</a>
                         </div>
                     </td>
                     <td>
-                        <div *ngIf="expanseDtl.itemId">
-                            <a [routerLink]="['/item', expanseDtl.itemId , 'view']" >{{ expanseDtl.itemName }}</a>
+                        <div *ngIf="expanseDtl.expanseId">
+                            <a [routerLink]="['/expanse', expanseDtl.expanseId , 'view']" >{{ expanseDtl.expanseVoucherNo }}</a>
                         </div>
                     </td>
                     <td class="text-right">

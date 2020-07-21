@@ -70,8 +70,15 @@ export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements 
   }
 
   registerChangeInExpanseDtls(): void {
-    /*    this.eventSubscriber = this.eventManager.subscribe('expanseDtlListModification', () => {
-      //this.loadPage();
-    });*/
+    this.eventSubscriber = this.eventManager.subscribe('expanseDtlListModification', () => {
+      this.loadPage();
+    });
+  }
+
+  protected onSuccess(data: IExpanseDtl[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.page = page;
+    this.expanseDtls = data || [];
+    this.ngbPaginationPage = this.page;
   }
 }

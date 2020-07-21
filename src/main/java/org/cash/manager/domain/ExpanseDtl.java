@@ -31,16 +31,13 @@ public class ExpanseDtl implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "quantity", precision = 21, scale = 2, nullable = false)
+    @Column(name = "quantity", precision = 21, scale = 2)
     private BigDecimal quantity;
 
-    @NotNull
-    @Column(name = "unit_price", precision = 21, scale = 2, nullable = false)
+    @Column(name = "unit_price", precision = 21, scale = 2)
     private BigDecimal unitPrice;
 
-    @NotNull
-    @Column(name = "amount", precision = 21, scale = 2, nullable = false)
+    @Column(name = "amount", precision = 21, scale = 2)
     private BigDecimal amount;
 
     @Column(name = "created_by")
@@ -59,14 +56,14 @@ public class ExpanseDtl implements Serializable {
     @LastModifiedDate
     private Instant modifiedOn;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = "expanseDtls", allowSetters = true)
-    private Expanse expanse;
-
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "expanseDtls", allowSetters = true)
     private Item item;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "expanseDtls", allowSetters = true)
+    private Expanse expanse;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -168,19 +165,6 @@ public class ExpanseDtl implements Serializable {
         this.modifiedOn = modifiedOn;
     }
 
-    public Expanse getExpanse() {
-        return expanse;
-    }
-
-    public ExpanseDtl expanse(Expanse expanse) {
-        this.expanse = expanse;
-        return this;
-    }
-
-    public void setExpanse(Expanse expanse) {
-        this.expanse = expanse;
-    }
-
     public Item getItem() {
         return item;
     }
@@ -192,6 +176,19 @@ public class ExpanseDtl implements Serializable {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public Expanse getExpanse() {
+        return expanse;
+    }
+
+    public ExpanseDtl expanse(Expanse expanse) {
+        this.expanse = expanse;
+        return this;
+    }
+
+    public void setExpanse(Expanse expanse) {
+        this.expanse = expanse;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

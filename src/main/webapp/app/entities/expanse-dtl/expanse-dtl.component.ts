@@ -99,7 +99,7 @@ export class ExpanseDtlComponent implements OnInit, OnDestroy {
   protected onSuccess(data: IExpanseDtl[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
-    /*    if (navigate) {
+    if (navigate) {
       this.router.navigate(['/expanse-dtl'], {
         queryParams: {
           page: this.page,
@@ -107,7 +107,7 @@ export class ExpanseDtlComponent implements OnInit, OnDestroy {
           sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
         },
       });
-    }*/
+    }
     this.expanseDtls = data || [];
     this.ngbPaginationPage = this.page;
   }

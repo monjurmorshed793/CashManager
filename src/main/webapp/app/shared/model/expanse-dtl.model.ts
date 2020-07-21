@@ -9,10 +9,10 @@ export interface IExpanseDtl {
   createdOn?: Moment;
   modifiedBy?: string;
   modifiedOn?: Moment;
-  expanseVoucherNo?: string;
-  expanseId?: number;
   itemName?: string;
   itemId?: number;
+  expanseVoucherNo?: string;
+  expanseId?: number;
 }
 
 export class ExpanseDtl implements IExpanseDtl {
@@ -25,9 +25,9 @@ export class ExpanseDtl implements IExpanseDtl {
     public createdOn?: Moment,
     public modifiedBy?: string,
     public modifiedOn?: Moment,
-    public expanseVoucherNo?: string,
-    public expanseId?: number,
     public itemName?: string,
-    public itemId?: number
+    public itemId?: number,
+    public expanseVoucherNo?: string,
+    public expanseId?: number
   ) {}
 }

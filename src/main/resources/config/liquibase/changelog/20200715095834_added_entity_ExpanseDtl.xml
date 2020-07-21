@@ -12,18 +12,19 @@
         Added the entity ExpanseDtl.
     -->
     <changeSet id="20200715095834-1" author="jhipster">
+        <validCheckSum>8:ec39aa8f7b89370c375c9d9a952975eb</validCheckSum>
         <createTable tableName="expanse_dtl">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="quantity" type="decimal(21,2)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="unit_price" type="decimal(21,2)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="amount" type="decimal(21,2)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="created_by" type="varchar(255)">
                 <constraints nullable="true" />
@@ -37,11 +38,11 @@
             <column name="modified_on" type="datetime">
                 <constraints nullable="true" />
             </column>
-            <column name="expanse_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="item_id" type="bigint">
                 <constraints nullable="false" />
+            </column>
+            <column name="expanse_id" type="bigint">
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

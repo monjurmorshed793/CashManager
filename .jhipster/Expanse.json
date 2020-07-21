@@ -29,6 +29,10 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "totalAmount",
+      "fieldType": "BigDecimal"
+    },
+    {
       "fieldName": "isPosted",
       "fieldType": "Boolean"
     },
@@ -54,6 +58,12 @@
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "expanseDtl",
+      "otherEntityRelationshipName": "expanse",
+      "relationshipName": "expanseDtl"
+    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "payTo",

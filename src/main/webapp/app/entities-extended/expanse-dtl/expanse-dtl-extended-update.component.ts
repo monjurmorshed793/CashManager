@@ -35,11 +35,11 @@ export class ExpanseDtlExtendedUpdateComponent extends ExpanseDtlUpdateComponent
 
   constructor(
     protected expanseDtlService: ExpanseDtlExtendedService,
-    protected expanseService: ExpanseService,
     protected itemService: ItemExtendedService,
+    protected expanseService: ExpanseService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {
-    super(expanseDtlService, expanseService, itemService, activatedRoute, fb);
+    super(expanseDtlService, itemService, expanseService, activatedRoute, fb);
   }
 }

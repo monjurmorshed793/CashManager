@@ -107,7 +107,6 @@ export class ExpanseComponent implements OnInit, OnDestroy {
 
   protected onSuccess(data: IExpanse[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
-
     this.page = page;
     if (navigate) {
       this.router.navigate(['/expanse'], {

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Lob;
 import org.cash.manager.domain.enumeration.MonthType;
 
@@ -29,6 +30,8 @@ public class ExpanseDTO implements Serializable {
     
     @Lob
     private String notes;
+
+    private BigDecimal totalAmount;
 
     private Boolean isPosted;
 
@@ -93,6 +96,14 @@ public class ExpanseDTO implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public Boolean isIsPosted() {
@@ -186,6 +197,7 @@ public class ExpanseDTO implements Serializable {
             ", voucherDate='" + getVoucherDate() + "'" +
             ", month='" + getMonth() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", totalAmount=" + getTotalAmount() +
             ", isPosted='" + isIsPosted() + "'" +
             ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

@@ -16,6 +16,8 @@ public interface ExpanseMapper extends EntityMapper<ExpanseDTO, Expanse> {
     @Mapping(source = "payTo.name", target = "payToName")
     ExpanseDTO toDto(Expanse expanse);
 
+    @Mapping(target = "expanseDtls", ignore = true)
+    @Mapping(target = "removeExpanseDtl", ignore = true)
     @Mapping(source = "payToId", target = "payTo")
     Expanse toEntity(ExpanseDTO expanseDTO);
 
