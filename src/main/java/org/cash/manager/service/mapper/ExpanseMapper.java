@@ -4,12 +4,16 @@ package org.cash.manager.service.mapper;
 import org.cash.manager.domain.*;
 import org.cash.manager.service.dto.ExpanseDTO;
 
+import org.cash.manager.service.dto.ExpanseDtlDTO;
 import org.mapstruct.*;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Mapper for the entity {@link Expanse} and its DTO {@link ExpanseDTO}.
  */
-@Mapper(componentModel = "spring", uses = {PayToMapper.class})
+@Mapper(componentModel = "spring", uses = {PayToMapper.class, ExpanseDtlMapper.class})
 public interface ExpanseMapper extends EntityMapper<ExpanseDTO, Expanse> {
 
     @Mapping(source = "payTo.id", target = "payToId")
@@ -29,4 +33,5 @@ public interface ExpanseMapper extends EntityMapper<ExpanseDTO, Expanse> {
         expanse.setId(id);
         return expanse;
     }
+
 }

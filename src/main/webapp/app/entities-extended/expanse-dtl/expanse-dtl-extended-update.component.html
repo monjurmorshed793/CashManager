@@ -13,10 +13,20 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_item">Item</label>
-                    <select class="form-control" id="field_item" name="item" formControlName="itemId">
+                   <!-- <select class="form-control" id="field_item" name="item" formControlName="itemId">
                         <option [ngValue]="null"></option>
                         <option [ngValue]="itemOption.id" *ngFor="let itemOption of items; trackBy: trackById">{{ itemOption.name }}</option>
-                    </select>
+                    </select>-->
+                    <input
+                        id="field_item"
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="selectedItemName"
+                        [ngbTypeahead]="search"
+                        (focus)="focus$.next($any($event).target.value)"
+                        (click)="click$.next($any($event).target.value)"
+                        #instance="ngbTypeahead"
+                    />
                 </div>
 
                 <div class="form-group">
