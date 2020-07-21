@@ -91,7 +91,7 @@ export class ExpanseDtlUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): IExpanseDtl {
+  protected createFromForm(): IExpanseDtl {
     return {
       ...new ExpanseDtl(),
       id: this.editForm.get(['id'])!.value,

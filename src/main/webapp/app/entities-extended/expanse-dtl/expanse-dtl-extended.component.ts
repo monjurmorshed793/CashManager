@@ -19,6 +19,7 @@ import { ExpanseExtendedService } from 'app/entities-extended/expanse/expanse-ex
 export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements OnInit, OnDestroy {
   @Input()
   expanseId: number | null = null;
+  expanse: IExpanse | null = null;
 
   constructor(
     protected expanseDtlService: ExpanseDtlExtendedService,
@@ -63,6 +64,7 @@ export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements 
     //this.expanseService.getExpanseId().subscribe((a)=> this.expanseId = a);
     this.handleNavigation();
     this.loadPage();
+    this.registerChangeInExpanseDtls();
   }
 
   addNew(): void {

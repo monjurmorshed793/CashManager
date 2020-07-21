@@ -1,6 +1,7 @@
 package org.cash.manager.web.rest;
 
 import org.cash.manager.service.ExpanseDtlService;
+import org.cash.manager.service.extended.ExpanseDtlExtendedService;
 import org.cash.manager.web.rest.errors.BadRequestAlertException;
 import org.cash.manager.service.dto.ExpanseDtlDTO;
 import org.cash.manager.service.dto.ExpanseDtlCriteria;
@@ -40,11 +41,11 @@ public class ExpanseDtlResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ExpanseDtlService expanseDtlService;
+    private final ExpanseDtlExtendedService expanseDtlService;
 
     private final ExpanseDtlQueryService expanseDtlQueryService;
 
-    public ExpanseDtlResource(ExpanseDtlService expanseDtlService, ExpanseDtlQueryService expanseDtlQueryService) {
+    public ExpanseDtlResource(ExpanseDtlExtendedService expanseDtlService, ExpanseDtlQueryService expanseDtlQueryService) {
         this.expanseDtlService = expanseDtlService;
         this.expanseDtlQueryService = expanseDtlQueryService;
     }

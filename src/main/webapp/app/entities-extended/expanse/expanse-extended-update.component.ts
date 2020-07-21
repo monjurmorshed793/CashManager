@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
@@ -56,7 +56,8 @@ export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent imple
     private accountService: AccountService,
     private expanseDtlService: ExpanseDtlService,
     private modalService: NgbModal,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private router: Router
   ) {
     super(dataUtils, eventManager, expanseService, payToService, activatedRoute, fb);
   }
@@ -144,6 +145,7 @@ export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent imple
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IExpanse>>): void {
     result.subscribe(
       res => {
+        this.expanse = res.body;
         if (this.isAddingNew) {
           this.expanseService.setNewId(res?.body?.id!);
         }
@@ -161,6 +163,32 @@ export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent imple
     } else {
       this.isAddingNew = true;
       this.subscribeToSaveResponse(this.expanseService.create(expanse));
+    }
+  }
+
+  post(): void {
+    this.isSaving = true;
+    const expanse = this.createFromForm();
+    expanse.isPosted = true;
+    expanse.postDate = moment();
+    if (expanse.id !== undefined) {
+      this.subscribeToSaveResponse(this.expanseService.update(expanse));
+    } else {
+      this.isAddingNew = true;
+      this.subscribeToSaveResponse(this.expanseService.create(expanse));
+    }
+  }
+
+  protected onSaveSuccess(): void {
+    this.isSaving = false;
+    //this.previousState();
+  }
+
+  previousState(): void {
+    if (this.expanse?.isPosted) {
+      window.history.back();
+    } else {
+      this.router.navigate(['/expanse']);
     }
   }
 }

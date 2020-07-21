@@ -1,16 +1,15 @@
 <div class="card">
-    <div class="card-header bg-secondary text-white">Create or Edit Expense</div>
+    <div class="card-header bg-secondary text-white">Create or Edit Expense </div>
     <div class="card-body">
         <div class="row justify-content-center">
-            <div class="col-8">
-                <jhi-alert></jhi-alert>
-            </div>
             <div class="col-8">
                 <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
 
                     <div>
                         <jhi-alert-error></jhi-alert-error>
-
+                        <div class="alert alert-info" align="center">
+                            Created By: {{editForm.controls['createdBy'].value}} | Created On: {{editForm.controls['createdOn'].value | date: 'mediumDate'}} | Modified By: {{editForm.controls['modifiedBy'].value}} | Modified On: {{editForm.controls['modifiedOn'].value | date: 'mediumDate'}}
+                        </div>
                         <div class="form-group row">
                             <label class="form-control-label col-md-4" for="field_loginId">Login Id</label>
                             <input type="text" class="form-control col-md-8" name="loginId" id="field_loginId"
@@ -61,6 +60,7 @@
 
 
 
+
                         <div class="card" *ngIf="editForm.controls['id'].value">
                             <div class="card-body">
                                 <div class="row">
@@ -69,6 +69,12 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="alert alert-info" *ngIf="editForm.controls['totalAmount'].value">
+                                <div class="row">
+                                    <div class="col-md-6" align="right">Total: </div>
+                                    <div class="col-md-6"><b>{{editForm.controls['totalAmount'].value}}</b></div>
+                                </div>
                         </div>
 
                         <div class="form-group">
@@ -82,11 +88,14 @@
 
                     <div>
                         <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                            <span>Back</span>
                         </button>
 
-                        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || expanse?.isPosted" class="btn btn-primary">
                             <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                        </button>
+                        <button *ngIf="expanse?.id" (click)="post()" [disabled]="editForm.invalid || isSaving || expanse?.isPosted" class="btn btn-primary">
+                            <fa-icon icon="save"></fa-icon>&nbsp;<span>Post</span>
                         </button>
                     </div>
                 </form>

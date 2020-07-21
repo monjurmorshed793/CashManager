@@ -10,6 +10,7 @@ import { IExpanseDtl } from 'app/shared/model/expanse-dtl.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ExpanseDtlService } from './expanse-dtl.service';
 import { ExpanseDtlDeleteDialogComponent } from './expanse-dtl-delete-dialog.component';
+import { ExpanseDtlExtendedDeleteDialogComponent } from 'app/entities-extended/expanse-dtl/expanse-dtl-extended-delete-dialog.component';
 
 @Component({
   selector: 'jhi-expanse-dtl',
@@ -80,11 +81,13 @@ export class ExpanseDtlComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInExpanseDtls(): void {
-    this.eventSubscriber = this.eventManager.subscribe('expanseDtlListModification', () => this.loadPage());
+    this.eventSubscriber = this.eventManager.subscribe('expanseDtlListModification', () => {
+      this.loadPage();
+    });
   }
 
   delete(expanseDtl: IExpanseDtl): void {
-    const modalRef = this.modalService.open(ExpanseDtlDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(ExpanseDtlExtendedDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.expanseDtl = expanseDtl;
   }
 
