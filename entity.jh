@@ -38,6 +38,7 @@ entity Expanse{
     voucherDate LocalDate required,
     month MonthType required,
     notes TextBlob required,
+    totalAmount BigDecimal,
     isPosted Boolean,
     postDate Instant,
     createdBy String,
@@ -57,9 +58,9 @@ entity DepositSeq{
 
 entity ExpanseDtl{
 	//item
-    quantity BigDecimal required,
-    unitPrice BigDecimal required,
-    amount BigDecimal required,
+    quantity BigDecimal ,
+    unitPrice BigDecimal ,
+    amount BigDecimal ,
     createdBy String,
     createdOn Instant,
     modifiedBy String,
