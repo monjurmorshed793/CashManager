@@ -11,6 +11,12 @@ import { ExpanseComponent } from '../../entities/expanse/expanse.component';
 import { IExpanse } from '../../shared/model/expanse.model';
 import { Account } from '../../core/user/account.model';
 import { AccountService } from '../../core/auth/account.service';
+import { UserService } from '../../core/user/user.service';
+import { ItemService } from '../../entities/item/item.service';
+import { PayToService } from '../../entities/pay-to/pay-to.service';
+import { IUser } from '../../core/user/user.model';
+import { IPayTo } from '../../shared/model/pay-to.model';
+import { Item } from '../../shared/model/item.model';
 
 @Component({
   selector: 'jhi-expanse',
@@ -20,6 +26,13 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
   account: Account | null = null;
   newId: number | null = null;
   showLoader = false;
+  login: string | null = null;
+  loginList: string[] = [];
+  payToId: number | null = null;
+  payToLists: IPayTo[] = [];
+  itemId: number | null = null;
+  itemLists: Item[] = [];
+
   constructor(
     protected expanseService: ExpanseExtendedService,
     protected activatedRoute: ActivatedRoute,
@@ -27,7 +40,10 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private userService: UserService,
+    private itemService: ItemService,
+    private payToService: PayToService
   ) {
     super(expanseService, activatedRoute, dataUtils, router, eventManager, modalService);
   }
