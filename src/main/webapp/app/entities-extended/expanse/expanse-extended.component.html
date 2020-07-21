@@ -45,7 +45,6 @@
                     <td>{{ expanse.voucherNo }}</td>
                     <td>{{ expanse.voucherDate | date:'mediumDate' }}</td>
                     <td>{{ expanse.month }}</td>
-                    <td>{{ expanse.createdBy }}</td>
                     <td>
                         <div *ngIf="expanse.payToId">
                             <a [routerLink]="['/pay-to', expanse.payToId , 'view']" >{{ expanse.payToName }}</a>

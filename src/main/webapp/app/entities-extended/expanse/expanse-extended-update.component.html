@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header bg-secondary text-white">Create or Edit Expense </div>
+    <div class="card-header bg-secondary text-white">Create or Edit Expense (<span *ngIf="expanse?.isPosted">Posted</span>)</div>
     <div class="card-body">
         <div class="row justify-content-center">
             <div class="col-8">
@@ -10,6 +10,7 @@
                         <div class="alert alert-info" align="center">
                             Created By: {{editForm.controls['createdBy'].value}} | Created On: {{editForm.controls['createdOn'].value | date: 'mediumDate'}} | Modified By: {{editForm.controls['modifiedBy'].value}} | Modified On: {{editForm.controls['modifiedOn'].value | date: 'mediumDate'}}
                         </div>
+
                         <div class="form-group row">
                             <label class="form-control-label col-md-4" for="field_loginId">Login Id</label>
                             <input type="text" class="form-control col-md-8" name="loginId" id="field_loginId"

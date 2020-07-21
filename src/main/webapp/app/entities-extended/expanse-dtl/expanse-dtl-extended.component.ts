@@ -46,6 +46,10 @@ export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements 
           (res: HttpResponse<IExpanseDtl[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
           () => this.onError()
         );
+
+      this.expanseService.find(this.expanseId).subscribe(res => {
+        this.expanse = res.body;
+      });
     } else {
       this.expanseDtlService
         .query({
