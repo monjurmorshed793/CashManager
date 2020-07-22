@@ -74,6 +74,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
 
     private LongFilter payToId;
 
+    private LongFilter itemId;
+
     public ExpanseCriteria() {
     }
 
@@ -92,6 +94,7 @@ public class ExpanseCriteria implements Serializable, Criteria {
         this.modifiedOn = other.modifiedOn == null ? null : other.modifiedOn.copy();
         this.expanseDtlId = other.expanseDtlId == null ? null : other.expanseDtlId.copy();
         this.payToId = other.payToId == null ? null : other.payToId.copy();
+        this.itemId = other.itemId == null ? null : other.itemId.copy();
     }
 
     @Override
@@ -105,6 +108,14 @@ public class ExpanseCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    public LongFilter getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(LongFilter itemId) {
+        this.itemId = itemId;
     }
 
     public StringFilter getLoginId() {
@@ -235,7 +246,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
             Objects.equals(modifiedBy, that.modifiedBy) &&
             Objects.equals(modifiedOn, that.modifiedOn) &&
             Objects.equals(expanseDtlId, that.expanseDtlId) &&
-            Objects.equals(payToId, that.payToId);
+            Objects.equals(payToId, that.payToId) &&
+            Objects.equals(itemId, that.itemId);
     }
 
     @Override
@@ -254,7 +266,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
         modifiedBy,
         modifiedOn,
         expanseDtlId,
-        payToId
+        payToId,
+        itemId
         );
     }
 

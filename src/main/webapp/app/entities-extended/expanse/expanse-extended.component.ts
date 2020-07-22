@@ -75,12 +75,12 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
     });
 
     if (this.account?.authorities.includes('ROLE_ADMIN')) {
-      if (this.login && this.payToId && this.itemName) {
+      if (this.login && this.payToId && this.itemId) {
         this.expanseService
           .query({
             'loginId.equals': this.login,
             'payToId.equals': this.payToId,
-            'itemName.contains': this.itemName,
+            'itemId.equals': this.itemId,
             page: pageToLoad - 1,
             size: this.itemsPerPage,
             sort: ['id,desc'],
@@ -89,11 +89,11 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
             (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
             () => this.onError()
           );
-      } else if (this.login && this.itemName && !this.payToId) {
+      } else if (this.login && this.itemId && !this.payToId) {
         this.expanseService
           .query({
             'loginId.equals': this.login,
-            'itemName.contains': this.itemName,
+            'itemId.equals': this.itemId,
             page: pageToLoad - 1,
             size: this.itemsPerPage,
             sort: ['id,desc'],
@@ -102,7 +102,7 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
             (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
             () => this.onError()
           );
-      } else if (this.login && this.payToId && !this.itemName) {
+      } else if (this.login && this.payToId && !this.itemId) {
         this.expanseService
           .query({
             'loginId.equals': this.login,
@@ -115,11 +115,11 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
             (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
             () => this.onError()
           );
-      } else if (!this.login && this.payToId && this.itemName) {
+      } else if (!this.login && this.payToId && this.itemId) {
         this.expanseService
           .query({
             'payToId.equals': this.payToId,
-            'itemName.contains': this.itemName,
+            'itemId.equals': this.itemId,
             page: pageToLoad - 1,
             size: this.itemsPerPage,
             sort: ['id,desc'],
@@ -128,7 +128,7 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
             (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
             () => this.onError()
           );
-      } else if (this.login && !this.payToId && !this.itemName) {
+      } else if (this.login && !this.payToId && !this.itemId) {
         this.expanseService
           .query({
             'loginId.equals': this.login,
@@ -140,7 +140,7 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
             (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
             () => this.onError()
           );
-      } else if (!this.login && this.payToId && !this.itemName) {
+      } else if (!this.login && this.payToId && !this.itemId) {
         this.expanseService
           .query({
             'payToId.equals': this.payToId,
@@ -152,10 +152,10 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
             (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
             () => this.onError()
           );
-      } else if (!this.login && !this.payToId && this.itemName) {
+      } else if (!this.login && !this.payToId && this.itemId) {
         this.expanseService
           .query({
-            'itemName.contains': this.itemName,
+            'itemId.equals': this.itemId,
             page: pageToLoad - 1,
             size: this.itemsPerPage,
             sort: ['id,desc'],
@@ -199,8 +199,8 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
     this.expanseService.setPayToId(payToId);
   }
 
-  itemSelected(itemName: string | null): void {
-    this.expanseService.setItemName(itemName);
+  itemSelected(itemId: number | null): void {
+    this.expanseService.setItemId(itemId);
   }
 
   ngOnInit(): void {
@@ -209,7 +209,6 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
     this.expanseService.getLogin().subscribe(login => (this.login = login));
     this.expanseService.getItemId().subscribe(itemId => (this.itemId = itemId));
     this.expanseService.getPayToId().subscribe(payToId => (this.payToId = payToId));
-    this.expanseService.getItemName().subscribe(itemName => (this.itemName = itemName));
     this.expanseService.getNewId().subscribe(res => {
       this.newId = res;
       if (res) {

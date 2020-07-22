@@ -132,6 +132,10 @@ public class ExpanseQueryService extends QueryService<Expanse> {
                 specification = specification.and(buildSpecification(criteria.getPayToId(),
                     root -> root.join(Expanse_.payTo, JoinType.LEFT).get(PayTo_.id)));
             }
+            if(criteria.getItemId() !=null){
+                specification = specification.and(buildSpecification(criteria.getItemId(),
+                    root -> root.joinSet("expanseDtls", JoinType.LEFT).get("item").get("id")));
+            }
         }
         return specification;
     }
