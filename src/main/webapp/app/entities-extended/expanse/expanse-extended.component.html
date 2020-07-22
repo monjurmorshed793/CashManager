@@ -1,5 +1,37 @@
+
+<div class="card" style="padding-bottom: 10px;">
+    <div class="card-header bg-secondary text-white">Select</div>
+    <div class="card-body">
+        <div class="row justify-content-between">
+            <div class="col-md-3">
+                <select class="form-control col-md-8" id="field_login" name="login" [(ngModel)]="login" (ngModelChange)="loginSelected(login)">
+                    <option [ngValue]="null">Select Login</option>
+                    <option [ngValue]="loginOption" *ngFor="let loginOption of loginList">{{ loginOption }}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control col-md-8" id="field_payTo" name="login" [(ngModel)]="payToId" (ngModelChange)="payToSelected(payToId)">
+                    <option [ngValue]="null">Select Pay To</option>
+                    <option [ngValue]="payToOption.id" *ngFor="let payToOption of payToLists">{{ payToOption.name }}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control col-md-8" id="field_item" name="login" [(ngModel)]="itemId" (ngModelChange)="itemSelected(itemId)">
+                    <option [ngValue]="null">Select Item</option>
+                    <option [ngValue]="itemOption.id" *ngFor="let itemOption of itemLists">{{ itemOption.name }}</option>
+                </select>
+            </div>
+            <div class="col-md-3" align="right">
+                <button class="btn btn-secondary" (click)="loadPage()">Filter</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <div class="row justify-content-center" *ngIf="showLoader">
-    <div class="col-md-8 fa-5x" align="center" *ngIf="showLoader">
+    <div class="col-md-8 fa-5x" align="center" >
          <span>
                 <fa-icon icon="spinner" [pulse]="true"></fa-icon>
             </span>
@@ -7,14 +39,14 @@
 </div>
 
 
-<div *ngIf="!showLoader">
+<div *ngIf="!showLoader" style="padding-top: 10px;">
     <h2 id="page-heading">
-        <span>Expanses</span>
+        <span>Expenses</span>
 
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-expanse" [routerLink]="['/expanse/new']">
             <fa-icon icon="plus"></fa-icon>
             <span>
-            Create a new Expanse
+            Add
             </span>
         </button>
     </h2>
@@ -28,7 +60,7 @@
     </div>
 
     <div class="table-responsive" id="entities" *ngIf="expanses && expanses.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
+        <table class="table table-striped" aria-describedby="page-heading" >
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                     <th scope="col"  jhiSortBy="loginId"><span>Login Id</span> <fa-icon icon="sort"></fa-icon></th>
@@ -45,7 +77,6 @@
                     <td>{{ expanse.voucherNo }}</td>
                     <td>{{ expanse.voucherDate | date:'mediumDate' }}</td>
                     <td>{{ expanse.month }}</td>
-                    <td>{{ expanse.createdBy }}</td>
                     <td>
                         <div *ngIf="expanse.payToId">
                             <a [routerLink]="['/pay-to', expanse.payToId , 'view']" >{{ expanse.payToName }}</a>
@@ -54,20 +85,13 @@
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
-                                    [routerLink]="['/expanse', expanse.id, 'view']"
-                                    class="btn btn-info btn-sm">
+                                    [routerLink]="['/expanse', expanse.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
                                 <fa-icon icon="eye"></fa-icon>
                                 <span class="d-none d-md-inline">View</span>
                             </button>
 
-                            <button type="submit"
-                                    [routerLink]="['/expanse', expanse.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(expanse)"
+                            <button *ngIf="!expanse.isPosted" type="submit" (click)="delete(expanse)"
                                     class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
                                 <span class="d-none d-md-inline">Delete</span>

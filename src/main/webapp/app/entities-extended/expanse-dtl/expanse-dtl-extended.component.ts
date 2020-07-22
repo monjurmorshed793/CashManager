@@ -19,6 +19,7 @@ import { ExpanseExtendedService } from 'app/entities-extended/expanse/expanse-ex
 export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements OnInit, OnDestroy {
   @Input()
   expanseId: number | null = null;
+  expanse: IExpanse | null = null;
 
   constructor(
     protected expanseDtlService: ExpanseDtlExtendedService,
@@ -45,6 +46,10 @@ export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements 
           (res: HttpResponse<IExpanseDtl[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
           () => this.onError()
         );
+
+      this.expanseService.find(this.expanseId).subscribe(res => {
+        this.expanse = res.body;
+      });
     } else {
       this.expanseDtlService
         .query({
@@ -63,6 +68,7 @@ export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements 
     //this.expanseService.getExpanseId().subscribe((a)=> this.expanseId = a);
     this.handleNavigation();
     this.loadPage();
+    this.registerChangeInExpanseDtls();
   }
 
   addNew(): void {
@@ -70,8 +76,15 @@ export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements 
   }
 
   registerChangeInExpanseDtls(): void {
-    /*    this.eventSubscriber = this.eventManager.subscribe('expanseDtlListModification', () => {
-      //this.loadPage();
-    });*/
+    this.eventSubscriber = this.eventManager.subscribe('expanseDtlListModification', () => {
+      this.loadPage();
+    });
+  }
+
+  protected onSuccess(data: IExpanseDtl[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.page = page;
+    this.expanseDtls = data || [];
+    this.ngbPaginationPage = this.page;
   }
 }

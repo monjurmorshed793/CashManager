@@ -11,6 +11,7 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
+import io.github.jhipster.service.filter.BigDecimalFilter;
 import io.github.jhipster.service.filter.InstantFilter;
 import io.github.jhipster.service.filter.LocalDateFilter;
 
@@ -55,6 +56,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
 
     private MonthTypeFilter month;
 
+    private BigDecimalFilter totalAmount;
+
     private BooleanFilter isPosted;
 
     private InstantFilter postDate;
@@ -67,6 +70,8 @@ public class ExpanseCriteria implements Serializable, Criteria {
 
     private InstantFilter modifiedOn;
 
+    private LongFilter expanseDtlId;
+
     private LongFilter payToId;
 
     public ExpanseCriteria() {
@@ -78,12 +83,14 @@ public class ExpanseCriteria implements Serializable, Criteria {
         this.voucherNo = other.voucherNo == null ? null : other.voucherNo.copy();
         this.voucherDate = other.voucherDate == null ? null : other.voucherDate.copy();
         this.month = other.month == null ? null : other.month.copy();
+        this.totalAmount = other.totalAmount == null ? null : other.totalAmount.copy();
         this.isPosted = other.isPosted == null ? null : other.isPosted.copy();
         this.postDate = other.postDate == null ? null : other.postDate.copy();
         this.createdBy = other.createdBy == null ? null : other.createdBy.copy();
         this.createdOn = other.createdOn == null ? null : other.createdOn.copy();
         this.modifiedBy = other.modifiedBy == null ? null : other.modifiedBy.copy();
         this.modifiedOn = other.modifiedOn == null ? null : other.modifiedOn.copy();
+        this.expanseDtlId = other.expanseDtlId == null ? null : other.expanseDtlId.copy();
         this.payToId = other.payToId == null ? null : other.payToId.copy();
     }
 
@@ -130,6 +137,14 @@ public class ExpanseCriteria implements Serializable, Criteria {
 
     public void setMonth(MonthTypeFilter month) {
         this.month = month;
+    }
+
+    public BigDecimalFilter getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimalFilter totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public BooleanFilter getIsPosted() {
@@ -180,6 +195,14 @@ public class ExpanseCriteria implements Serializable, Criteria {
         this.modifiedOn = modifiedOn;
     }
 
+    public LongFilter getExpanseDtlId() {
+        return expanseDtlId;
+    }
+
+    public void setExpanseDtlId(LongFilter expanseDtlId) {
+        this.expanseDtlId = expanseDtlId;
+    }
+
     public LongFilter getPayToId() {
         return payToId;
     }
@@ -204,12 +227,14 @@ public class ExpanseCriteria implements Serializable, Criteria {
             Objects.equals(voucherNo, that.voucherNo) &&
             Objects.equals(voucherDate, that.voucherDate) &&
             Objects.equals(month, that.month) &&
+            Objects.equals(totalAmount, that.totalAmount) &&
             Objects.equals(isPosted, that.isPosted) &&
             Objects.equals(postDate, that.postDate) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdOn, that.createdOn) &&
             Objects.equals(modifiedBy, that.modifiedBy) &&
             Objects.equals(modifiedOn, that.modifiedOn) &&
+            Objects.equals(expanseDtlId, that.expanseDtlId) &&
             Objects.equals(payToId, that.payToId);
     }
 
@@ -221,12 +246,14 @@ public class ExpanseCriteria implements Serializable, Criteria {
         voucherNo,
         voucherDate,
         month,
+        totalAmount,
         isPosted,
         postDate,
         createdBy,
         createdOn,
         modifiedBy,
         modifiedOn,
+        expanseDtlId,
         payToId
         );
     }
@@ -240,12 +267,14 @@ public class ExpanseCriteria implements Serializable, Criteria {
                 (voucherNo != null ? "voucherNo=" + voucherNo + ", " : "") +
                 (voucherDate != null ? "voucherDate=" + voucherDate + ", " : "") +
                 (month != null ? "month=" + month + ", " : "") +
+                (totalAmount != null ? "totalAmount=" + totalAmount + ", " : "") +
                 (isPosted != null ? "isPosted=" + isPosted + ", " : "") +
                 (postDate != null ? "postDate=" + postDate + ", " : "") +
                 (createdBy != null ? "createdBy=" + createdBy + ", " : "") +
                 (createdOn != null ? "createdOn=" + createdOn + ", " : "") +
                 (modifiedBy != null ? "modifiedBy=" + modifiedBy + ", " : "") +
                 (modifiedOn != null ? "modifiedOn=" + modifiedOn + ", " : "") +
+                (expanseDtlId != null ? "expanseDtlId=" + expanseDtlId + ", " : "") +
                 (payToId != null ? "payToId=" + payToId + ", " : "") +
             "}";
     }

@@ -51,6 +51,9 @@ public class CacheConfiguration {
             createCache(cm, org.cash.manager.domain.Deposit.class.getName());
             createCache(cm, org.cash.manager.domain.ExpanseSeq.class.getName());
             createCache(cm, org.cash.manager.domain.DepositSeq.class.getName());
+            createCache(cm, org.cash.manager.domain.Expanse.class.getName());
+            createCache(cm, org.cash.manager.domain.ExpanseDtl.class.getName());
+            createCache(cm, org.cash.manager.domain.Expanse.class.getName() + ".expanseDtls");
             // jhipster-needle-ehcache-add-entry
         };
     }

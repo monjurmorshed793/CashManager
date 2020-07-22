@@ -2,8 +2,8 @@ package org.cash.manager.web.rest;
 
 import org.cash.manager.CashManagerApp;
 import org.cash.manager.domain.ExpanseDtl;
-import org.cash.manager.domain.Expanse;
 import org.cash.manager.domain.Item;
+import org.cash.manager.domain.Expanse;
 import org.cash.manager.repository.ExpanseDtlRepository;
 import org.cash.manager.service.ExpanseDtlService;
 import org.cash.manager.service.dto.ExpanseDtlDTO;
@@ -187,66 +187,6 @@ public class ExpanseDtlResourceIT {
         assertThat(expanseDtlList).hasSize(databaseSizeBeforeCreate);
     }
 
-
-    @Test
-    @Transactional
-    public void checkQuantityIsRequired() throws Exception {
-        int databaseSizeBeforeTest = expanseDtlRepository.findAll().size();
-        // set the field null
-        expanseDtl.setQuantity(null);
-
-        // Create the ExpanseDtl, which fails.
-        ExpanseDtlDTO expanseDtlDTO = expanseDtlMapper.toDto(expanseDtl);
-
-
-        restExpanseDtlMockMvc.perform(post("/api/expanse-dtls")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(expanseDtlDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<ExpanseDtl> expanseDtlList = expanseDtlRepository.findAll();
-        assertThat(expanseDtlList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUnitPriceIsRequired() throws Exception {
-        int databaseSizeBeforeTest = expanseDtlRepository.findAll().size();
-        // set the field null
-        expanseDtl.setUnitPrice(null);
-
-        // Create the ExpanseDtl, which fails.
-        ExpanseDtlDTO expanseDtlDTO = expanseDtlMapper.toDto(expanseDtl);
-
-
-        restExpanseDtlMockMvc.perform(post("/api/expanse-dtls")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(expanseDtlDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<ExpanseDtl> expanseDtlList = expanseDtlRepository.findAll();
-        assertThat(expanseDtlList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkAmountIsRequired() throws Exception {
-        int databaseSizeBeforeTest = expanseDtlRepository.findAll().size();
-        // set the field null
-        expanseDtl.setAmount(null);
-
-        // Create the ExpanseDtl, which fails.
-        ExpanseDtlDTO expanseDtlDTO = expanseDtlMapper.toDto(expanseDtl);
-
-
-        restExpanseDtlMockMvc.perform(post("/api/expanse-dtls")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(expanseDtlDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<ExpanseDtl> expanseDtlList = expanseDtlRepository.findAll();
-        assertThat(expanseDtlList).hasSize(databaseSizeBeforeTest);
-    }
 
     @Test
     @Transactional
@@ -885,6 +825,22 @@ public class ExpanseDtlResourceIT {
 
     @Test
     @Transactional
+    public void getAllExpanseDtlsByItemIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        Item item = expanseDtl.getItem();
+        expanseDtlRepository.saveAndFlush(expanseDtl);
+        Long itemId = item.getId();
+
+        // Get all the expanseDtlList where item equals to itemId
+        defaultExpanseDtlShouldBeFound("itemId.equals=" + itemId);
+
+        // Get all the expanseDtlList where item equals to itemId + 1
+        defaultExpanseDtlShouldNotBeFound("itemId.equals=" + (itemId + 1));
+    }
+
+
+    @Test
+    @Transactional
     public void getAllExpanseDtlsByExpanseIsEqualToSomething() throws Exception {
         // Initialize the database
         expanseDtlRepository.saveAndFlush(expanseDtl);
@@ -900,22 +856,6 @@ public class ExpanseDtlResourceIT {
 
         // Get all the expanseDtlList where expanse equals to expanseId + 1
         defaultExpanseDtlShouldNotBeFound("expanseId.equals=" + (expanseId + 1));
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllExpanseDtlsByItemIsEqualToSomething() throws Exception {
-        // Get already existing entity
-        Item item = expanseDtl.getItem();
-        expanseDtlRepository.saveAndFlush(expanseDtl);
-        Long itemId = item.getId();
-
-        // Get all the expanseDtlList where item equals to itemId
-        defaultExpanseDtlShouldBeFound("itemId.equals=" + itemId);
-
-        // Get all the expanseDtlList where item equals to itemId + 1
-        defaultExpanseDtlShouldNotBeFound("itemId.equals=" + (itemId + 1));
     }
 
     /**

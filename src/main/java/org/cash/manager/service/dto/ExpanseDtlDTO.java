@@ -12,13 +12,10 @@ public class ExpanseDtlDTO implements Serializable {
     
     private Long id;
 
-    @NotNull
     private BigDecimal quantity;
 
-    @NotNull
     private BigDecimal unitPrice;
 
-    @NotNull
     private BigDecimal amount;
 
     private String createdBy;
@@ -30,13 +27,13 @@ public class ExpanseDtlDTO implements Serializable {
     private Instant modifiedOn;
 
 
-    private Long expanseId;
-
-    private String expanseVoucherNo;
-
     private Long itemId;
 
     private String itemName;
+
+    private Long expanseId;
+
+    private String expanseVoucherNo;
     
     public Long getId() {
         return id;
@@ -102,22 +99,6 @@ public class ExpanseDtlDTO implements Serializable {
         this.modifiedOn = modifiedOn;
     }
 
-    public Long getExpanseId() {
-        return expanseId;
-    }
-
-    public void setExpanseId(Long expanseId) {
-        this.expanseId = expanseId;
-    }
-
-    public String getExpanseVoucherNo() {
-        return expanseVoucherNo;
-    }
-
-    public void setExpanseVoucherNo(String expanseVoucherNo) {
-        this.expanseVoucherNo = expanseVoucherNo;
-    }
-
     public Long getItemId() {
         return itemId;
     }
@@ -132,6 +113,22 @@ public class ExpanseDtlDTO implements Serializable {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public Long getExpanseId() {
+        return expanseId;
+    }
+
+    public void setExpanseId(Long expanseId) {
+        this.expanseId = expanseId;
+    }
+
+    public String getExpanseVoucherNo() {
+        return expanseVoucherNo;
+    }
+
+    public void setExpanseVoucherNo(String expanseVoucherNo) {
+        this.expanseVoucherNo = expanseVoucherNo;
     }
 
     @Override
@@ -163,10 +160,10 @@ public class ExpanseDtlDTO implements Serializable {
             ", createdOn='" + getCreatedOn() + "'" +
             ", modifiedBy='" + getModifiedBy() + "'" +
             ", modifiedOn='" + getModifiedOn() + "'" +
-            ", expanseId=" + getExpanseId() +
-            ", expanseVoucherNo='" + getExpanseVoucherNo() + "'" +
             ", itemId=" + getItemId() +
             ", itemName='" + getItemName() + "'" +
+            ", expanseId=" + getExpanseId() +
+            ", expanseVoucherNo='" + getExpanseVoucherNo() + "'" +
             "}";
     }
 }

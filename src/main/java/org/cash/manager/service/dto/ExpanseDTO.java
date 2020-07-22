@@ -4,20 +4,25 @@ import java.time.Instant;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.Lob;
+
+import org.cash.manager.domain.ExpanseDtl;
 import org.cash.manager.domain.enumeration.MonthType;
 
 /**
  * A DTO for the {@link org.cash.manager.domain.Expanse} entity.
  */
 public class ExpanseDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
     private String loginId;
 
-    
+
     private Integer voucherNo;
 
     @NotNull
@@ -26,9 +31,11 @@ public class ExpanseDTO implements Serializable {
     @NotNull
     private MonthType month;
 
-    
+
     @Lob
     private String notes;
+
+    private BigDecimal totalAmount;
 
     private Boolean isPosted;
 
@@ -46,7 +53,17 @@ public class ExpanseDTO implements Serializable {
     private Long payToId;
 
     private String payToName;
-    
+
+    private Set<ExpanseDtlDTO> expanseDtls;
+
+    public Set<ExpanseDtlDTO> getExpanseDtls() {
+        return expanseDtls;
+    }
+
+    public void setExpanseDtls(Set<ExpanseDtlDTO> expanseDtls) {
+        this.expanseDtls = expanseDtls;
+    }
+
     public Long getId() {
         return id;
     }
@@ -93,6 +110,14 @@ public class ExpanseDTO implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public Boolean isIsPosted() {
@@ -186,6 +211,7 @@ public class ExpanseDTO implements Serializable {
             ", voucherDate='" + getVoucherDate() + "'" +
             ", month='" + getMonth() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", totalAmount=" + getTotalAmount() +
             ", isPosted='" + isIsPosted() + "'" +
             ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

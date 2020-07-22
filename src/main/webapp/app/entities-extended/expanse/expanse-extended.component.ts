@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
-import { Subscription, combineLatest } from 'rxjs';
+import { Subscription, combineLatest, forkJoin } from 'rxjs';
 import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -11,6 +11,12 @@ import { ExpanseComponent } from '../../entities/expanse/expanse.component';
 import { IExpanse } from '../../shared/model/expanse.model';
 import { Account } from '../../core/user/account.model';
 import { AccountService } from '../../core/auth/account.service';
+import { UserService } from '../../core/user/user.service';
+import { ItemService } from '../../entities/item/item.service';
+import { PayToService } from '../../entities/pay-to/pay-to.service';
+import { IUser } from '../../core/user/user.model';
+import { IPayTo } from '../../shared/model/pay-to.model';
+import { Item } from '../../shared/model/item.model';
 
 @Component({
   selector: 'jhi-expanse',
@@ -20,6 +26,13 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
   account: Account | null = null;
   newId: number | null = null;
   showLoader = false;
+  login: string | null = null;
+  loginList: string[] = [];
+  payToId: number | null = null;
+  payToLists: IPayTo[] = [];
+  itemId: number | null = null;
+  itemLists: Item[] = [];
+
   constructor(
     protected expanseService: ExpanseExtendedService,
     protected activatedRoute: ActivatedRoute,
@@ -27,7 +40,10 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private userService: UserService,
+    private itemService: ItemService,
+    private payToService: PayToService
   ) {
     super(expanseService, activatedRoute, dataUtils, router, eventManager, modalService);
   }
@@ -35,17 +51,66 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
   loadPage(page?: number, dontNavigate?: boolean): void {
     const pageToLoad: number = page || this.page || 1;
 
+    forkJoin(
+      this.itemService.query({
+        size: 100000,
+      }),
+      this.payToService.query({
+        size: 10000,
+      }),
+      this.userService.query({
+        page: 0,
+        size: 10000,
+        sort: this.sort(),
+      })
+    ).subscribe(res => {
+      this.itemLists = res[0].body!;
+      this.payToLists = res[1].body!;
+      const users = res[2].body!;
+      this.loginList = [];
+      users.forEach(u => {
+        this.loginList.push(u.login!);
+      });
+    });
+
     if (this.account?.authorities.includes('ROLE_ADMIN')) {
-      this.expanseService
-        .query({
-          page: pageToLoad - 1,
-          size: this.itemsPerPage,
-          sort: ['id,desc'],
-        })
-        .subscribe(
-          (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-          () => this.onError()
-        );
+      if (this.login && this.payToId) {
+        this.expanseService
+          .query({
+            'loginId.equals': this.login,
+            'payToId.equals': this.payToId,
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: ['id,desc'],
+          })
+          .subscribe(
+            (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+            () => this.onError()
+          );
+      } else if (this.login && !this.payToId) {
+        this.expanseService
+          .query({
+            'loginId.equals': this.login,
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: ['id,desc'],
+          })
+          .subscribe(
+            (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+            () => this.onError()
+          );
+      } else {
+        this.expanseService
+          .query({
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: ['id,desc'],
+          })
+          .subscribe(
+            (res: HttpResponse<IExpanse[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+            () => this.onError()
+          );
+      }
     } else {
       this.expanseService
         .query({
@@ -61,9 +126,24 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
     }
   }
 
+  loginSelected(login: string | null): void {
+    this.expanseService.setLogin(login);
+  }
+
+  payToSelected(payToId: number | null): void {
+    this.expanseService.setPayToId(payToId);
+  }
+
+  itemSelected(itemId: number | null): void {
+    this.expanseService.setItemId(itemId);
+  }
+
   ngOnInit(): void {
     this.showLoader = true;
     this.expanseService.setExpanseId(null);
+    this.expanseService.getLogin().subscribe(login => (this.login = login));
+    this.expanseService.getItemId().subscribe(itemId => (this.itemId = itemId));
+    this.expanseService.getPayToId().subscribe(payToId => (this.payToId = payToId));
     this.expanseService.getNewId().subscribe(res => {
       this.newId = res;
       if (res) {

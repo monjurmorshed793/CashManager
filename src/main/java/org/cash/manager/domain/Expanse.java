@@ -8,8 +8,11 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.cash.manager.domain.enumeration.MonthType;
 import org.springframework.data.annotation.CreatedBy;
@@ -55,6 +58,9 @@ public class Expanse implements Serializable {
     @Column(name = "notes", nullable = false)
     private String notes;
 
+    @Column(name = "total_amount", precision = 21, scale = 2)
+    private BigDecimal totalAmount;
+
     @Column(name = "is_posted")
     private Boolean isPosted;
 
@@ -76,6 +82,10 @@ public class Expanse implements Serializable {
     @Column(name = "modified_on")
     @LastModifiedDate
     private Instant modifiedOn;
+
+    @OneToMany(mappedBy = "expanse")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<ExpanseDtl> expanseDtls = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
@@ -156,6 +166,19 @@ public class Expanse implements Serializable {
         this.notes = notes;
     }
 
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public Expanse totalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+        return this;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
     public Boolean isIsPosted() {
         return isPosted;
     }
@@ -234,6 +257,31 @@ public class Expanse implements Serializable {
         this.modifiedOn = modifiedOn;
     }
 
+    public Set<ExpanseDtl> getExpanseDtls() {
+        return expanseDtls;
+    }
+
+    public Expanse expanseDtls(Set<ExpanseDtl> expanseDtls) {
+        this.expanseDtls = expanseDtls;
+        return this;
+    }
+
+    public Expanse addExpanseDtl(ExpanseDtl expanseDtl) {
+        this.expanseDtls.add(expanseDtl);
+        expanseDtl.setExpanse(this);
+        return this;
+    }
+
+    public Expanse removeExpanseDtl(ExpanseDtl expanseDtl) {
+        this.expanseDtls.remove(expanseDtl);
+        expanseDtl.setExpanse(null);
+        return this;
+    }
+
+    public void setExpanseDtls(Set<ExpanseDtl> expanseDtls) {
+        this.expanseDtls = expanseDtls;
+    }
+
     public PayTo getPayTo() {
         return payTo;
     }
@@ -274,6 +322,7 @@ public class Expanse implements Serializable {
             ", voucherDate='" + getVoucherDate() + "'" +
             ", month='" + getMonth() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", totalAmount=" + getTotalAmount() +
             ", isPosted='" + isIsPosted() + "'" +
             ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

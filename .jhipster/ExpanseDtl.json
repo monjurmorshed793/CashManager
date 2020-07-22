@@ -3,18 +3,15 @@
   "fields": [
     {
       "fieldName": "quantity",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": ["required"]
+      "fieldType": "BigDecimal"
     },
     {
       "fieldName": "unitPrice",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": ["required"]
+      "fieldType": "BigDecimal"
     },
     {
       "fieldName": "amount",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": ["required"]
+      "fieldType": "BigDecimal"
     },
     {
       "fieldName": "createdBy",
@@ -36,18 +33,18 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "expanse",
-      "otherEntityRelationshipName": "expanseDtl",
-      "relationshipName": "expanse",
-      "otherEntityField": "voucherNo"
-    },
-    {
-      "relationshipType": "many-to-one",
       "otherEntityName": "item",
       "otherEntityRelationshipName": "expanseDtl",
       "relationshipValidateRules": "required",
       "relationshipName": "item",
       "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "expanse",
+      "otherEntityRelationshipName": "expanseDtl",
+      "relationshipName": "expanse",
+      "otherEntityField": "voucherNo"
     }
   ],
   "changelogDate": "20200715095834",

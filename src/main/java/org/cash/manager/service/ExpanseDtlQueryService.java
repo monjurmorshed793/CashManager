@@ -112,13 +112,13 @@ public class ExpanseDtlQueryService extends QueryService<ExpanseDtl> {
             if (criteria.getModifiedOn() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getModifiedOn(), ExpanseDtl_.modifiedOn));
             }
-            if (criteria.getExpanseId() != null) {
-                specification = specification.and(buildSpecification(criteria.getExpanseId(),
-                    root -> root.join(ExpanseDtl_.expanse, JoinType.LEFT).get(Expanse_.id)));
-            }
             if (criteria.getItemId() != null) {
                 specification = specification.and(buildSpecification(criteria.getItemId(),
                     root -> root.join(ExpanseDtl_.item, JoinType.LEFT).get(Item_.id)));
+            }
+            if (criteria.getExpanseId() != null) {
+                specification = specification.and(buildSpecification(criteria.getExpanseId(),
+                    root -> root.join(ExpanseDtl_.expanse, JoinType.LEFT).get(Expanse_.id)));
             }
         }
         return specification;

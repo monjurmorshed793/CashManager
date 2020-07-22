@@ -8,17 +8,17 @@
     -->
     <changeSet id="20200715095834-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="expanse_id"
-                                 baseTableName="expanse_dtl"
-                                 constraintName="fk_expanse_dtl_expanse_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="expanse"/>
-
         <addForeignKeyConstraint baseColumnNames="item_id"
                                  baseTableName="expanse_dtl"
                                  constraintName="fk_expanse_dtl_item_id"
                                  referencedColumnNames="id"
                                  referencedTableName="item"/>
+
+        <addForeignKeyConstraint baseColumnNames="expanse_id"
+                                 baseTableName="expanse_dtl"
+                                 constraintName="fk_expanse_dtl_expanse_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="expanse"/>
 
     </changeSet>
 </databaseChangeLog>

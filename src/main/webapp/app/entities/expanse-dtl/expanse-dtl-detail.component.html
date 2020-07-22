@@ -36,16 +36,16 @@
                 <dd>
                     <span>{{ expanseDtl.modifiedOn }}</span>
                 </dd>
-                <dt><span>Expanse</span></dt>
-                <dd>
-                    <div *ngIf="expanseDtl.expanseId">
-                        <a [routerLink]="['/expanse', expanseDtl.expanseId, 'view']">{{ expanseDtl.expanseVoucherNo }}</a>
-                    </div>
-                </dd>
                 <dt><span>Item</span></dt>
                 <dd>
                     <div *ngIf="expanseDtl.itemId">
                         <a [routerLink]="['/item', expanseDtl.itemId, 'view']">{{ expanseDtl.itemName }}</a>
+                    </div>
+                </dd>
+                <dt><span>Expanse</span></dt>
+                <dd>
+                    <div *ngIf="expanseDtl.expanseId">
+                        <a [routerLink]="['/expanse', expanseDtl.expanseId, 'view']">{{ expanseDtl.expanseVoucherNo }}</a>
                     </div>
                 </dd>
             </dl>

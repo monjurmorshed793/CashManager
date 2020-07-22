@@ -14,7 +14,10 @@ type EntityArrayResponseType = HttpResponse<IExpanse[]>;
 export class ExpanseExtendedService extends ExpanseService {
   public resourceUrl = SERVER_API_URL + 'api/extended/expanses';
   private newId = new ReplaySubject<number | null>(1);
-  public expanseId = new ReplaySubject<number | null>(1);
+  private expanseId = new ReplaySubject<number | null>(1);
+  private login = new ReplaySubject<string | null>(1);
+  private payToId = new ReplaySubject<number | null>(1);
+  private itemId = new ReplaySubject<number | null>(1);
 
   constructor(protected http: HttpClient) {
     super(http);
@@ -34,5 +37,29 @@ export class ExpanseExtendedService extends ExpanseService {
 
   getExpanseId(): Observable<number | null> {
     return this.expanseId.asObservable();
+  }
+
+  setLogin(value: string | null): void {
+    this.login.next(value);
+  }
+
+  getLogin(): Observable<string | null> {
+    return this.login.asObservable();
+  }
+
+  setPayToId(value: number | null): void {
+    this.payToId.next(value);
+  }
+
+  getPayToId(): Observable<number | null> {
+    return this.payToId.asObservable();
+  }
+
+  setItemId(value: number | null): void {
+    this.itemId.next(value);
+  }
+
+  getItemId(): Observable<number | null> {
+    return this.itemId.asObservable();
   }
 }

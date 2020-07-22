@@ -1,93 +1,108 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <jhi-alert></jhi-alert>
-    </div>
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-expanse-heading">Create or edit a Expense</h2>
+<div class="card">
+    <div class="card-header bg-secondary text-white">Create or Edit Expense (<span *ngIf="expanse?.isPosted">Posted</span>)</div>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
+                    <div>
+                        <jhi-alert-error></jhi-alert-error>
+                        <div class="alert alert-info" align="center">
+                            Created By: {{editForm.controls['createdBy'].value}} | Created On: {{editForm.controls['createdOn'].value | date: 'mediumDate'}} | Modified By: {{editForm.controls['modifiedBy'].value}} | Modified On: {{editForm.controls['modifiedOn'].value | date: 'mediumDate'}}
+                        </div>
 
-                <div class="form-group row">
-                    <label class="form-control-label col-md-4" for="field_loginId">Login Id</label>
-                    <input type="text" class="form-control col-md-8" name="loginId" id="field_loginId"
-                           formControlName="loginId" readonly/>
-                </div>
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-4" for="field_loginId">Login Id</label>
+                            <input type="text" class="form-control col-md-8" name="loginId" id="field_loginId"
+                                   formControlName="loginId" readonly/>
+                        </div>
 
-                <div class="form-group row">
-                    <label class="form-control-label col-md-4" for="field_voucherNo">Voucher No (auto generated)</label>
-                    <input type="number" class="form-control col-md-8" name="voucherNo" id="field_voucherNo"
-                           formControlName="voucherNo" readonly/>
-                </div>
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-4" for="field_voucherNo">Voucher No (auto generated)</label>
+                            <input type="number" class="form-control col-md-8" name="voucherNo" id="field_voucherNo"
+                                   formControlName="voucherNo" readonly/>
+                        </div>
 
-                <div class="form-group row">
-                    <label class="form-control-label col-md-4" for="field_voucherDate">Voucher Date</label>
-                    <div class="input-group col-md-8">
-                        <input id="field_voucherDate" type="text" class="form-control" name="voucherDate" ngbDatepicker #voucherDateDp="ngbDatepicker" formControlName="voucherDate"/>
-                        <span class="input-group-append">
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-4" for="field_voucherDate">Voucher Date</label>
+                            <div class="input-group col-md-8" style="padding: 0px">
+                                <input id="field_voucherDate" type="date" class="form-control" name="voucherDate" ngbDatepicker #voucherDateDp="ngbDatepicker" formControlName="voucherDate"/>
+                                <span class="input-group-append">
                             <button type="button" class="btn btn-secondary" (click)="voucherDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="form-control-label col-md-4" for="field_month">Month</label>
-                    <select class="form-control col-md-8" name="month" formControlName="month" id="field_month">
-                        <option value="JANUARY">JANUARY</option>
-                        <option value="FEBRUARY">FEBRUARY</option>
-                        <option value="MARCH">MARCH</option>
-                        <option value="APRIL">APRIL</option>
-                        <option value="MAY">MAY</option>
-                        <option value="JUNE">JUNE</option>
-                        <option value="JULY">JULY</option>
-                        <option value="AUGUST">AUGUST</option>
-                        <option value="SEPTEMBER">SEPTEMBER</option>
-                        <option value="OCTOBER">OCTOBER</option>
-                        <option value="NOVEMBER">NOVEMBER</option>
-                        <option value="DECEMBER">DECEMBER</option>
-                    </select>
-                </div>
-
-                <div class="form-group row">
-                    <label class="form-control-label col-md-4" for="field_payTo">Pay To</label>
-                    <select class="form-control col-md-8" id="field_payTo" name="payTo" formControlName="payToId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="payToOption.id" *ngFor="let payToOption of paytos; trackBy: trackById">{{ payToOption.name }}</option>
-                    </select>
-                </div>
-
-
-
-                <div class="card" *ngIf="editForm.controls['id'].value">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12" style="background-color: whitesmoke;">
-                                <jhi-expanse-dtl-directive  [expanseId]="editForm.controls['id'].value"></jhi-expanse-dtl-directive>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-4" for="field_month">Month</label>
+                            <select class="form-control col-md-8" name="month" formControlName="month" id="field_month">
+                                <option value="JANUARY">JANUARY</option>
+                                <option value="FEBRUARY">FEBRUARY</option>
+                                <option value="MARCH">MARCH</option>
+                                <option value="APRIL">APRIL</option>
+                                <option value="MAY">MAY</option>
+                                <option value="JUNE">JUNE</option>
+                                <option value="JULY">JULY</option>
+                                <option value="AUGUST">AUGUST</option>
+                                <option value="SEPTEMBER">SEPTEMBER</option>
+                                <option value="OCTOBER">OCTOBER</option>
+                                <option value="NOVEMBER">NOVEMBER</option>
+                                <option value="DECEMBER">DECEMBER</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="form-control-label col-md-4" for="field_payTo">Pay To</label>
+                            <select class="form-control col-md-8" id="field_payTo" name="payTo" formControlName="payToId">
+                                <option [ngValue]="null"></option>
+                                <option [ngValue]="payToOption.id" *ngFor="let payToOption of paytos; trackBy: trackById">{{ payToOption.name }}</option>
+                            </select>
+                        </div>
+
+
+
+
+                        <div class="card" *ngIf="editForm.controls['id'].value">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12" style="background-color: whitesmoke;">
+                                        <jhi-expanse-dtl-directive  [expanseId]="editForm.controls['id'].value"></jhi-expanse-dtl-directive>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info" *ngIf="editForm.controls['totalAmount'].value">
+                                <div class="row">
+                                    <div class="col-md-6" align="right">Total: </div>
+                                    <div class="col-md-6"><b>{{editForm.controls['totalAmount'].value}}</b></div>
+                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_notes">Notes</label>
+                            <textarea class="form-control" name="notes" id="field_notes"
+                                      formControlName="notes"></textarea>
+                        </div>
+
+
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_notes">Notes</label>
-                    <textarea class="form-control" name="notes" id="field_notes"
-                              formControlName="notes"></textarea>
-                </div>
+                    <div>
+                        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                            <span>Back</span>
+                        </button>
 
-
+                        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || expanse?.isPosted" class="btn btn-primary">
+                            <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                        </button>
+                        <button *ngIf="expanse?.id" (click)="post()" [disabled]="editForm.invalid || isSaving || expanse?.isPosted" class="btn btn-primary">
+                            <fa-icon icon="save"></fa-icon>&nbsp;<span>Post</span>
+                        </button>
+                    </div>
+                </form>
             </div>
+        </div>
 
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
-
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
-                </button>
-            </div>
-        </form>
     </div>
 </div>
 

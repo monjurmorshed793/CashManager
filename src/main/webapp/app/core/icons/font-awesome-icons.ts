@@ -37,6 +37,7 @@ import {
   faDollarSign,
   faExpand,
   faShare,
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const fontAwesomeIcons = [
@@ -78,4 +79,5 @@ export const fontAwesomeIcons = [
   faDollarSign,
   faExpand,
   faShare,
+  faSpinner,
 ];

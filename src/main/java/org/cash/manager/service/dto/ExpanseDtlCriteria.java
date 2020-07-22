@@ -42,9 +42,9 @@ public class ExpanseDtlCriteria implements Serializable, Criteria {
 
     private InstantFilter modifiedOn;
 
-    private LongFilter expanseId;
-
     private LongFilter itemId;
+
+    private LongFilter expanseId;
 
     public ExpanseDtlCriteria() {
     }
@@ -58,8 +58,8 @@ public class ExpanseDtlCriteria implements Serializable, Criteria {
         this.createdOn = other.createdOn == null ? null : other.createdOn.copy();
         this.modifiedBy = other.modifiedBy == null ? null : other.modifiedBy.copy();
         this.modifiedOn = other.modifiedOn == null ? null : other.modifiedOn.copy();
-        this.expanseId = other.expanseId == null ? null : other.expanseId.copy();
         this.itemId = other.itemId == null ? null : other.itemId.copy();
+        this.expanseId = other.expanseId == null ? null : other.expanseId.copy();
     }
 
     @Override
@@ -131,20 +131,20 @@ public class ExpanseDtlCriteria implements Serializable, Criteria {
         this.modifiedOn = modifiedOn;
     }
 
-    public LongFilter getExpanseId() {
-        return expanseId;
-    }
-
-    public void setExpanseId(LongFilter expanseId) {
-        this.expanseId = expanseId;
-    }
-
     public LongFilter getItemId() {
         return itemId;
     }
 
     public void setItemId(LongFilter itemId) {
         this.itemId = itemId;
+    }
+
+    public LongFilter getExpanseId() {
+        return expanseId;
+    }
+
+    public void setExpanseId(LongFilter expanseId) {
+        this.expanseId = expanseId;
     }
 
 
@@ -166,8 +166,8 @@ public class ExpanseDtlCriteria implements Serializable, Criteria {
             Objects.equals(createdOn, that.createdOn) &&
             Objects.equals(modifiedBy, that.modifiedBy) &&
             Objects.equals(modifiedOn, that.modifiedOn) &&
-            Objects.equals(expanseId, that.expanseId) &&
-            Objects.equals(itemId, that.itemId);
+            Objects.equals(itemId, that.itemId) &&
+            Objects.equals(expanseId, that.expanseId);
     }
 
     @Override
@@ -181,8 +181,8 @@ public class ExpanseDtlCriteria implements Serializable, Criteria {
         createdOn,
         modifiedBy,
         modifiedOn,
-        expanseId,
-        itemId
+        itemId,
+        expanseId
         );
     }
 
@@ -198,8 +198,8 @@ public class ExpanseDtlCriteria implements Serializable, Criteria {
                 (createdOn != null ? "createdOn=" + createdOn + ", " : "") +
                 (modifiedBy != null ? "modifiedBy=" + modifiedBy + ", " : "") +
                 (modifiedOn != null ? "modifiedOn=" + modifiedOn + ", " : "") +
-                (expanseId != null ? "expanseId=" + expanseId + ", " : "") +
                 (itemId != null ? "itemId=" + itemId + ", " : "") +
+                (expanseId != null ? "expanseId=" + expanseId + ", " : "") +
             "}";
     }
 

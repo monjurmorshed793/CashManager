@@ -103,6 +103,9 @@ public class ExpanseQueryService extends QueryService<Expanse> {
             if (criteria.getMonth() != null) {
                 specification = specification.and(buildSpecification(criteria.getMonth(), Expanse_.month));
             }
+            if (criteria.getTotalAmount() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getTotalAmount(), Expanse_.totalAmount));
+            }
             if (criteria.getIsPosted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsPosted(), Expanse_.isPosted));
             }
@@ -120,6 +123,10 @@ public class ExpanseQueryService extends QueryService<Expanse> {
             }
             if (criteria.getModifiedOn() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getModifiedOn(), Expanse_.modifiedOn));
+            }
+            if (criteria.getExpanseDtlId() != null) {
+                specification = specification.and(buildSpecification(criteria.getExpanseDtlId(),
+                    root -> root.join(Expanse_.expanseDtls, JoinType.LEFT).get(ExpanseDtl_.id)));
             }
             if (criteria.getPayToId() != null) {
                 specification = specification.and(buildSpecification(criteria.getPayToId(),

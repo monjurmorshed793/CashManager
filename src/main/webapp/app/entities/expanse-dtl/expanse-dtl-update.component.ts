@@ -9,12 +9,12 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IExpanseDtl, ExpanseDtl } from 'app/shared/model/expanse-dtl.model';
 import { ExpanseDtlService } from './expanse-dtl.service';
-import { IExpanse } from 'app/shared/model/expanse.model';
-import { ExpanseService } from 'app/entities/expanse/expanse.service';
 import { IItem } from 'app/shared/model/item.model';
 import { ItemService } from 'app/entities/item/item.service';
+import { IExpanse } from 'app/shared/model/expanse.model';
+import { ExpanseService } from 'app/entities/expanse/expanse.service';
 
-type SelectableEntity = IExpanse | IItem;
+type SelectableEntity = IItem | IExpanse;
 
 @Component({
   selector: 'jhi-expanse-dtl-update',
@@ -22,26 +22,26 @@ type SelectableEntity = IExpanse | IItem;
 })
 export class ExpanseDtlUpdateComponent implements OnInit {
   isSaving = false;
-  expanses: IExpanse[] = [];
   items: IItem[] = [];
+  expanses: IExpanse[] = [];
 
   editForm = this.fb.group({
     id: [],
-    quantity: [null, [Validators.required]],
-    unitPrice: [null, [Validators.required]],
-    amount: [null, [Validators.required]],
+    quantity: [],
+    unitPrice: [],
+    amount: [],
     createdBy: [],
     createdOn: [],
     modifiedBy: [],
     modifiedOn: [],
-    expanseId: [],
     itemId: [null, Validators.required],
+    expanseId: [],
   });
 
   constructor(
     protected expanseDtlService: ExpanseDtlService,
-    protected expanseService: ExpanseService,
     protected itemService: ItemService,
+    protected expanseService: ExpanseService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -56,9 +56,9 @@ export class ExpanseDtlUpdateComponent implements OnInit {
 
       this.updateForm(expanseDtl);
 
-      this.expanseService.query().subscribe((res: HttpResponse<IExpanse[]>) => (this.expanses = res.body || []));
-
       this.itemService.query().subscribe((res: HttpResponse<IItem[]>) => (this.items = res.body || []));
+
+      this.expanseService.query().subscribe((res: HttpResponse<IExpanse[]>) => (this.expanses = res.body || []));
     });
   }
 
@@ -72,8 +72,8 @@ export class ExpanseDtlUpdateComponent implements OnInit {
       createdOn: expanseDtl.createdOn ? expanseDtl.createdOn.format(DATE_TIME_FORMAT) : null,
       modifiedBy: expanseDtl.modifiedBy,
       modifiedOn: expanseDtl.modifiedOn ? expanseDtl.modifiedOn.format(DATE_TIME_FORMAT) : null,
-      expanseId: expanseDtl.expanseId,
       itemId: expanseDtl.itemId,
+      expanseId: expanseDtl.expanseId,
     });
   }
 
@@ -91,7 +91,7 @@ export class ExpanseDtlUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): IExpanseDtl {
+  protected createFromForm(): IExpanseDtl {
     return {
       ...new ExpanseDtl(),
       id: this.editForm.get(['id'])!.value,
@@ -102,8 +102,8 @@ export class ExpanseDtlUpdateComponent implements OnInit {
       createdOn: this.editForm.get(['createdOn'])!.value ? moment(this.editForm.get(['createdOn'])!.value, DATE_TIME_FORMAT) : undefined,
       modifiedBy: this.editForm.get(['modifiedBy'])!.value,
       modifiedOn: this.editForm.get(['modifiedOn'])!.value ? moment(this.editForm.get(['modifiedOn'])!.value, DATE_TIME_FORMAT) : undefined,
-      expanseId: this.editForm.get(['expanseId'])!.value,
       itemId: this.editForm.get(['itemId'])!.value,
+      expanseId: this.editForm.get(['expanseId'])!.value,
     };
   }
 
