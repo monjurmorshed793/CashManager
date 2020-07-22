@@ -27,6 +27,7 @@ export class ExpanseDtlExtendedDeleteDialogComponent extends ExpanseDtlDeleteDia
   confirmDelete(id: number): void {
     this.expanseDtlService.delete(id).subscribe(() => {
       this.eventManager.broadcast('expanseDtlListModification');
+      this.eventManager.broadcast('expanseUpdateModification');
       this.activeModal.close();
     });
   }

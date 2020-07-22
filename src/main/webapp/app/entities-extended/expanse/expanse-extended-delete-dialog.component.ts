@@ -17,4 +17,11 @@ export class ExpanseExtendedDeleteDialogComponent extends ExpanseDeleteDialogCom
   ) {
     super(expanseService, activeModal, eventManager);
   }
+
+  confirmDelete(id: number): void {
+    this.expanseService.delete(id).subscribe(() => {
+      this.eventManager.broadcast('expanseListModification');
+      this.activeModal.close();
+    });
+  }
 }

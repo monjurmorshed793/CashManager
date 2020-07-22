@@ -87,4 +87,9 @@ export class ExpanseDtlExtendedComponent extends ExpanseDtlComponent implements 
     this.expanseDtls = data || [];
     this.ngbPaginationPage = this.page;
   }
+
+  delete(expanseDtl: IExpanseDtl): void {
+    const modalRef = this.modalService.open(ExpanseDtlExtendedDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.expanseDtl = expanseDtl;
+  }
 }

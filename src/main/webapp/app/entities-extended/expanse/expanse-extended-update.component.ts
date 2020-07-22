@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Subscription, combineLatest } from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,13 +26,14 @@ import { IItem, Item } from '../../shared/model/item.model';
   selector: 'jhi-expanse-update',
   templateUrl: './expanse-extended-update.component.html',
 })
-export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent implements OnInit {
+export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   expanseDtls: IExpanseDtl[] = [];
   expanseDtl: IExpanseDtl | null = null;
   isAddingNew: Boolean = false;
   expanse: IExpanse | null = null;
   items: Item[] = [];
+  eventSubscriber?: Subscription;
 
   expanseDtlForm = this.fb.group({
     id: [],
@@ -63,6 +65,7 @@ export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent imple
   }
 
   ngOnInit(): void {
+    this.registerChangeEvent();
     this.accountService.getAuthenticationState().subscribe(a => (this.account = a));
     this.expanseService.setNewId(null);
     this.activatedRoute.data.subscribe(({ expanse }) => {
@@ -90,6 +93,33 @@ export class ExpanseExtendedUpdateComponent extends ExpanseUpdateComponent imple
 
       this.payToService.query({ size: 10000 }).subscribe((res: HttpResponse<IPayTo[]>) => (this.paytos = res.body || []));
       this.itemService.query({ size: 10000 }).subscribe((res: HttpResponse<IItem[]>) => (this.items = res.body || []));
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
+  }
+
+  loadAll(): void {
+    this.expanseService.find(this.expanse?.id!).subscribe(expanseRes => {
+      const expanse = expanseRes.body!;
+      this.expanseDtlService
+        .query({
+          'expanseId.equals': expanse.id,
+        })
+        .subscribe(res => {
+          this.expanseDtls = res.body ? res.body : [];
+        });
+      this.expanse = expanse;
+      this.updateForm(expanse);
+    });
+  }
+
+  registerChangeEvent(): void {
+    this.eventSubscriber = this.eventManager.subscribe('expanseUpdateModification', () => {
+      this.loadAll();
     });
   }
 
