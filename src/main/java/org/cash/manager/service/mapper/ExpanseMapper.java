@@ -33,5 +33,4 @@ public interface ExpanseMapper extends EntityMapper<ExpanseDTO, Expanse> {
         expanse.setId(id);
         return expanse;
     }
-
 }

@@ -33,14 +33,28 @@ public class ExpanseDtlExtendedService extends ExpanseDtlService {
     public ExpanseDtlDTO save(ExpanseDtlDTO expanseDtlDTO) {
         expanseDtlDTO = super.save(expanseDtlDTO);
 
-        ExpanseDTO expanseDTO = expanseService.findOne(expanseDtlDTO.getExpanseId()).get();
+        updateExpanse(expanseDtlDTO.getExpanseId());
+        return expanseDtlDTO;
+    }
+
+    private void updateExpanse(Long expanseId) {
+        ExpanseDTO expanseDTO = expanseService.findOne(expanseId).get();
         List<ExpanseDtl> expanseDtls = expanseDtlExtendedRepository.findAllByExpanse_Id(expanseDTO.getId());
         BigDecimal totalAmount = BigDecimal.ZERO;
+        String itemNames = "";
         for(ExpanseDtl expanseDtl: expanseDtls){
             totalAmount = totalAmount.add(expanseDtl.getAmount());
+            itemNames = itemNames.concat(expanseDtl.getItem().getName()+",");
         }
         expanseDTO.setTotalAmount(totalAmount);
+        expanseDTO.setItemNames(itemNames);
         expanseService.save(expanseDTO);
-        return expanseDtlDTO;
+    }
+
+    @Override
+    public void delete(Long id) {
+        ExpanseDtlDTO expanseDtlDTO = findOne(id).get();
+        super.delete(id);
+        updateExpanse(expanseDtlDTO.getExpanseId());
     }
 }

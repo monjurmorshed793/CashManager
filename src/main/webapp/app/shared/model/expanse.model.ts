@@ -10,6 +10,7 @@ export interface IExpanse {
   month?: MonthType;
   notes?: any;
   totalAmount?: number;
+  itemNames?: any;
   isPosted?: boolean;
   postDate?: Moment;
   createdBy?: string;
@@ -30,6 +31,7 @@ export class Expanse implements IExpanse {
     public month?: MonthType,
     public notes?: any,
     public totalAmount?: number,
+    public itemNames?: any,
     public isPosted?: boolean,
     public postDate?: Moment,
     public createdBy?: string,

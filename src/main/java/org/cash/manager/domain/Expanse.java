@@ -15,11 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cash.manager.domain.enumeration.MonthType;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * A Expanse.
@@ -27,7 +22,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Table(name = "expanse")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@EntityListeners(AuditingEntityListener.class)
 public class Expanse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +34,7 @@ public class Expanse implements Serializable {
     @Column(name = "login_id", nullable = false)
     private String loginId;
 
-
+    
     @Column(name = "voucher_no", unique = true)
     private Integer voucherNo;
 
@@ -53,13 +47,17 @@ public class Expanse implements Serializable {
     @Column(name = "month", nullable = false)
     private MonthType month;
 
-
+    
     @Lob
     @Column(name = "notes", nullable = false)
     private String notes;
 
     @Column(name = "total_amount", precision = 21, scale = 2)
     private BigDecimal totalAmount;
+
+    @Lob
+    @Column(name = "item_names")
+    private String itemNames;
 
     @Column(name = "is_posted")
     private Boolean isPosted;
@@ -68,19 +66,15 @@ public class Expanse implements Serializable {
     private Instant postDate;
 
     @Column(name = "created_by")
-    @CreatedBy
     private String createdBy;
 
     @Column(name = "created_on")
-    @CreatedDate
     private Instant createdOn;
 
     @Column(name = "modified_by")
-    @LastModifiedBy
     private String modifiedBy;
 
     @Column(name = "modified_on")
-    @LastModifiedDate
     private Instant modifiedOn;
 
     @OneToMany(mappedBy = "expanse")
@@ -177,6 +171,19 @@ public class Expanse implements Serializable {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getItemNames() {
+        return itemNames;
+    }
+
+    public Expanse itemNames(String itemNames) {
+        this.itemNames = itemNames;
+        return this;
+    }
+
+    public void setItemNames(String itemNames) {
+        this.itemNames = itemNames;
     }
 
     public Boolean isIsPosted() {
@@ -323,6 +330,7 @@ public class Expanse implements Serializable {
             ", month='" + getMonth() + "'" +
             ", notes='" + getNotes() + "'" +
             ", totalAmount=" + getTotalAmount() +
+            ", itemNames='" + getItemNames() + "'" +
             ", isPosted='" + isIsPosted() + "'" +
             ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

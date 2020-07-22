@@ -37,6 +37,9 @@ public class ExpanseDTO implements Serializable {
 
     private BigDecimal totalAmount;
 
+    @Lob
+    private String itemNames;
+
     private Boolean isPosted;
 
     private Instant postDate;
@@ -118,6 +121,14 @@ public class ExpanseDTO implements Serializable {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getItemNames() {
+        return itemNames;
+    }
+
+    public void setItemNames(String itemNames) {
+        this.itemNames = itemNames;
     }
 
     public Boolean isIsPosted() {
@@ -212,6 +223,7 @@ public class ExpanseDTO implements Serializable {
             ", month='" + getMonth() + "'" +
             ", notes='" + getNotes() + "'" +
             ", totalAmount=" + getTotalAmount() +
+            ", itemNames='" + getItemNames() + "'" +
             ", isPosted='" + isIsPosted() + "'" +
             ", postDate='" + getPostDate() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

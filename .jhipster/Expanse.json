@@ -33,6 +33,11 @@
       "fieldType": "BigDecimal"
     },
     {
+      "fieldName": "itemNames",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
       "fieldName": "isPosted",
       "fieldType": "Boolean"
     },

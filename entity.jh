@@ -39,6 +39,7 @@ entity Expanse{
     month MonthType required,
     notes TextBlob required,
     totalAmount BigDecimal,
+    itemNames TextBlob,
     isPosted Boolean,
     postDate Instant,
     createdBy String,

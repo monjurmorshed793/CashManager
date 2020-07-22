@@ -64,6 +64,9 @@ public class ExpanseResourceIT {
     private static final BigDecimal UPDATED_TOTAL_AMOUNT = new BigDecimal(2);
     private static final BigDecimal SMALLER_TOTAL_AMOUNT = new BigDecimal(1 - 1);
 
+    private static final String DEFAULT_ITEM_NAMES = "AAAAAAAAAA";
+    private static final String UPDATED_ITEM_NAMES = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_IS_POSTED = false;
     private static final Boolean UPDATED_IS_POSTED = true;
 
@@ -116,6 +119,7 @@ public class ExpanseResourceIT {
             .month(DEFAULT_MONTH)
             .notes(DEFAULT_NOTES)
             .totalAmount(DEFAULT_TOTAL_AMOUNT)
+            .itemNames(DEFAULT_ITEM_NAMES)
             .isPosted(DEFAULT_IS_POSTED)
             .postDate(DEFAULT_POST_DATE)
             .createdBy(DEFAULT_CREATED_BY)
@@ -148,6 +152,7 @@ public class ExpanseResourceIT {
             .month(UPDATED_MONTH)
             .notes(UPDATED_NOTES)
             .totalAmount(UPDATED_TOTAL_AMOUNT)
+            .itemNames(UPDATED_ITEM_NAMES)
             .isPosted(UPDATED_IS_POSTED)
             .postDate(UPDATED_POST_DATE)
             .createdBy(UPDATED_CREATED_BY)
@@ -193,6 +198,7 @@ public class ExpanseResourceIT {
         assertThat(testExpanse.getMonth()).isEqualTo(DEFAULT_MONTH);
         assertThat(testExpanse.getNotes()).isEqualTo(DEFAULT_NOTES);
         assertThat(testExpanse.getTotalAmount()).isEqualTo(DEFAULT_TOTAL_AMOUNT);
+        assertThat(testExpanse.getItemNames()).isEqualTo(DEFAULT_ITEM_NAMES);
         assertThat(testExpanse.isIsPosted()).isEqualTo(DEFAULT_IS_POSTED);
         assertThat(testExpanse.getPostDate()).isEqualTo(DEFAULT_POST_DATE);
         assertThat(testExpanse.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
@@ -299,6 +305,7 @@ public class ExpanseResourceIT {
             .andExpect(jsonPath("$.[*].month").value(hasItem(DEFAULT_MONTH.toString())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].itemNames").value(hasItem(DEFAULT_ITEM_NAMES.toString())))
             .andExpect(jsonPath("$.[*].isPosted").value(hasItem(DEFAULT_IS_POSTED.booleanValue())))
             .andExpect(jsonPath("$.[*].postDate").value(hasItem(DEFAULT_POST_DATE.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
@@ -324,6 +331,7 @@ public class ExpanseResourceIT {
             .andExpect(jsonPath("$.month").value(DEFAULT_MONTH.toString()))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES.toString()))
             .andExpect(jsonPath("$.totalAmount").value(DEFAULT_TOTAL_AMOUNT.intValue()))
+            .andExpect(jsonPath("$.itemNames").value(DEFAULT_ITEM_NAMES.toString()))
             .andExpect(jsonPath("$.isPosted").value(DEFAULT_IS_POSTED.booleanValue()))
             .andExpect(jsonPath("$.postDate").value(DEFAULT_POST_DATE.toString()))
             .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
@@ -1210,6 +1218,7 @@ public class ExpanseResourceIT {
             .andExpect(jsonPath("$.[*].month").value(hasItem(DEFAULT_MONTH.toString())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].itemNames").value(hasItem(DEFAULT_ITEM_NAMES.toString())))
             .andExpect(jsonPath("$.[*].isPosted").value(hasItem(DEFAULT_IS_POSTED.booleanValue())))
             .andExpect(jsonPath("$.[*].postDate").value(hasItem(DEFAULT_POST_DATE.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
@@ -1268,6 +1277,7 @@ public class ExpanseResourceIT {
             .month(UPDATED_MONTH)
             .notes(UPDATED_NOTES)
             .totalAmount(UPDATED_TOTAL_AMOUNT)
+            .itemNames(UPDATED_ITEM_NAMES)
             .isPosted(UPDATED_IS_POSTED)
             .postDate(UPDATED_POST_DATE)
             .createdBy(UPDATED_CREATED_BY)
@@ -1291,6 +1301,7 @@ public class ExpanseResourceIT {
         assertThat(testExpanse.getMonth()).isEqualTo(UPDATED_MONTH);
         assertThat(testExpanse.getNotes()).isEqualTo(UPDATED_NOTES);
         assertThat(testExpanse.getTotalAmount()).isEqualTo(UPDATED_TOTAL_AMOUNT);
+        assertThat(testExpanse.getItemNames()).isEqualTo(UPDATED_ITEM_NAMES);
         assertThat(testExpanse.isIsPosted()).isEqualTo(UPDATED_IS_POSTED);
         assertThat(testExpanse.getPostDate()).isEqualTo(UPDATED_POST_DATE);
         assertThat(testExpanse.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
