@@ -203,6 +203,16 @@ export class ExpanseExtendedComponent extends ExpanseComponent implements OnInit
     this.expanseService.setItemId(itemId);
   }
 
+  cleanFilter(): void {
+    this.itemId = null;
+    this.payToId = null;
+    this.login = null;
+    this.expanseService.setItemId(this.itemId);
+    this.expanseService.setPayToId(this.payToId);
+    this.expanseService.setLogin(this.login);
+    this.loadPage();
+  }
+
   ngOnInit(): void {
     this.showLoader = true;
     this.expanseService.setExpanseId(null);
