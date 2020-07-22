@@ -16,9 +16,9 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <select class="form-control col-md-8" id="field_item" name="login" [(ngModel)]="itemId" (ngModelChange)="itemSelected(itemId)">
+                <select class="form-control col-md-8" id="field_item" name="login" [(ngModel)]="itemName" (ngModelChange)="itemSelected(itemName)">
                     <option [ngValue]="null">Select Item</option>
-                    <option [ngValue]="itemOption.id" *ngFor="let itemOption of itemLists">{{ itemOption.name }}</option>
+                    <option [ngValue]="itemOption.name" *ngFor="let itemOption of itemLists">{{ itemOption.name }}</option>
                 </select>
             </div>
             <div class="col-md-3" align="right">

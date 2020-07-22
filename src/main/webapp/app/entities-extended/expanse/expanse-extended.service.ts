@@ -18,6 +18,7 @@ export class ExpanseExtendedService extends ExpanseService {
   private login = new ReplaySubject<string | null>(1);
   private payToId = new ReplaySubject<number | null>(1);
   private itemId = new ReplaySubject<number | null>(1);
+  private itemName = new ReplaySubject<string | null>(1);
 
   constructor(protected http: HttpClient) {
     super(http);
@@ -61,5 +62,13 @@ export class ExpanseExtendedService extends ExpanseService {
 
   getItemId(): Observable<number | null> {
     return this.itemId.asObservable();
+  }
+
+  setItemName(value: string | null): void {
+    this.itemName.next(value);
+  }
+
+  getItemName(): Observable<string | null> {
+    return this.itemName.asObservable();
   }
 }
